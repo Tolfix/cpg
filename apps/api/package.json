@@ -38,7 +38,7 @@
     "nodemailer": "^6.7.0",
     "npm": "^7.20.5",
     "paypal-rest-sdk": "^1.8.1",
-    "pdfkit-table": "^0.1.86",
+    "pdfkit-table": "github:Tolfx/pdfkit-table",
     "prompt": "^1.2.0",
     "qrcode": "^1.4.4",
     "request": "^2.88.2",
@@ -95,6 +95,7 @@
     "eslint": "^8.14.0",
     "eslint-config-custom": "*",
     "interfaces": "*",
+    "tsconfig": "*",
     "lib": "*",
     "typescript": "^4.3.5"
   }

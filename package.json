@@ -13,7 +13,7 @@
     "cpg-api:build": "tsc --project ./apps/api/tsconfig.json --watch",
     "cpg-api:dev": "turbo run dev --scope=cpg-api",
     "cpg-customer:dev": "turbo run dev --scope=cpg-customer",
-    "format": "npx \"**/*.{ts,tsx,md}\" --fix"
+    "format": "npx eslint \"**/*.{ts,tsx}\" --fix"
   },
   "devDependencies": {
     "turbo": "latest"
@@ -23,6 +23,5 @@
     "node": ">=14.0.0"
   },
   "packageManager": "npm@8.3.0",
-  "dependencies": {
-  }
+  "dependencies": {}
 }

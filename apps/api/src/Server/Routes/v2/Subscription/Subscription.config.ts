@@ -16,8 +16,8 @@ import EnsureAuth from "../../../../Middlewares/EnsureAuth";
 import SubscriptionController from "./Subscription.controller";
 import dateFormat from "date-and-time";
 import { ce_subscription } from "../../../../Lib/Subscriptions/PlaceSubscription";
-
-export = class SubscriptionRouter
+export = SubscriptionRouter;
+class SubscriptionRouter
 {
     private server: Application;
     private router = Router();
