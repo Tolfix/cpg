@@ -1,0 +1,1 @@
+export type TPaymentTypes = "one_time" | "recurring" | "free";

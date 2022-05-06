@@ -1,0 +1,39 @@
+{
+  "name": "interfaces",
+  "version": "0.0.0",
+  "files": [
+    "Customer.interface.d.ts",
+    "Product.interface.d.ts",
+    "Payments.interface.d.ts",
+    "Subscription.interface.d.ts",
+    "Transaction.interface.d.ts",
+    "Quotes.interface.d.ts",
+    "Logging.interface.d.ts",
+    "Orders.interface.d.ts",
+    "Invoice.interface.d.ts",
+    "Images.interface.d.ts",
+    "ConfigurableOptions.interface.d.ts",
+    "Categories.interface.d.ts",
+
+    
+    "./Lang/Alllang.interface.d.ts",
+    "./Lang/GetText.interface.d.ts",
+    "./Events/MainOnEvents.interface.d.ts",
+
+
+    "./Admin/Administrators.interface.d.ts",
+    "./Admin/Configs.interface.d.ts",
+
+
+    "./types/PaymentMethod.d.ts",
+    "./types/PaymentMethod.js",
+    "./types/Currencies.d.ts",
+    "./types/PaymentTypes.d.ts",
+    "./types/PaymentTypes.js"
+  ],
+  "license": "MIT",
+  "dependencies": {},
+  "publishConfig": {
+    "access": "public"
+  }
+}
