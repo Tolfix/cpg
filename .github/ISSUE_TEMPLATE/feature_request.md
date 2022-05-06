@@ -1,7 +1,7 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
-title: "[Feature]"
+about: Suggest an idea for a app
+title: 'Feature(app): '
 labels: enhancement
 assignees: ''
 
