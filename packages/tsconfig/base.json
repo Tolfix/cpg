@@ -16,5 +16,5 @@
     "skipLibCheck": true,
     "strict": true
   },
-  "exclude": ["node_modules", "node_modules/pdfkit-table/index.ts"]
+  "exclude": ["node_modules"]
 }

@@ -39,17 +39,29 @@ RUN apk update && \
     apk upgrade && \
     apk add git
 
-COPY --from=BUILDER /app/apps/api/build ./build
+COPY --from=BUILDER /app/apps/customer ./
 COPY --from=BUILDER /app/node_modules ./node_modules
 COPY --from=BUILDER /app/packages ./packages
 COPY --from=BUILDER /app/package.json ./package.json
 
-ENV DEBIAN_FRONTEND=noninteractive
+COPY ./apps/customer/entrypoint.sh .
+COPY ./apps/customer/.env.production .
 
 LABEL author="Tolfix" maintainer="support@tolfix.com"
 
-ENV PLUGINS "[]"
+RUN apk add --no-cache --upgrade bash
+RUN chmod +x /app/entrypoint.sh
+ENTRYPOINT ["/app/entrypoint.sh"]
 
-EXPOSE 3001
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
+RUN chown -R nextjs:nodejs /app/.next
 
-CMD [ "node", "./build/Main.js" ]
+USER nextjs
+
+EXPOSE 3000
+ENV PORT 3000
+
+RUN npx next telemetry disable
+
+CMD npm run start
