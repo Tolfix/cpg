@@ -28,7 +28,7 @@ COPY . .
 
 COPY --from=INSTALLER /app/node_modules ./node_modules
 COPY --from=INSTALLER /app/package.json ./package.json
-COPY --from=INSTALLER /app/package-lock.json ./package-lock.json
+# COPY --from=INSTALLER /app/package-lock.json ./package-lock.json
 
 RUN npm run build
 ##########################
@@ -42,7 +42,7 @@ RUN apk update && \
     apk upgrade && \
     apk add git
 
-COPY --from=BUILDER /app/build ./build
+COPY --from=BUILDER /app/apps/api/build ./build
 COPY --from=BUILDER /app/node_modules ./node_modules
 COPY --from=BUILDER /app/package.json ./package.json
 
