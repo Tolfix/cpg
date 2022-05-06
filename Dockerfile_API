@@ -41,6 +41,7 @@ RUN apk update && \
 
 COPY --from=BUILDER /app/apps/api/build ./build
 COPY --from=BUILDER /app/node_modules ./node_modules
+COPY --from=BUILDER /app/packages ./packages
 COPY --from=BUILDER /app/package.json ./package.json
 
 ENV DEBIAN_FRONTEND=noninteractive
