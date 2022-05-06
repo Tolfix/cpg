@@ -21,10 +21,10 @@ RUN npm install --force
 # BUILDER
 FROM node:16-alpine as BUILDER
 
-WORKDIR /app
 
 RUN npm i -g turbo
 COPY --from=INSTALLER . .
+WORKDIR /app
 # Print our directory
 RUN ls -la
 RUN turbo run build --scope=cpg-api
