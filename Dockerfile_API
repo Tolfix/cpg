@@ -14,6 +14,7 @@ RUN npm install -g @types/node \
     && npm install -g typescript@4.3.5
 
 COPY ./package.json ./
+COPY ./package-lock.json ./
 
 RUN npm install --force
 ##########################
@@ -26,6 +27,8 @@ WORKDIR /app
 COPY . .
 
 COPY --from=INSTALLER /app/node_modules ./node_modules
+COPY --from=INSTALLER /app/package.json ./package.json
+COPY --from=INSTALLER /app/package-lock.json ./package-lock.json
 
 RUN npm run build
 ##########################
