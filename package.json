@@ -10,6 +10,9 @@
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
+    "cpg-api:build": "tsc --project ./apps/api/tsconfig.json --watch",
+    "cpg-api:dev": "turbo run dev --scope=cpg-api",
+    "cpg-customer:dev": "turbo run dev --scope=cpg-customer",
     "format": "npx \"**/*.{ts,tsx,md}\" --fix"
   },
   "devDependencies": {
