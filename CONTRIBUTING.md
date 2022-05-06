@@ -17,12 +17,12 @@ But a quick summerization:
 2. Be in `develop` branch
 3. Pull.
 4. Create a issue/feature of what you want to change
-5.5. Fork (If you are not a member of `Tolfix`)
-5. Create a branch with format of `feature/ISSUE_ID-NAME-OF-CHOICE` (ISSUE_ID is the id of the issue you created on `4`)
-6. Code
-7. Commit each change and pull/merge from develop
-8. Once done create a `PR`
-9. Once merged repeat for new features/ideas.
+5. Fork (If you are not a member of `Tolfix`)
+6. Create a branch with format of `feature/ISSUE_ID-NAME-OF-CHOICE` (ISSUE_ID is the id of the issue you created on `4`)
+7. Code
+8. Commit each change and pull/merge from develop
+9. Once done create a `PR`
+10. Once merged repeat for new features/ideas.
 
 ## Any contributions you make will be under the MIT Software License
 In short, when you submit code changes, your submissions are understood to be under the same [MIT License](http://choosealicense.com/licenses/mit/) that covers the project. Feel free to contact the maintainers if that's a concern.
