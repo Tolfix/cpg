@@ -2,7 +2,7 @@
 FROM node:16-alpine as INSTALLER
 
 # Caching
-RUN apk add --no-cache libc6-compat
+# RUN apk add --no-cache libc6-compat
 
 WORKDIR /app
 
