@@ -1,0 +1,22 @@
+import { IOrder } from "interfaces/Orders.interface";
+import { IRowData } from "../../interfaces/RowData";
+import DynamicTable from "../Tables/DynamicTable";
+
+export default function OrderTable<T extends Array<IOrder>>({
+    orders,
+    rowData,
+    count,
+    pages
+}: {
+    orders: T,
+    // ! fix later !
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    rowData: IRowData<any>[],
+    count: number,
+    pages: number,
+})
+{
+    return (
+        <DynamicTable count={count} pages={pages} path="/orders" data={orders} rowData={rowData} />
+    )
+}
