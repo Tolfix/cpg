@@ -12,7 +12,7 @@ export const JWT_Access_Token = process.env.JWT_ACCESS_TOKEN ?? "";
 export const d_Days = parseInt(process.env.D_DAYS ?? "30");
 export const Domain = process.env.DOMAIN ||= "localhost";
 export const Http_Schema = process.env.HTTP_SCHEMA ||= "http";
-export const PORT = process.env.PORT ||= "8080";
+export const PORT = process.env.PORT ||= "3001";
 export const Full_Domain = `${Http_Schema}://${Domain === "localhost" ? `localhost:${PORT}` : Domain}`;
 export const CLI_MODE = process.env.CLI_MODE === "true";
 
