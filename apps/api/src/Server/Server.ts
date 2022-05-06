@@ -5,7 +5,7 @@ import cors from "cors";
 import session from "express-session";
 import fileUpload from "express-fileupload";
 import { Default_Language, Express_Session_Secret, Full_Domain, PORT } from "../Config";
-import Logger from "../Lib/Logger";
+import Logger from "lib/Logger";
 import RouteHandler from "../Handlers/Route.handler";
 import { ICustomer } from "interfaces/Customer.interface";
 import { APIError } from "../Lib/Response";

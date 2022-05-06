@@ -7,7 +7,7 @@ import { idTransactions } from "../../../../Lib/Generator";
 import { APISuccess } from "../../../../Lib/Response";
 import sendEmailOnTransactionCreation from "../../../../Lib/Transaction/SendEmailOnCreation";
 import BaseModelAPI from "../../../../Models/BaseModelAPI";
-import { getDate } from "../../../../Lib/Time";
+import { getDate } from "lib/Time";
 
 const API = new BaseModelAPI<ITransactions>(idTransactions, TransactionsModel);
 

@@ -4,7 +4,7 @@ import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 // @ts-ignore
 import pdfdocs from "pdfkit-table";
 import { Company_Currency } from "../../../../Config";
-import { convertCurrency } from "../../../../Lib/Currencies";
+import { convertCurrency } from "lib/Currencies";
 
 export = TaxesRouter;
 class TaxesRouter

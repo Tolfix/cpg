@@ -11,11 +11,11 @@ import { IConfigurableOptions } from "interfaces/ConfigurableOptions.interface";
 import mainEvent from "../../Events/Main.event";
 import { IPromotionsCodes } from "interfaces/PromotionsCodes.interface";
 import { Document } from "mongoose";
-import Logger from "../Logger";
+import Logger from "lib/Logger";
 import PromotionCodeModel from "../../Database/Models/PromotionsCode.model";
 import { sanitizeMongoose } from "../Sanitize";
 import CustomerModel from "../../Database/Models/Customers/Customer.model";
-import { convertCurrency } from "../Currencies";
+import { convertCurrency } from "lib/Currencies";
 import nextRycleDate from "../../Lib/Dates/DateCycle";
 
 // Create a method that checks if the order next recycle is within 14 days

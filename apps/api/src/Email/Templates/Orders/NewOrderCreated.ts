@@ -7,7 +7,7 @@ import getFullName from "../../../Lib/Customers/getFullName";
 import getProductById from "../../../Lib/Products/getProductById";
 import UseStyles from "../General/UseStyles";
 import printOrderProductTable from "../Methods/OrderProducts.print";
-import { convertCurrency } from "../../../Lib/Currencies";
+import { convertCurrency } from "lib/Currencies";
 
 export default async (order: IOrder, customer: ICustomer) => await UseStyles(stripIndents`
 <div>

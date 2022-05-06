@@ -1,5 +1,5 @@
-import Logger from "../Lib/Logger";
-import {Plugins} from "../Config";
+import Logger from "lib/Logger";
+import { Plugins } from "../Config";
 import npm from "npm";
 import fs from "fs";
 import GetText from "../Translation/GetText";
@@ -20,10 +20,10 @@ export default async function PlguinHandler()
             Logger.plugin(GetText().plugins.txt_Plugin_Installed(plugin));
             // Logger.plugin(`Installed plugin ${plugin}`)
         }
-    
+
         // @ts-ignore
         await require(plugin)();
-    
+
         Logger.plugin(GetText().plugins.txt_Plugin_Loaded(plugin));
         // Logger.plugin(`Loaded plugin ${plugin}`);
     }
@@ -34,14 +34,14 @@ export function installPlugin(plugin: string)
 {
     return new Promise((resolve, reject) =>
     {
-        npm.load(function(err)
+        npm.load(function (err)
         {
             if (err)
             {
                 Logger.error(err);
                 return reject(err);
             }
-            npm.commands.install([plugin], function(err)
+            npm.commands.install([plugin], function (err)
             {
                 if (err)
                 {
@@ -51,7 +51,7 @@ export function installPlugin(plugin: string)
                 resolve(true);
             });
         });
-    }) 
+    })
 }
 
 export function isPluginInstalled(plugin: string)

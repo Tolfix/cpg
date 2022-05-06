@@ -2,7 +2,7 @@ import InvoiceModel from "../../Database/Models/Invoices.model";
 import { IInvoice } from "interfaces/Invoice.interface";
 import { Document } from "mongoose";
 import mainEvent from "../../Events/Main.event";
-import { getDate } from "../Time";
+import { getDate } from "lib/Time";
 
 export async function getInvoiceByIdAndMarkAsPaid(id: number | string): Promise<IInvoice & Document>
 {

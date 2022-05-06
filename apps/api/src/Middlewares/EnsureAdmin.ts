@@ -4,7 +4,7 @@ import { CacheAdmin, getAdminByUsername } from "../Cache/Admin.cache";
 import { APIError } from "../Lib/Response";
 import jwt from "jsonwebtoken";
 import { JWT_Access_Token } from "../Config";
-import Logger from "../Lib/Logger";
+import Logger from "lib/Logger";
 
 export default function EnsureAdmin(eR = false)
 {
@@ -17,22 +17,22 @@ export default function EnsureAdmin(eR = false)
             return eR ? Promise.resolve(false) : APIError({
                 text: "Missing 'authorization' in header"
             })(res);
-    
+
         let b64auth: string[];
         if (authHeader)
             b64auth = authHeader.split(' ');
-    
+
         if (tokenQuery)
             b64auth = ["query", tokenQuery as string];
-    
+
         // @ts-ignore
         if (!b64auth[0].toLocaleLowerCase().match(/basic|bearer|query/g))
             return eR ? Promise.resolve(false) : APIError("Missing 'basic' or 'bearer' in authorization")(res);
-            
+
         // @ts-ignore
         if (!b64auth[1])
             return eR ? Promise.resolve(false) : APIError("Missing 'buffer' in authorization")(res);
-        
+
         // @ts-ignore
         if (b64auth[0].toLocaleLowerCase() === "basic")
         {
@@ -60,30 +60,30 @@ export default function EnsureAdmin(eR = false)
                 !eR ? Logger.warning(`Authorization failed for admin with username: ${login}`) : null;
                 return eR ? Promise.resolve(false) : APIError("Unauthorized admin", 403)(res);
             }
-    
+
             return eR ? Promise.resolve(true) : next?.();
         }
-    
+
         // @ts-ignore
         if (b64auth[0].toLocaleLowerCase() === "bearer" || b64auth[0].toLocaleLowerCase() === "query")
         {
             // @ts-ignore
             const token = (Buffer.isBuffer(b64auth[1]) ? Buffer.from(b64auth[1], 'base64') : b64auth[1]).toString();
-            
+
             !eR ? Logger.warning(`Authoring admin with token: ${token}`) : null;
 
             try
             {
                 const payload = jwt.verify(token, JWT_Access_Token);
-                
+
                 if (!payload)
                 {
                     !eR ? Logger.warning(`Authorization failed for admin with token: ${token}`) : null;
                     return eR ? Promise.resolve(false) : APIError("Unauthorized admin", 403)(res);
                 }
-    
+
                 eR ? Logger.warning(`Authorized admin with token: ${token}`) : null;
-    
+
                 return eR ? Promise.resolve(true) : next?.();
             }
             catch (e)

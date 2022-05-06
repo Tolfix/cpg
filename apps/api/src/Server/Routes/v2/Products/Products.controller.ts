@@ -6,7 +6,7 @@ import { idProduct } from "../../../../Lib/Generator";
 import { APISuccess } from "../../../../Lib/Response";
 import BaseModelAPI from "../../../../Models/BaseModelAPI";
 import { TPaymentCurrency } from "interfaces/types/Currencies";
-import { currencyCodes } from "../../../../Lib/Currencies";
+import { currencyCodes } from "lib/Currencies";
 import { Company_Currency } from "../../../../Config";
 
 const API = new BaseModelAPI<IProduct>(idProduct, ProductModel);

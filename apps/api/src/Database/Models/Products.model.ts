@@ -2,11 +2,11 @@ import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../Config";
 import { IProduct } from "interfaces/Products.interface";
-import Logger from "../../Lib/Logger";
+import Logger from "lib/Logger";
 import GetText from "../../Translation/GetText";
 import { A_RecurringMethod } from "interfaces/types/PaymentMethod";
 import { A_PaymentTypes } from "interfaces/types/PaymentTypes";
-import { currencyCodes } from "../../Lib/Currencies";
+import { currencyCodes } from "lib/Currencies";
 
 
 const ProductSchema = new Schema

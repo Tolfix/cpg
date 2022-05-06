@@ -2,7 +2,7 @@ import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../Config";
 import { IImage } from "interfaces/Images.interface";
-import Logger from "../../Lib/Logger";
+import Logger from "lib/Logger";
 import GetText from "../../Translation/GetText";
 
 const ImageSchema = new Schema

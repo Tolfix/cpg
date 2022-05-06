@@ -4,7 +4,7 @@ import SchemaPoser from './SchemaPoser';
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { CacheAdmin, getAdminByUsername } from '../../Cache/Admin.cache';
-import Logger from '../../Lib/Logger';
+import Logger from 'lib/Logger';
 import { Application } from "express";
 import GetText from '../../Translation/GetText';
 
@@ -15,20 +15,20 @@ export default async (server: Application) =>
         schema: SchemaPoser,
         context: async ({ req }) =>
         {
-            
+
             const authHeader = req.headers['authorization'];
             if (!authHeader)
                 return {
                     isAuth: false,
                 }
-        
+
             const b64auth = (authHeader).split(' ');
-        
+
             if (!b64auth[0].toLocaleLowerCase().match(/basic|bearer/g))
                 return {
                     isAuth: false,
                 }
-        
+
             if (!b64auth[1])
                 return {
                     isAuth: false,
@@ -93,7 +93,7 @@ export default async (server: Application) =>
             }
         },
     });
-    
+
     await apolloServer.start();
     Logger.graphql(`${GetText().graphql.txt_Apollo_Starting} ${Full_Domain}/graphql`);
 

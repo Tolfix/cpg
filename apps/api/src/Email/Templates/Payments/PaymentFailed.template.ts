@@ -3,7 +3,7 @@ import { stripIndents } from "common-tags";
 import { Company_Email, CPG_Customer_Panel_Domain } from "../../../Config";
 import { ICustomer } from "interfaces/Customer.interface";
 import getFullName from "../../../Lib/Customers/getFullName";
-import { GetCurrencySymbol } from "../../../Lib/Currencies";
+import { GetCurrencySymbol } from "lib/Currencies";
 import UseStyles from "../General/UseStyles";
 import printInvoiceItemsTable from "../Methods/InvoiceItems.print";
 

@@ -1,5 +1,5 @@
 /* eslint-disable no-case-declarations */
-import Logger from "../../Lib/Logger";
+import Logger from "lib/Logger";
 import prompt from "prompt";
 import { CacheConfig } from "../../Cache/Configs.cache";
 import ConfigModel from "../../Database/Models/Configs.model";

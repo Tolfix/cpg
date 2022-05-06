@@ -1,4 +1,4 @@
-import Logger from "../Lib/Logger";
+import Logger from "lib/Logger";
 import chalk from "chalk";
 import clear from "clear";
 import figlet from "figlet";

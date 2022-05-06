@@ -1,5 +1,5 @@
 import { Resolver } from "graphql-compose";
-import Logger from "../../Lib/Logger";
+import Logger from "lib/Logger";
 import GetText from "../../Translation/GetText";
 
 export function resolverAdminAccess(resolvers: {
@@ -33,7 +33,7 @@ export function resolverUserAccess(resolvers: {
     {
         resolvers[k] = resolvers[k].wrapResolve(next => async rp =>
         {
-    
+
             Logger.graphql(GetText().graphql.txt_Resolver_Checking_User(k));
             // Logger.graphql(`Checking if user is user on ${k}`);
 
@@ -46,7 +46,7 @@ export function resolverUserAccess(resolvers: {
 
             if (!rp.context.isUser)
                 throw new Error("Not Authorized");
-    
+
             return next(rp)
         })
     })

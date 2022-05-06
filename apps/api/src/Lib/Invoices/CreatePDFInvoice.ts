@@ -3,28 +3,28 @@ import { IInvoice } from "interfaces/Invoice.interface";
 import easyinvoice from 'easyinvoice';
 import { createSwishQRCode } from "../../Payments/Swish";
 import
-    {
-        Company_Address,
-        Company_Name,
-        Company_Zip,
-        Company_City,
-        Company_Country,
-        Full_Domain,
-        Paypal_Client_Secret,
-        Stripe_PK_Public,
-        Stripe_PK_Public_Test,
-        Stripe_SK_Live,
-        Stripe_SK_Test,
-        Swish_Payee_Number,
-        PDF_Template_Url,
-        Company_Logo_Url,
-        Company_Tax_Registered,
-        Company_Currency
-    } from "../../Config";
+{
+    Company_Address,
+    Company_Name,
+    Company_Zip,
+    Company_City,
+    Company_Country,
+    Full_Domain,
+    Paypal_Client_Secret,
+    Stripe_PK_Public,
+    Stripe_PK_Public_Test,
+    Stripe_SK_Live,
+    Stripe_SK_Test,
+    Swish_Payee_Number,
+    PDF_Template_Url,
+    Company_Logo_Url,
+    Company_Tax_Registered,
+    Company_Currency
+} from "../../Config";
 import qrcode from "qrcode";
 import GetText from "../../Translation/GetText";
 import GetOCRNumber from "./GetOCRNumber";
-import { convertCurrency } from "../Currencies";
+import { convertCurrency } from "lib/Currencies";
 
 export default function createPDFInvoice(invoice: IInvoice): Promise<string>
 {

@@ -1,10 +1,10 @@
 import TransactionsModel from "../../Database/Models/Transactions.model";
-import Logger from "../../Lib/Logger";
+import Logger from "lib/Logger";
 import inquirer from 'inquirer';
 import CustomerModel from "../../Database/Models/Customers/Customer.model";
 import InvoiceModel from "../../Database/Models/Invoices.model";
 import { A_CC_Payments } from "interfaces/types/PaymentMethod";
-import { currencyCodes } from "../../Lib/Currencies";
+import { currencyCodes } from "lib/Currencies";
 import dateFormat from "date-and-time";
 import mainEvent from "../../Events/Main.event";
 

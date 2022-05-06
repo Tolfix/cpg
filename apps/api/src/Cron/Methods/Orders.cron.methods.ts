@@ -1,6 +1,6 @@
 import { Default_Language, d_Days } from "../../Config";
 import OrderModel from "../../Database/Models/Orders.model";
-import Logger from "../../Lib/Logger";
+import Logger from "lib/Logger";
 import GetText from "../../Translation/GetText";
 import dateFormat from "date-and-time";
 import nextRecycleDate from "../../Lib/Dates/DateCycle";
@@ -34,14 +34,14 @@ export function cron_createNewInvoicesFromOrders()
                     // Update order.dates.next_recycle
                     order.dates.next_recycle = dateFormat.format(nextRecycleDate(
                         dateFormat.parse(temptNextRecycle, "YYYY-MM-DD"), order.billing_cycle ?? "monthly")
-                    , "YYYY-MM-DD");
+                        , "YYYY-MM-DD");
                     // Create a new invoice
                     const newInvoice = await createInvoiceFromOrder(order);
                     newInvoices.push(newInvoice);
 
                     // Save the invoice in order.invoices array
                     order.invoices.push(newInvoice.id);
-                    
+
                     // mark order updated in dates
                     order.markModified("dates");
                     order.markModified("invoices");

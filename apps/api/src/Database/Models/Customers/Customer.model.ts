@@ -2,9 +2,9 @@ import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../../Config";
 import { ICustomer, ICustomerMethods } from "interfaces/Customer.interface";
-import Logger from "../../../Lib/Logger";
+import Logger from "lib/Logger";
 import GetText from "../../../Translation/GetText";
-import { currencyCodes } from "../../../Lib/Currencies";
+import { currencyCodes } from "lib/Currencies";
 
 const CustomerSchema = new Schema
     (

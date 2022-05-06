@@ -2,7 +2,7 @@ require("dotenv").config();
 // Bad method, will find a better way to do this later
 // TODO: Find right amount of max listeners
 process.setMaxListeners(0);
-import Logger from "./Lib/Logger";
+import Logger from "lib/Logger";
 import { DebugMode, GetVersion, CLI_MODE } from "./Config";
 
 Logger.info(!CLI_MODE ? `Starting CPG-API with version ${GetVersion()}` : `Starting CPG-API with version ${GetVersion()} in CLI mode only`);

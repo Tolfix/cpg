@@ -6,7 +6,7 @@ import getFullName from "../../../Lib/Customers/getFullName";
 import UseStyles from "../General/UseStyles";
 import printInvoiceItemsTable from "../Methods/InvoiceItems.print";
 import { createSwishQRCode } from "../../../Payments/Swish";
-import { convertCurrency } from "../../../Lib/Currencies";
+import { convertCurrency } from "lib/Currencies";
 import GetOCRNumber from "../../../Lib/Invoices/GetOCRNumber";
 
 export default async (invoice: IInvoice & IInvoiceMethods, customer: ICustomer) => await UseStyles(stripIndents`

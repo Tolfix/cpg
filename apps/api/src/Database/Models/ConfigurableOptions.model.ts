@@ -2,7 +2,7 @@ import mongoose, { model, Schema, Document } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../Config";
 import { IConfigurableOptions } from "interfaces/ConfigurableOptions.interface";
-import Logger from "../../Lib/Logger";
+import Logger from "lib/Logger";
 import GetText from "../../Translation/GetText";
 
 const ConfigurableOptionsSchema = new Schema

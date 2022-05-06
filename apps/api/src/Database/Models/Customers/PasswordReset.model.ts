@@ -1,33 +1,33 @@
 import { Document, model, Schema } from "mongoose"
-import Logger from "../../../Lib/Logger";
+import Logger from "lib/Logger";
 
 const PasswordResetSchema = new Schema
-(
-    {
+    (
+        {
 
-        token: {
-            type: String,
-            required: true,
+            token: {
+                type: String,
+                required: true,
+            },
+
+            email: {
+                type: String,
+                required: true,
+            },
+
+            used: {
+                type: Boolean,
+                default: false,
+            }
+
         },
-
-        email: {
-            type: String,
-            required: true,
-        },
-
-        used: {
-            type: Boolean,
-            default: false,
+        {
+            timestamps: true,
         }
-
-    },
-    {
-        timestamps: true,
-    }
-);
+    );
 
 // Log when creation
-PasswordResetSchema.post('save', function(doc: any)
+PasswordResetSchema.post('save', function (doc: any)
 {
     Logger.db(`Created password reset for ${doc.email}`);
 });

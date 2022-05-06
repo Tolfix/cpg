@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { APIError, APISuccess } from "../../../../Lib/Response";
 import CustomerModel from "../../../../Database/Models/Customers/Customer.model";
-import Logger from "../../../../Lib/Logger";
+import Logger from "lib/Logger";
 import EnsureAuth from "../../../../Middlewares/EnsureAuth";
 import crypto from "crypto";
 import PasswordResetModel, { IPasswordReset } from "../../../../Database/Models/Customers/PasswordReset.model";

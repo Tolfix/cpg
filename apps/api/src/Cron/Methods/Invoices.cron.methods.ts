@@ -1,20 +1,20 @@
 import { DebugMode, Default_Language, d_Days } from "../../Config";
 import InvoiceModel from "../../Database/Models/Invoices.model";
 import dateFormat from "date-and-time";
-import Logger from "../../Lib/Logger";
+import Logger from "lib/Logger";
 import GetText from "../../Translation/GetText";
 import CustomerModel from "../../Database/Models/Customers/Customer.model";
 import { sendInvoiceEmail, sendLateInvoiceEmail } from "../../Lib/Invoices/SendEmail";
 import { ChargeCustomer } from "../../Payments/Stripe";
 import { InvoiceLateReport, InvoiceNotifiedReport } from "../../Email/Reports/InvoiceReport";
 import mainEvent from "../../Events/Main.event";
-import { getDate } from "../../Lib/Time";
+import { getDate } from "lib/Time";
 
 export const getDates30DaysAgo = () =>
 {
     const dates = [];
     for (let i = 0; i < d_Days; i++)
-        dates.push(dateFormat.format(dateFormat.addDays(new Date(), -i-1), "YYYY-MM-DD"))
+        dates.push(dateFormat.format(dateFormat.addDays(new Date(), -i - 1), "YYYY-MM-DD"))
     return dates;
 };
 
@@ -22,7 +22,7 @@ export const getDatesAhead = (n: number = d_Days) =>
 {
     const dates = [];
     for (let i = 0; i < n; i++)
-        dates.push(dateFormat.format(dateFormat.addDays(new Date(), i+1), "YYYY-MM-DD"))
+        dates.push(dateFormat.format(dateFormat.addDays(new Date(), i + 1), "YYYY-MM-DD"))
     return dates;
 }
 
@@ -47,12 +47,12 @@ export function cron_notifyInvoices()
             const Customer = await CustomerModel.findOne({ id: invoice.customer_uid });
             if (!Customer)
                 continue;
-            
+
             Logger.info(GetText(Default_Language).cron.txt_Invoice_Found_Sending_Email(Customer));
             // Logger.info(`Sending email to ${Customer.personal.email}`);
-    
+
             await sendInvoiceEmail(invoice, Customer);
-    
+
         }
         if (invoices.length > 0)
             await InvoiceNotifiedReport(invoices);
@@ -84,23 +84,25 @@ export function cron_chargeStripePayment()
         for await (const invoice of invoices)
         {
             // Get customer
-            const Customer = await CustomerModel.findOne({ $or: [
-                { id: invoice.customer_uid },
-                { uid: invoice.customer_uid }
-            ] });
+            const Customer = await CustomerModel.findOne({
+                $or: [
+                    { id: invoice.customer_uid },
+                    { uid: invoice.customer_uid }
+                ]
+            });
 
             if (!Customer)
                 continue;
-            
+
             Logger.info(`Checking ${Customer.personal.email} for stripe payment.`, Logger.trace());
             // Check if credit card
             if (invoice.payment_method !== "credit_card")
                 continue;
-    
+
             // Check if customer got setup_intent enabled
             if (!(Customer?.extra?.stripe_setup_intent))
                 continue;
-    
+
             Logger.info(`Invoice ${invoice.id} is due in the next 2 weeks and has a setup_intent enabled.`);
 
             // Assuming they have a card
@@ -140,7 +142,7 @@ export function cron_notifyLateInvoicePaid()
         for await (const invoice of invoices)
         {
             // Get customer
-            const Customer = await CustomerModel.findOne({ id: invoice.customer_uid});
+            const Customer = await CustomerModel.findOne({ id: invoice.customer_uid });
             if (!Customer)
                 continue;
             await sendLateInvoiceEmail(invoice, Customer);

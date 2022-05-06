@@ -1,7 +1,7 @@
 import { SchemaComposer } from 'graphql-compose';
 import fs from "fs";
 import { HomeDir } from '../../Config';
-import Logger from '../../Lib/Logger';
+import Logger from 'lib/Logger';
 import GetText from '../../Translation/GetText';
 
 const schemaComposer = new SchemaComposer();
@@ -9,7 +9,7 @@ const schemaComposer = new SchemaComposer();
 // Go through each in ./Schemas/*.js files and add them to schemaComposer
 Logger.graphql(GetText().graphql.txt_Schemas_Loading);
 // Logger.graphql("Loading GraphQL schemas...");
-const schemaDir = HomeDir+"/build/Database/GraphQL/Schemas";
+const schemaDir = HomeDir + "/build/Database/GraphQL/Schemas";
 const files = fs.readdirSync(`${schemaDir}`).filter((f) => f.endsWith('schemas.js'));
 for (const f of files)
 {

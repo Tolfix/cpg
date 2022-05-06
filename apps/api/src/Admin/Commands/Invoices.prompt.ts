@@ -1,15 +1,15 @@
 /* eslint-disable no-case-declarations */
 import InvoiceModel from "../../Database/Models/Invoices.model";
-import Logger from "../../Lib/Logger";
+import Logger from "lib/Logger";
 import inquirer from 'inquirer';
 import TransactionsModel from "../../Database/Models/Transactions.model";
 import { Company_Currency } from "../../Config";
-import { getDate } from "../../Lib/Time";
+import { getDate } from "lib/Time";
 import { idInvoice, idTransactions } from "../../Lib/Generator";
 import sendEmailOnTransactionCreation from "../../Lib/Transaction/SendEmailOnCreation";
 import { getDates30DaysAgo } from "../../Cron/Methods/Invoices.cron.methods";
 import { A_CC_Payments } from "interfaces/types/PaymentMethod";
-import { currencyCodes } from "../../Lib/Currencies";
+import { currencyCodes } from "lib/Currencies";
 import CustomerModel from "../../Database/Models/Customers/Customer.model";
 import mainEvent from "../../Events/Main.event";
 import { sendInvoiceEmail } from "../../Lib/Invoices/SendEmail";
