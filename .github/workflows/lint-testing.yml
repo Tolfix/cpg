@@ -3,13 +3,13 @@ name: Lint Testing
 on:
   push:
     paths:
-      - 'src/**'
+      - 'apps/**'
     branches:
       - master
       - dev
   pull_request:
     paths:
-      - 'src/**'
+      - 'apps/**'
     branches:
       - master
       - dev
@@ -31,8 +31,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin --force
-      # - name: Install packages
-      #   run: npm install --force
+      - name: Install packages
+        run: npm install --force
+      - name: Get turbo
+        run: npm i -g turbo
       - name: lint test
         run: npm run lint
