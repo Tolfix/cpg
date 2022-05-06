@@ -11,10 +11,9 @@ RUN apk update && \
     apk add git
 
 RUN npm install -g @types/node \
-    && npm install -g typescript@4.3.5
+    && npm install -g typescript@4.3.5 
 
-COPY ./package.json ./
-COPY ./package-lock.json ./
+COPY . .
 
 RUN npm install --force
 ##########################
@@ -24,13 +23,11 @@ FROM node:16-alpine as BUILDER
 
 WORKDIR /app
 
-COPY . .
-
-COPY --from=INSTALLER /app/node_modules ./node_modules
-COPY --from=INSTALLER /app/package.json ./package.json
-# COPY --from=INSTALLER /app/package-lock.json ./package-lock.json
-
-RUN npm run build
+RUN npm i -g turbo
+COPY --from=INSTALLER . .
+# Print our directory
+RUN ls -la
+RUN turbo run build --scope=cpg-api
 ##########################
 
 # APP
@@ -57,7 +54,7 @@ ENV DOMAIN ""
 ENV HTTP_SCHEMA ""
 
 ENV SESSION_SECRET ""
-ENV PORT "8080"
+ENV PORT "3001"
 
 ENV OSTICKET_URL ""
 ENV OSTICKET_API_KEY ""
@@ -77,6 +74,6 @@ ENV PLUGINS "[]"
 
 ENV WEBHOOK_SECRET ""
 
-EXPOSE 8080
+EXPOSE 3001
 
 CMD [ "node", "./build/Main.js" ]
