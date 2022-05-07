@@ -3,6 +3,15 @@ import { useRouter } from "next/router";
 import { IRowData } from "../../interfaces/RowData";
 import Loading from "../Loading";
 import useSortableData from "./Sortable";
+import
+{
+    Table,
+    Thead,
+    Tbody,
+    Tr,
+    Th,
+    TableContainer,
+} from '@chakra-ui/react'
 
 export default function DynamicTable<T>(
     {
@@ -40,7 +49,7 @@ export default function DynamicTable<T>(
 
     const changeNewLimit = (newLimit: number) =>
         window.location.href = `${path}?skip=${skip}&limit=${newLimit}`;
-    
+
     const { items, requestSort, sortConfig } = useSortableData(data);
 
     const isSelected = (name: string) =>
@@ -69,9 +78,9 @@ export default function DynamicTable<T>(
                     {/* Select for different categories */}
                     <select className='rounded py-0.5 bg-transparent border border-indigo-300 focus:border-indigo-400' name="searchOption" id="">
                         {rowData.map((row) =>
-                            (!row.extra && <>
-                                <option key={row.id} value={row.queryFormat()} className='uppercase'>{row.name}</option>
-                            </>)
+                        (!row.extra && <>
+                            <option key={row.id} value={row.queryFormat()} className='uppercase'>{row.name}</option>
+                        </>)
                         )}
                     </select>
                     {/* Input for what to search */}
@@ -87,63 +96,64 @@ export default function DynamicTable<T>(
             </div>
             <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="inline-block py-2 min-w-full sm:px-6 lg:px-8">
-                    <div className="overflow-hidden shadow-md rounded-bl-none rounded-lg">
-                        <table className="min-w-full">
-                            <thead className="bg-gray-50 dark:bg-gray-700">
-                            <tr>
-                                {rowData.map(({id, name, sortable, extra}) => (
-                                    (extra ? 
-                                        (
-                                            <>
-                                            
-                                                <th scope="col" className={`relative py-3 px-6`}>
-                                                    <span className="sr-only">
-                                                        {name}
-                                                    </span>
-                                                </th>
+                    <TableContainer>
+                        <Table size="md" colorScheme='purple'>
+                            <Thead>
+                                <Tr>
+                                    {rowData.map(({ id, name, sortable, extra }) => (
+                                        (extra ?
+                                            (
+                                                <>
 
-                                            </>
-                                        )
-                                        :
-                                        (
-                                            <>
-                                                <th
-                                                    key={id}
-                                                    className={`
+                                                    <Th scope="col" className={`relative py-3 px-6`}>
+                                                        <span className="sr-only">
+                                                            {name}
+                                                        </span>
+                                                    </Th>
+
+                                                </>
+                                            )
+                                            :
+                                            (
+                                                <>
+                                                    <Th
+                                                        key={id}
+                                                        className={`
                                                         ${sortable ? 'cursor-pointer' : ''} 
                                                         border-b border-gray-200 dark:border-gray-600 text-left 
                                                         py-4 px-6 font-medium text-xs 
                                                         text-gray-500 uppercase tracking-wider
                                                         ${isSelected(id) === "ascending" ? `bg-gray-200` : ``}
                                                     `}
-                                                    onClick={() => sortable && requestSort(id)}
-                                                >
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => requestSort(id)}
+                                                        onClick={() => sortable && requestSort(id)}
                                                     >
-                                                        {name}
-                                                    </button>
-                                                </th>
-                                            </>
-                                        ) 
-                                    )
-                                ))}
-                            </tr>
-                            </thead>
-                            <tbody>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => requestSort(id)}
+                                                        >
+                                                            {name}
+                                                        </button>
+                                                    </Th>
+                                                </>
+                                            )
+                                        )
+                                    ))}
+                                </Tr>
+                            </Thead>
+                            <Tbody>
                                 {items.map((data) => (
-                                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        {rowData.map(({id, printedPreview}) => (
-                                            <td key={id} className="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                    <Tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        {rowData.map(({ id, printedPreview }) => (
+                                            <Th key={id} className="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                 {printedPreview(data)}
-                                            </td>
+                                            </Th>
                                         ))}
-                                    </tr>                                       
+                                    </Tr>
                                 ))}
-                            </tbody>
-                        </table>
-                    </div>
+                            </Tbody>
+                        </Table>
+                    </TableContainer>
+
                     <div>
                         {/* Pagination */}
                         <div className="">
@@ -171,11 +181,11 @@ export default function DynamicTable<T>(
                                                 "
                                                 onClick={() => changeNewPage(currentPage - 1)}
                                             >
-                                                Back                          
-                                            </button>  
+                                                Back
+                                            </button>
                                         </>
                                     )}
-                                     
+
                                     <span>
                                         Showing
                                         <span className="px-1 text-xs font-medium leading-4 bg-gray-100 dark:bg-gray-800 rounded-full">
@@ -201,10 +211,10 @@ export default function DynamicTable<T>(
                                                 "
                                                 onClick={() => changeNewPage(currentPage + 1)}
                                             >
-                                                Next                                            
+                                                Next
                                             </button>
                                         </>
-                                    )}                                       
+                                    )}
                                 </div>
                             </div>
                         </div>
