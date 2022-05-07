@@ -22,6 +22,7 @@ import
     MenuDivider,
     MenuItem,
     MenuList,
+    Image
 } from '@chakra-ui/react';
 import
 {
@@ -73,6 +74,7 @@ function Navigation({
     return (
         <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
             <SidebarContent
+                company={company}
                 onClose={() => onClose}
                 display={{ base: 'none', md: 'block' }}
             />
@@ -85,7 +87,7 @@ function Navigation({
                 onOverlayClick={onClose}
                 size="full">
                 <DrawerContent>
-                    <SidebarContent onClose={onClose} />
+                    <SidebarContent company={company} onClose={onClose} />
                 </DrawerContent>
             </Drawer>
             {/* mobilenav */}
@@ -100,9 +102,10 @@ function Navigation({
 interface SidebarProps extends BoxProps
 {
     onClose: () => void;
+    company: ICompanyData
 }
 
-const SidebarContent = ({ onClose, ...rest }: SidebarProps) =>
+const SidebarContent = ({ onClose, company, ...rest }: SidebarProps) =>
 {
     const router = useRouter();
     return (
@@ -114,10 +117,15 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) =>
             w={{ base: 'full', md: 60 }}
             pos="fixed"
             h="full"
-            {...rest}>
+            {...rest}
+        >
             <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
+                <Image
+                    boxSize='75px'
+                    src={company.COMPANY_LOGO}
+                />
                 <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-                    CPG Portal
+                    {company.COMPANY_NAME}
                 </Text>
                 <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
             </Flex>
@@ -216,13 +224,11 @@ const MobileNav = ({ onOpen, profile, company, ...rest }: MobileProps) =>
                 icon={<FiMenu />}
             />
 
-            <Text
+            <Image
                 display={{ base: 'flex', md: 'none' }}
-                fontSize="2xl"
-                fontFamily="monospace"
-                fontWeight="bold">
-                {company.COMPANY_NAME}
-            </Text>
+                boxSize='100px'
+                src={company.COMPANY_LOGO}
+            />
 
             <HStack spacing={{ base: '0', md: '6' }}>
                 <IconButton

@@ -1,26 +1,18 @@
 import { signIn } from "next-auth/react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Box, Button, FormControl, FormLabel, Heading, HStack, Input, InputGroup, Text, VStack } from '@chakra-ui/react';
 import { InputRightElement } from "@chakra-ui/input";
 import { ICompanyData } from "../interfaces/CompanyData";
-import getCompanyData from "../lib/Company.fetch";
-export default () =>
+export default ({
+    company
+}: {
+    company: ICompanyData
+}) =>
 {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const [Error, setError] = useState(false);
-
-    const [company, setCompany] = useState<ICompanyData>({
-        COMPANY_LOGO: '',
-        COMPANY_NAME: '',
-        CPG_DOMAIN: '',
-    });
-
-    useEffect(() =>
-    {
-        getCompanyData().then(company => setCompany(company));
-    }, [getCompanyData, company, setCompany]);
 
     const login = async (e: { preventDefault: () => void; target: any; }) =>
     {
@@ -61,10 +53,17 @@ export default () =>
 
     return (
         <>
+            {/* center middle div */}
+
+            <div className="flex flex-wrap justify-center">
+                <img src={company.COMPANY_LOGO} alt={company.COMPANY_NAME} className="
+                w-72
+                " />
+            </div>
             <Box
                 w={['full', 'md']}
                 p={[8, 10]}
-                mt={[20, '10vh']}
+                mt={[20, '1vh']}
                 mx='auto'
                 border={['none', '1px']}
                 borderColor={['', 'gray.300']}
