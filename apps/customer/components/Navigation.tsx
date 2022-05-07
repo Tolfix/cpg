@@ -117,8 +117,13 @@ const SidebarContent = ({ onClose, company, ...rest }: SidebarProps) =>
             w={{ base: 'full', md: 60 }}
             pos="fixed"
             h="full"
-            {...rest}>
+            {...rest}
+        >
             <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
+                <Image
+                    boxSize='75px'
+                    src={company.COMPANY_LOGO}
+                />
                 <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
                     {company.COMPANY_NAME}
                 </Text>
