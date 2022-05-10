@@ -1,0 +1,12 @@
+node_modules
+build
+logs
+.github
+.env.example
+.env
+.gitignore
+Dockerfile
+package.json
+package.lock.json
+README.md
+tsconfig.json
