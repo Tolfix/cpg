@@ -45,7 +45,6 @@ export const EditOrders = (props: any) =>
                     { id: "fruad", name: "fruad" },
                     { id: "cancelled", name: "cancelled" },
                 ]} />
-                <NumberInput min={0} required={false} label="Price override" source="price_override" />
             </FormTab>
             <FormTab label="Payments">
                 <SelectInput required={true} source="payment_method" choices={[
@@ -72,9 +71,8 @@ export const EditOrders = (props: any) =>
             </FormTab>
             <FormTab label="Invoices">
 
-                <ReferenceArrayInput source="invoices"
-                    reference="invoices">
-                    <SelectArrayInput optionText="id" />
+                <ReferenceArrayInput source="invoices" reference="invoices">
+                    <SelectInput optionText={(record) => record.id.toString()} />
                 </ReferenceArrayInput>
 
             </FormTab>

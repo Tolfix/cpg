@@ -18,6 +18,7 @@ export const CustomerList = (props: any) => (
             <TextField label="City" source="billing.city" />
             <TextField label="State" source="billing.state" />
             <TextField label="Postcode" source="billing.postcode" />
+            <TextField label="Currency" source="currency" />
             <EditButton />
         </Datagrid>
     </List>

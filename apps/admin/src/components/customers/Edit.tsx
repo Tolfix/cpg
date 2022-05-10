@@ -1,4 +1,5 @@
-import { Edit, FormTab, PasswordInput, TabbedForm, TextInput } from "react-admin";
+import { currencyCodes } from "lib/Currencies";
+import { Edit, FormTab, PasswordInput, SelectInput, TabbedForm, TextInput } from "react-admin";
 
 export const EditCustomer = (props: any) =>
 (
@@ -20,6 +21,10 @@ export const EditCustomer = (props: any) =>
                 <TextInput label="City" required={true} source="billing.city" />
                 <TextInput label="State" required={true} source="billing.state" />
                 <TextInput label="Postcode" required={true} source="billing.postcode" />
+                <SelectInput required={true} source="currency" choices={currencyCodes.map(e =>
+                {
+                    return { id: e, name: e };
+                })} />
             </FormTab>
         </TabbedForm>
     </Edit>

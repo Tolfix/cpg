@@ -79,7 +79,7 @@ export const CreateInvoices = (props: any) =>
                 </ArrayInput>
 
                 <ReferenceArrayInput source="transactions" reference="transactions">
-                    <SelectArrayInput optionText="uid" />
+                    <SelectInput optionText={(record) => record.id.toString()} />
                 </ReferenceArrayInput>
 
             </FormTab>

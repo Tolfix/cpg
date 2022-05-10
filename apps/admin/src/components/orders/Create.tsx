@@ -1,4 +1,5 @@
-import { 
+import
+{
     ArrayInput,
     Create, FormTab,
     NumberInput,
@@ -13,38 +14,37 @@ export const CreateOrders = (props: any) =>
         <TabbedForm>
             <FormTab label="General">
                 <ReferenceArrayInput source="customer_uid" reference="customers">
-                        <SelectInput
-                            source="customers"
-                            label="Customers"
-                            required={true}
-                            allowEmpty={false}
-                            optionText={
-                                (record: { personal: {first_name: any; last_name: any;} }) => 
+                    <SelectInput
+                        source="customers"
+                        label="Customers"
+                        required={true}
+                        allowEmpty={false}
+                        optionText={
+                            (record: { personal: { first_name: any; last_name: any; } }) =>
                                 `${record.personal.first_name} ${record.personal.last_name}`}
-                        />
+                    />
                 </ReferenceArrayInput>
                 <ArrayInput source="products">
                     <SimpleFormIterator>
-                            <ReferenceArrayInput source="product_id" reference="products">
-                                <SelectInput
-                                    source="products"
-                                    label="Products"
-                                    required={true}
-                                    allowEmpty={false}
-                                    optionText="name"
-                                />
+                        <ReferenceArrayInput source="product_id" reference="products">
+                            <SelectInput
+                                source="products"
+                                label="Products"
+                                required={true}
+                                allowEmpty={false}
+                                optionText="name"
+                            />
                         </ReferenceArrayInput>
                         <NumberInput label="Quantity" defaultValue={1} source="quantity" />
                     </SimpleFormIterator>
                 </ArrayInput>
-                
+
                 <SelectInput required={true} source="order_status" choices={[
                     { id: "active", name: "active" },
                     { id: "pending", name: "pending" },
                     { id: "fruad", name: "fruad" },
                     { id: "cancelled", name: "cancelled" },
                 ]} />
-                <NumberInput min={0} required={false} label="Price override" source="price_override" />
             </FormTab>
             <FormTab label="Payments">
                 <SelectInput required={true} source="payment_method" choices={[
@@ -71,9 +71,9 @@ export const CreateOrders = (props: any) =>
             </FormTab>
             <FormTab label="Invoices">
 
-            <ReferenceArrayInput source="invoices" reference="invoices">
-                    <SelectArrayInput optionText="uid" />
-            </ReferenceArrayInput>
+                <ReferenceArrayInput source="invoices" reference="invoices">
+                    <SelectInput optionText={(record) => record.id.toString()} />
+                </ReferenceArrayInput>
 
             </FormTab>
         </TabbedForm>

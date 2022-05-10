@@ -1,4 +1,4 @@
-import { List, Datagrid, TextField, EditButton, ReferenceField, FunctionField, DateField, ReferenceArrayField, SingleFieldList, ChipField, Pagination } from 'react-admin';
+import { List, Datagrid, TextField, EditButton, ReferenceField, FunctionField, DateField, ReferenceArrayField, SingleFieldList, ChipField, Pagination, ArrayField } from 'react-admin';
 
 const PostPagination = (props: JSX.IntrinsicAttributes) => <Pagination rowsPerPageOptions={[10, 25, 50, 100]} {...props} />;
 
@@ -14,20 +14,23 @@ export const OrderList = (props: any) => (
                     source="personal.first_name"
                 />
             </ReferenceField>
-            <ReferenceArrayField
+            <ArrayField
                 label="Product"
-                reference="products"
-                source="product_id"
+                source="products"
             >
-                <SingleFieldList>
-                    <ChipField source="id" />
-                </SingleFieldList>
-            </ReferenceArrayField>
+                <Datagrid>
+                    <ReferenceField
+                        source="product_id"
+                        reference="products"
+                    >
+                        <ChipField source="name" />
+                    </ReferenceField>
+                </Datagrid>
+            </ArrayField>
             <TextField label="Method" source="payment_method" />
             <TextField label="Status" source="order_status" />
             <TextField label="Billing Type" source="billing_type" />
             <TextField label="Cycle" source="billing_cycle" />
-            <TextField label="Price Override" source="price_override" />
             <DateField label="Last" source="dates.last_recycle" />
             <DateField label="Next" source="dates.next_recycle" />
             <ReferenceArrayField
