@@ -10,7 +10,6 @@ export function APISuccess(msg: any, status = 200)
         const method = res.req.method;
         Logger.api(`${ip} ${method}:(${status}) ${url}`);
         res.setHeader('Access-Control-Expose-Headers', 'X-Total-Count')
-        res.setHeader("X-Total-Count", msg?.length ?? 0)
         res.status(status).json(msg);
     }
 }
@@ -24,7 +23,6 @@ export function APIError(msg: any, status = 400)
         const method = res.req.method;
         Logger.api(`${ip} ${method}:(${status}) ${url}`);
         res.setHeader('Access-Control-Expose-Headers', 'X-Total-Count')
-        res.setHeader("X-Total-Count", msg?.length ?? 0)
         res.status(status).json(msg);
     }
 }
