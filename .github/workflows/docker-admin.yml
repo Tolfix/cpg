@@ -5,6 +5,7 @@ on:
     paths:
       - 'apps/admin/src/**'
       - 'apps/admin/public/**'
+      - 'apps/admin/package.json'
       - 'Dockerfile_ADMIN'
     branches:
       - master
