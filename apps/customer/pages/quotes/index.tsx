@@ -169,20 +169,19 @@ export default (
             },
             printedPreview: (quote: IQuotes) =>
             {
+                if (quote.accepted || quote.declined)
+                    return <></>
                 return (
                     <>
-                        {(!quote.accepted && !quote.declined) ??
-                            <>
-                                <td className="text-sm font-medium text-right whitespace-nowrap">
-                                    <button onClick={() =>
-                                    {
-                                        setCurrentQuote(quote);
-                                        setShowModal(true);
-                                    }} className='text-indigo-600 hover:text-indigo-900'>
-                                        Decline & Accept
-                                    </button>
-                                </td>
-                            </>}
+                        <td className="text-sm font-medium text-right whitespace-nowrap">
+                            <button onClick={() =>
+                            {
+                                setCurrentQuote(quote);
+                                setShowModal(true);
+                            }} className='text-indigo-600 hover:text-indigo-900'>
+                                Decline & Accept
+                            </button>
+                        </td>
                     </>
                 )
             }
@@ -202,7 +201,7 @@ export default (
                     <Modal
                         show={showModal}
                         onClose={() => setShowModal(false)}
-                        title="Accepept & Decline Quote"
+                        title="Accept or Decline Quote"
                     >
                         Do you accept this quote?
                         <div className="flex justify-center mt-4">
