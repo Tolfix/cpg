@@ -15,7 +15,7 @@ RUN npm install -g @types/node \
 
 COPY . .
 
-RUN npm install -w=cpg-admin --force
+RUN npm install --force
 ##########################
 
 # BUILDER
@@ -44,7 +44,8 @@ COPY --from=BUILDER /app/packages ./packages
 COPY --from=BUILDER /app/package.json ./package.json
 
 ENV DEBIAN_FRONTEND=noninteractive
-
+ENV DISABLE_ESLINT_PLUGIN=true
+ENV ESLINT_NO_DEV_ERRORS=true
 LABEL author="Tolfix" maintainer="support@tolfix.com"
 
 EXPOSE 3000

@@ -1,7 +1,7 @@
-import { model, Schema } from "mongoose"
+import mongoose, { model } from "mongoose"
 import { IDConfigs } from "interfaces/Admin/Configs.interface";
 
-const ConfigsSchema = new Schema
+const ConfigsSchema = new mongoose.Schema
     (
         {
 
