@@ -46,6 +46,8 @@ COPY --from=BUILDER /app/package.json ./package.json
 ENV DEBIAN_FRONTEND=noninteractive
 ENV DISABLE_ESLINT_PLUGIN=true
 ENV ESLINT_NO_DEV_ERRORS=true
+ENV SKIP_PREFLIGHT_CHECK=true
+
 LABEL author="Tolfix" maintainer="support@tolfix.com"
 
 EXPOSE 3000
