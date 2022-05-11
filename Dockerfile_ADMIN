@@ -38,6 +38,7 @@ RUN apk update && \
     apk add git
 
 COPY --from=BUILDER /app/apps/admin/src ./src
+COPY --from=BUILDER /app/apps/admin/public ./public
 COPY --from=BUILDER /app/node_modules ./node_modules
 COPY --from=BUILDER /app/packages ./packages
 COPY --from=BUILDER /app/package.json ./package.json
