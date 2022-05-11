@@ -3,7 +3,8 @@ import { getSession } from "next-auth/react";
 import { ParsedUrlQuery } from "querystring";
 
 export async function mustAuth(
-    yes: boolean, 
+
+    yes: boolean,
     context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>
 )
 {

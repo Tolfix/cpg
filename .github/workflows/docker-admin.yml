@@ -1,0 +1,30 @@
+name: Docker Image - Admin
+
+on:
+  push:
+    paths:
+      - 'apps/admin/src/**'
+      - 'apps/admin/public/**'
+      - 'Dockerfile_ADMIN'
+    branches:
+      - master
+
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Docker login
+        env:
+          DOCKER_USER: ${{secrets.DOCKER_USERNAME}}
+          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile_ADMIN --tag tolfixorg/cpg-admin:latest
+      - name: Docker push
+        run: docker push tolfixorg/cpg-admin:latest

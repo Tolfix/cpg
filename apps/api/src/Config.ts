@@ -57,7 +57,7 @@ export const Company_Name = async (): Promise<IConfigs["company"]["name"]> =>
 {
     const configs = await ConfigModel.findOne();
     if (!configs) throw new Error("No configs found");
-    return (configs.company?.name === "" ? undefined : configs.company?.name) ?? process.env.COMPANY_NAME ?? "";
+    return (configs.company?.name === "" ? undefined : configs.company?.name) ?? process.env.COMPANY_NAME ?? "CPG";
 };
 export const Company_Address = async (): Promise<IConfigs["company"]["address"]> =>
 {
@@ -118,7 +118,7 @@ export const Company_Logo_Url = async (): Promise<IConfigs["company"]["logo_url"
 {
     const configs = await ConfigModel.findOne();
     if (!configs) throw new Error("No configs found");
-    return (configs.company?.logo_url === "" ? undefined : configs.company?.logo_url) ?? process.env.COMPANY_LOGO_URL ?? "";
+    return (configs.company?.logo_url === "" ? undefined : configs.company?.logo_url) ?? process.env.COMPANY_LOGO_URL ?? "https://cdn.tolfix.com/cpg/logo.png";
 }
 export const Company_Website = async (): Promise<IConfigs["company"]["website"]> =>
 {

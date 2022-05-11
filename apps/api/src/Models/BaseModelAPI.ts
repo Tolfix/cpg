@@ -26,10 +26,12 @@ export default class BaseModelAPI<IModel extends { uid: string }>
     {
         if (!uid || uid === "undefined")
             return Promise.resolve([]);
-        return this.iModel.findOne({ $or: [
-            { id: uid },
-            { uid: uid }
-        ]}).then((result: any) =>
+        return this.iModel.findOne({
+            $or: [
+                { id: uid },
+                { uid: uid }
+            ]
+        }).then((result: any) =>
         {
             if (!result)
                 return;
@@ -57,7 +59,8 @@ export default class BaseModelAPI<IModel extends { uid: string }>
                 });
 
                 res.setHeader("X-Total-Pages", result.totalPages);
-                res.setHeader("X-Total", result.totalCount);
+                res.setHeader("X-Total", result.totalInAll);
+                res.setHeader("X-Total-Count", result.totalCount);
                 if (query["include_x"])
                     return resolve({
                         // @ts-ignore
@@ -77,10 +80,12 @@ export default class BaseModelAPI<IModel extends { uid: string }>
     {
         if (!uid || uid === "undefined")
             return Promise.reject("No uid provided");
-        return this.iModel.findOneAndUpdate({ $or: [
-            { id: uid },
-            { uid: uid }
-        ]}, data);
+        return this.iModel.findOneAndUpdate({
+            $or: [
+                { id: uid },
+                { uid: uid }
+            ]
+        }, data);
     }
 
     public removeByUid(uid: IModel["uid"])
@@ -89,10 +94,12 @@ export default class BaseModelAPI<IModel extends { uid: string }>
             return Promise.resolve([]);
         return new Promise((resolve, reject) =>
         {
-            this.iModel.deleteMany({ $or: [
-                { id: uid },
-                { uid: uid }
-            ]}, (err: any) =>
+            this.iModel.deleteMany({
+                $or: [
+                    { id: uid },
+                    { uid: uid }
+                ]
+            }, (err: any) =>
             {
                 if (err)
                 {

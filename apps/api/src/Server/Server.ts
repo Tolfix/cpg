@@ -52,7 +52,7 @@ server.use((req, res, next) =>
 {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   express.json({
-    verify: (req, res, buf, encoding) =>
+    verify: (req, res, buf) =>
     {
       // Check if content type is application/json
       // And method is POST|PUT|PATCH, since we don't care to look at GET requests

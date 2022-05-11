@@ -12,7 +12,7 @@ We use github to host code, to track issues and feature requests, as well as acc
 
 ## Git workflow
 CPG uses this `Git Feature Branch Workflow` workflow to ensure we have a standard, click [here](https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow) to read more.
-But a quick summerization:
+But a quick summarization:
 1. Fetch.
 2. Be in `develop` branch
 3. Pull.

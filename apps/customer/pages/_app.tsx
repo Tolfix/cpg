@@ -1,8 +1,8 @@
 import '../styles/globals.css';
-import type { AppProps } from 'next/app'
+import type { AppContext, AppProps } from 'next/app'
 import { Layout } from '../components/Layout'
 import { SessionProvider } from 'next-auth/react'
-import { ChakraProvider, ColorModeProvider } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import getCompanyData from '../lib/Company.fetch';
 import App from 'next/app';
 
@@ -21,11 +21,11 @@ function MyApp({ Component, pageProps }: AppProps)
   )
 }
 
-MyApp.getInitialProps = async (context) =>
+MyApp.getInitialProps = async (context: AppContext) =>
 {
   const { req } = context.ctx;
-  const ishttps = req.headers['x-forwarded-proto'] === 'https';
-  const company = await getCompanyData(`${ishttps ? 'https' : 'http'}://${req.headers.host}/api/info/company`);
+  const ishttps = req?.headers['x-forwarded-proto'] === 'https';
+  const company = await getCompanyData(`${ishttps ? 'https' : 'http'}://${req?.headers.host}/api/info/company`);
   const appProps = await App.getInitialProps(context);
   appProps.pageProps.company = company;
   return {
