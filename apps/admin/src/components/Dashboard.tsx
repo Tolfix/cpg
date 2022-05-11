@@ -32,6 +32,5 @@ export default () =>
             <CardHeader title="Welcome to the administration" />
             <CardContent>Lorem ipsum sic dolor amet...</CardContent>
         </Card>
-
     )
 }
