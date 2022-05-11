@@ -28,7 +28,7 @@ export default async (quote: IQuotes, customer: ICustomer) => await UseStyles(st
         <strong>
             Total:
         </strong>
-        ${quote.items.reduce((total, item) => total + (item.price * item.quantity), 0) + ((quote.tax_rate / 100) * quote.items.reduce((total, item) => total + (item.price * item.quantity), 0))}
+        ${quote.items.reduce((total, item) => total + (item.price * item.quantity), 0) + ((quote.tax_rate / 100) * quote.items.reduce((total, item) => total + (item.price * item.quantity), 0))} ${quote.currency}
     </p>
     ${CPG_Customer_Panel_Domain ? `
     <p>

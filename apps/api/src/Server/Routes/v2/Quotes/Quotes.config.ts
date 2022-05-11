@@ -43,6 +43,7 @@ class QuotesRouter
 
         this.router.get("/:uid/view", EnsureAuth(), async (req, res) =>
         {
+            // @ts-ignore
             const uid = req.params.uid;
             const [quote, e_quote] = await AW(await QuotesModel.findOne({
                 $or: [
@@ -75,6 +76,7 @@ class QuotesRouter
 
         this.router.post("/:uid/accept", EnsureAuth(), async (req, res) =>
         {
+            // @ts-ignore
             const uid = req.params.uid;
             const [quote, e_quote] = await AW(await QuotesModel.findOne({
                 $or: [
@@ -107,7 +109,7 @@ class QuotesRouter
                 receiver: customer.personal.email,
                 subject: `Quote accepted | #${quote.id}`,
                 body: {
-                    body: QuoteAcceptedTemplate(quote, customer),
+                    body: await QuoteAcceptedTemplate(quote, customer),
                 }
             });
 
@@ -117,7 +119,7 @@ class QuotesRouter
                 return APIError("Failed to convert quote to invoice")(res);
 
             // Send email to customer, no need to await since if it fails it will run cron either way
-            sendInvoiceEmail(invoice, customer);
+            await sendInvoiceEmail(invoice, customer);
 
             return APISuccess(invoice)(res);
         });
