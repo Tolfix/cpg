@@ -26,7 +26,7 @@ COPY --from=INSTALLER . .
 
 WORKDIR /app
 
-RUN turbo run build --scope=cpg-api
+RUN tsc --project apps/api/tsconfig.json
 ##########################
 
 # APP
