@@ -34,7 +34,7 @@ function insert(req: Request, res: Response)
                 if (invoice)
                 {
                     // Update invoice
-                    invoice.transactions.push(result.uid);
+                    invoice.transactions.push(result.id);
                     invoice.markModified("transactions");
                     // Check if they wanted to mark it as paid as well
                     if (req.body.markInvoiceAsPaid)

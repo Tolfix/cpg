@@ -52,7 +52,7 @@ export interface IInvoice
     amount: number;
     fees?: number;
     items: Array<IInvoices_Items>;
-    transactions: Array<ITransactions["uid"]>;
+    transactions: Array<ITransactions["id"]>;
     payment_method: keyof IPayments;
     status: extendedOrderStatus;
     tax_rate: number;
