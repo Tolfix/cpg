@@ -1,9 +1,8 @@
-import { 
-    Create, FileField, FileInput, FormTab,
-    ImageField,
-    ImageInput,
-    TabbedForm,
-} from "react-admin";
+import
+    {
+        Create, FileField, FileInput, FormTab,
+        TabbedForm,
+    } from "react-admin";
 
 export const CreateImage = (props: any) =>
 (

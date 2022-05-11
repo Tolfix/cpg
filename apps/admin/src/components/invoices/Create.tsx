@@ -4,7 +4,7 @@ import
     BooleanInput,
     Create, DateInput, FormTab,
     NumberInput,
-    ReferenceArrayInput, SelectArrayInput, SelectInput,
+    ReferenceArrayInput, SelectInput,
     SimpleFormIterator,
     TabbedForm,
 } from "react-admin";

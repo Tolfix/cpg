@@ -1,12 +1,13 @@
-import { 
-    ArrayInput,
-    Create, FormTab,
-    NumberInput,
-    ReferenceArrayInput, SelectArrayInput, SelectInput,
-    SimpleFormIterator,
-    TabbedForm,
-    TextInput,
-} from "react-admin";
+import
+    {
+        ArrayInput,
+        Create, FormTab,
+        NumberInput,
+        ReferenceArrayInput, SelectArrayInput,
+        SimpleFormIterator,
+        TabbedForm,
+        TextInput,
+    } from "react-admin";
 
 export const Create_configurable_options = (props: any) =>
 (

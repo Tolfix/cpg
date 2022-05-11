@@ -1,5 +1,5 @@
 import { currencyCodes } from "lib/Currencies";
-import { Create, DateInput, FormTab, NumberInput, ReferenceArrayInput, SelectArrayInput, SelectInput, TabbedForm } from "react-admin";
+import { Create, DateInput, FormTab, NumberInput, ReferenceArrayInput, SelectInput, TabbedForm } from "react-admin";
 
 export const CreateTransactions = (props: any) =>
 (

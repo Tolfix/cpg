@@ -7,6 +7,7 @@ export default () =>
 {
     // Fetch the data from the server
     const [transactions, setTransactions] = React.useState<ITransactions<"income">[]>([]);
+    console.log(transactions);
     const setAuth = () =>
     {
         return {

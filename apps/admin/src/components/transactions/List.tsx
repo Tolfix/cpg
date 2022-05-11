@@ -1,4 +1,4 @@
-import { List, Datagrid, TextField, SingleFieldList, ChipField, ReferenceField, EditButton, FunctionField, ReferenceArrayField, Pagination, PaginationProps } from 'react-admin';
+import { List, Datagrid, TextField, ReferenceField, EditButton, FunctionField, Pagination, PaginationProps } from 'react-admin';
 
 const PostPagination = (props: JSX.IntrinsicAttributes & PaginationProps) => <Pagination rowsPerPageOptions={[10, 25, 50, 100]} {...props} />;
 
@@ -7,6 +7,14 @@ export const ListTransactions = (props: any) => (
     <List {...props} pagination={<PostPagination />}>
         <Datagrid>
             <TextField label="Id" source="id" />
+            <ReferenceField label="Invoice id" source="invoice_uid" reference="invoices">
+                <FunctionField
+                    // @ts-ignore
+                    render={(record) =>
+                        `${record.id}`}
+                    source="id"
+                />
+            </ReferenceField>
             <TextField label="Statement" source="statement" />
             <ReferenceField label="Customer" source="customer_uid" reference="customers">
                 <FunctionField

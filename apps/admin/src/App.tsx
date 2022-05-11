@@ -25,6 +25,9 @@ import { Create_configurable_options } from './components/configurable_options/C
 import { Edit_configurable_options } from './components/configurable_options/Edit';
 import { CreateImage } from './components/images/Create';
 import { ListImage } from './components/images/List';
+import ListPromotionCodes from './components/promotion_codes/List';
+import CreatePromotionCode from './components/promotion_codes/Create';
+import EditPromotionCode from './components/promotion_codes/Edit';
 
 function App()
 {
@@ -37,6 +40,7 @@ function App()
         <Resource name="products" list={ListProducts} create={CreateProducts} edit={EditProducts} />
         <Resource name="orders" list={OrderList} create={CreateOrders} edit={EditOrders} />
         <Resource name="images" list={ListImage} create={CreateImage} />
+        <Resource name="promotion_codes" list={ListPromotionCodes} create={CreatePromotionCode} edit={EditPromotionCode} />
         <Resource name="transactions" list={ListTransactions} create={CreateTransactions} edit={EditTrans} />
         <Resource name="configurable_options" list={configurable_options_List} create={Create_configurable_options} edit={Edit_configurable_options} />
       </Admin>

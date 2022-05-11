@@ -1,12 +1,7 @@
 export const PDFButton = (props: any) =>
 {
     const {
-        basePath = '',
-        icon = "defaultIcon",
-        label = 'ra.action.edit',
         record,
-        scrollToTop = true,
-        ...rest
     } = props;
 
     function downloadPDF()

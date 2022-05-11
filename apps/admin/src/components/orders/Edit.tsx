@@ -1,10 +1,9 @@
 import
 {
     ArrayInput,
-    AutocompleteArrayInput,
     Edit, FormTab,
     NumberInput,
-    ReferenceArrayInput, ReferenceInput, SelectArrayInput, SelectInput,
+    ReferenceArrayInput, ReferenceInput, SelectInput,
     SimpleFormIterator,
     TabbedForm,
 } from "react-admin";
