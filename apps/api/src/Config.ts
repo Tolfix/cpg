@@ -15,6 +15,7 @@ export const Http_Schema = process.env.HTTP_SCHEMA ||= "http";
 export const PORT = process.env.PORT ||= "3001";
 export const Full_Domain = `${Http_Schema}://${Domain === "localhost" ? `localhost:${PORT}` : Domain}`;
 export const CLI_MODE = process.env.CLI_MODE === "true";
+export const disableJsonError = process.env.DISABLE_JSON_ERROR === "true";
 
 // API
 export const Express_Session_Secret = process.env.SESSION_SECRET ?? require("crypto").randomBytes(20).toString("hex");

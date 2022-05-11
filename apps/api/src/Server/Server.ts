@@ -4,7 +4,7 @@ import express from "express";
 import cors from "cors";
 import session from "express-session";
 import fileUpload from "express-fileupload";
-import { Default_Language, Express_Session_Secret, Full_Domain, PORT } from "../Config";
+import { Default_Language, disableJsonError, Express_Session_Secret, Full_Domain, PORT } from "../Config";
 import Logger from "lib/Logger";
 import RouteHandler from "../Handlers/Route.handler";
 import { ICustomer } from "interfaces/Customer.interface";
@@ -48,7 +48,7 @@ const sessionMiddleWare = session({
 server.use(sessionMiddleWare);
 
 server.use(express.urlencoded({ extended: true }));
-server.use((req, res, next) => 
+!disableJsonError ? server.use((req, res, next) => 
 {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   express.json({
@@ -76,12 +76,11 @@ server.use((req, res, next) =>
         }
       }
 
-
       // @ts-ignore
       req.rawBody = buf;
     }
   })(req, res, next);
-});
+}) : server.use(express.json());
 
 server.use((req, res, next) =>
 {
