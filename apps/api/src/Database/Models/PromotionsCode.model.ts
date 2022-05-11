@@ -27,7 +27,7 @@ const PromotionCodeSchema = new Schema
 
             uses: {
                 type: Number,
-                enum: [String, "unlimited"],
+                // enum: [Number, "unlimited"],
                 default: "unlimited"
             },
 
