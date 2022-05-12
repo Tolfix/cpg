@@ -9,7 +9,8 @@ import
     Filter,
     SearchInput,
     ReferenceInput,
-    SelectInput
+    SelectInput,
+    ArrayField
 } from 'react-admin';
 
 const PostPagination = (props: JSX.IntrinsicAttributes) => <Pagination rowsPerPageOptions={[10, 25, 50, 100]} {...props} />;
@@ -42,6 +43,12 @@ export const InvoicesList = (props: any) => (
                     source="personal.first_name"
                 />
             </ReferenceField>
+            <ArrayField source="items">
+                <Datagrid>
+                    <TextField source="notes" />
+                    <TextField source="amount" />
+                </Datagrid>
+            </ArrayField>
             <TextField label="Due Date" source="dates.due_date" />
             <TextField label="Amount" source="amount" />
             <TextField label="Currency" source="currency" />
