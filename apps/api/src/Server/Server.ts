@@ -15,6 +15,7 @@ import rateLimiter from "express-rate-limit"
 import EnsureAdmin from "../Middlewares/EnsureAdmin";
 import EnsureAuth from "../Middlewares/EnsureAuth";
 import PluginHandler from "../Plugins/PluginHandler";
+import FallbackTemplate from "../Email/Templates/Web/Fallback.template";
 
 declare module "express-session"
 {
@@ -113,9 +114,10 @@ server.listen(PORT, () => Logger.api(`${GetText(Default_Language).txt_Api_Listin
 {
   await ApolloServer(server);
   await PluginHandler();
-  server.use("*", (req, res) =>
+  server.use("*", async (req, res) =>
   {
-    return APIError(GetText(Default_Language).txt_ApiError_default(req))(res);
+    res.status(404).send(await FallbackTemplate({ req, res }))
+    // return APIError(GetText(Default_Language).txt_ApiError_default(req))(res);
   });
 }
 )();
