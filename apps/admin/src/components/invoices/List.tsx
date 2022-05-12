@@ -5,14 +5,33 @@ import
     TextField, SingleFieldList,
     ChipField, BooleanField, ReferenceField,
     EditButton, ReferenceArrayField, FunctionField,
-    Pagination
+    Pagination,
+    Filter,
+    SearchInput,
+    ReferenceInput,
+    SelectInput
 } from 'react-admin';
 
 const PostPagination = (props: JSX.IntrinsicAttributes) => <Pagination rowsPerPageOptions={[10, 25, 50, 100]} {...props} />;
 
+const TagFilter = (props: any) =>
+{
+    return (
+        <Filter {...props}>
+            <SearchInput name='Search id' source="id" alwaysOn={true} />
+            {/* Search for specific customer */}
+            <ReferenceInput label="Customer" source="customer_uid" reference="customers" alwaysOn={true}>
+                <SelectInput optionText={
+                    (record: { personal: { first_name: any; last_name: any; } }) =>
+                        `${record.personal.first_name} ${record.personal.last_name}`} />
+            </ReferenceInput>
+        </Filter>
+    )
+}
+
 export const InvoicesList = (props: any) => (
     // @ts-ignore
-    <List {...props} pagination={<PostPagination />}>
+    <List {...props} pagination={<PostPagination />} filters={<TagFilter />}>
         <Datagrid>
             <TextField label="Id" source="id" />
             <ReferenceField label="Customer" source="customer_uid" reference="customers">

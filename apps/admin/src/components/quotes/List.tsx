@@ -25,7 +25,14 @@ export default function ListQuotes(props: any)
         <List {...props} pagination={<PostPagination />}>
             <Datagrid>
                 <TextField label="Id" source="id" />
-                <TextField label="Customer" source="customer_uid" />
+                <ReferenceField label="Customer" source="customer_uid" reference="customers">
+                    <FunctionField
+                        // @ts-ignore
+                        render={(record) =>
+                            `${record.personal.first_name} ${record.personal.last_name}`}
+                        source="personal.first_name"
+                    />
+                </ReferenceField>
                 <BooleanField label="Created invoice" source="created_invoice" />
                 <ReferenceField label="Invoice id" source="invoice_uid" reference="invoices">
                     <FunctionField
