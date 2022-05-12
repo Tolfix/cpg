@@ -4,7 +4,7 @@ import
     BooleanInput,
     Create, DateInput, FormTab,
     NumberInput,
-    ReferenceArrayInput, SelectInput,
+    ReferenceArrayInput, SelectArrayInput, SelectInput,
     SimpleFormIterator,
     TabbedForm,
 } from "react-admin";
@@ -79,7 +79,7 @@ export const CreateInvoices = (props: any) =>
                 </ArrayInput>
 
                 <ReferenceArrayInput source="transactions" reference="transactions">
-                    <SelectInput optionText={(record) => record.id.toString()} />
+                    <SelectArrayInput optionText={(record) => record.id.toString()} />
                 </ReferenceArrayInput>
 
             </FormTab>
