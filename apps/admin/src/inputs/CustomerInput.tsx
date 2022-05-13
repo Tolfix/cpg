@@ -1,4 +1,5 @@
-import { ReferenceArrayInput, ReferenceInput, SelectInput } from "react-admin";
+import { ReferenceArrayInput, ReferenceInput, AutocompleteInput } from "react-admin";
+import RenderFullName from "../lib/RenderFullName";
 
 export default function CustomerInput({
     source = "customer_uid",
@@ -14,14 +15,12 @@ export default function CustomerInput({
         label: label,
         children:
             (
-                <SelectInput
+                <AutocompleteInput
                     source="customers"
                     label={label}
                     required={required}
                     allowEmpty={false}
-                    optionText={
-                        (record: { personal: { first_name: any; last_name: any; } }) =>
-                            `${record.personal.first_name} ${record.personal.last_name}`}
+                    optionText={RenderFullName}
                 />
             )
     });

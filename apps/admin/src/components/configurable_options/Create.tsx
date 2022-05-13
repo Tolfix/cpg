@@ -1,13 +1,14 @@
 import
-    {
-        ArrayInput,
-        Create, FormTab,
-        NumberInput,
-        ReferenceArrayInput, SelectArrayInput,
-        SimpleFormIterator,
-        TabbedForm,
-        TextInput,
-    } from "react-admin";
+{
+    ArrayInput,
+    AutocompleteArrayInput,
+    Create, FormTab,
+    NumberInput,
+    ReferenceArrayInput,
+    SimpleFormIterator,
+    TabbedForm,
+    TextInput,
+} from "react-admin";
 
 export const Create_configurable_options = (props: any) =>
 (
@@ -15,8 +16,11 @@ export const Create_configurable_options = (props: any) =>
         <TabbedForm>
             <FormTab label="General">
                 <TextInput label="Name" required={true} source="name" />
-                <ReferenceArrayInput source="products_ids" reference="products">
-                    <SelectArrayInput
+                {/* @ts-ignore */}
+                <ReferenceArrayInput filterToQuery={searchText => ({
+                    "name": searchText,
+                })} perPage={100} source="products_ids" reference="products">
+                    <AutocompleteArrayInput
                         source="products"
                         label="Products"
                         required={true}
