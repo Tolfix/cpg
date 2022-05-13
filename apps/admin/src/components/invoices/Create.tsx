@@ -1,34 +1,37 @@
 import
 {
     ArrayInput,
+    AutocompleteArrayInput,
     BooleanInput,
     Create, DateInput, FormTab,
     NumberInput,
-    ReferenceArrayInput, SelectArrayInput, SelectInput,
+    ReferenceArrayInput, AutocompleteInput,
     SimpleFormIterator,
     TabbedForm,
 } from "react-admin";
 //@ts-ignore
 import MarkdownInput from 'ra-input-markdown';
 import { currencyCodes } from "lib/Currencies";
+import RenderFullName from "../../lib/RenderFullName";
 
 export const CreateInvoices = (props: any) =>
 (
     <Create {...props}>
         <TabbedForm>
             <FormTab label="General">
-                <ReferenceArrayInput source="customer_uid" reference="customers">
-                    <SelectInput
+                {/* @ts-ignore */}
+                <ReferenceArrayInput filterToQuery={searchText => ({
+                    "personal.first_name": searchText,
+                })} perPage={100} source="customer_uid" reference="customers">
+                    <AutocompleteInput
                         source="customers"
                         label="Customer"
                         required={true}
                         allowEmpty={false}
-                        optionText={
-                            (record: { personal: { first_name: any; last_name: any; } }) =>
-                                `${record.personal.first_name} ${record.personal.last_name}`}
+                        optionText={RenderFullName}
                     />
                 </ReferenceArrayInput>
-                <SelectInput required={true} source="status" choices={[
+                <AutocompleteInput required={true} source="status" choices={[
                     { id: "draft", name: "draft" },
                     { id: "refunded", name: "refunded" },
                     { id: "collections", name: "collections" },
@@ -36,7 +39,7 @@ export const CreateInvoices = (props: any) =>
                     { id: "active", name: "active" },
                     { id: "pending", name: "pending" },
                 ]} />
-                <SelectInput required={true} source="payment_method" choices={[
+                <AutocompleteInput required={true} source="payment_method" choices={[
                     { id: "none", name: "none" },
                     { id: "manual", name: "manual" },
                     { id: "bank", name: "bank" },
@@ -45,7 +48,7 @@ export const CreateInvoices = (props: any) =>
                     { id: "swish", name: "swish" },
                 ]} />
                 <NumberInput required={true} label="Amount" source="amount" />
-                <SelectInput required={true} source="currency" choices={currencyCodes.map(e =>
+                <AutocompleteInput required={true} source="currency" choices={currencyCodes.map(e =>
                 {
                     return { id: e, name: e };
                 })} />
@@ -66,8 +69,11 @@ export const CreateInvoices = (props: any) =>
                         <MarkdownInput source="notes" />
                         <NumberInput required={true} label="Amount" source="amount" />
                         <NumberInput label="Quantity" defaultValue={1} source="quantity" />
-                        <ReferenceArrayInput source="product_id" reference="products">
-                            <SelectInput
+                        {/* @ts-ignore */}
+                        <ReferenceArrayInput filterToQuery={searchText => ({
+                            "name": searchText,
+                        })} perPage={100} source="product_id" reference="products">
+                            <AutocompleteInput
                                 source="product"
                                 label="Product"
                                 required={true}
@@ -78,8 +84,10 @@ export const CreateInvoices = (props: any) =>
                     </SimpleFormIterator>
                 </ArrayInput>
 
-                <ReferenceArrayInput source="transactions" reference="transactions">
-                    <SelectArrayInput optionText={(record) => record.id.toString()} />
+                <ReferenceArrayInput filterToQuery={(searchText: string) => ({
+                    "id": searchText,
+                })} perPage={100} source="transactions" reference="transactions">
+                    <AutocompleteArrayInput optionText={(record) => record?.id?.toString() ?? ""} />
                 </ReferenceArrayInput>
 
             </FormTab>

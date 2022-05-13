@@ -3,31 +3,32 @@ import
     ArrayInput,
     Edit, FormTab,
     NumberInput,
-    ReferenceArrayInput, ReferenceInput, SelectInput,
+    ReferenceArrayInput, ReferenceInput, AutocompleteInput,
     SimpleFormIterator,
     TabbedForm,
 } from "react-admin";
+import RenderFullName from "../../lib/RenderFullName";
 
 export const EditOrders = (props: any) =>
 (
     <Edit {...props}>
         <TabbedForm>
             <FormTab label="General">
-                <ReferenceInput source="customer_uid" reference="customers">
-                    <SelectInput
+                <ReferenceInput filterToQuery={searchText => ({
+                    "personal.first_name": searchText,
+                })} perPage={100} source="customer_uid" reference="customers">
+                    <AutocompleteInput
                         source="customers"
                         label="Customers"
                         required={true}
-                        allowEmpty={false}
-                        optionText={
-                            (record: { personal: { first_name: any; last_name: any; } }) =>
-                                `${record.personal.first_name} ${record.personal.last_name}`}
+                        // allowEmpty={false}
+                        optionText={RenderFullName}
                     />
                 </ReferenceInput>
                 <ArrayInput source="products">
                     <SimpleFormIterator>
                         <ReferenceInput source="product_id" reference="products">
-                            <SelectInput
+                            <AutocompleteInput
                                 source="products"
                                 label="Products"
                                 required={true}
@@ -38,7 +39,7 @@ export const EditOrders = (props: any) =>
                         <NumberInput label="Quantity" defaultValue={1} source="quantity" />
                     </SimpleFormIterator>
                 </ArrayInput>
-                <SelectInput required={true} source="order_status" choices={[
+                <AutocompleteInput required={true} source="order_status" choices={[
                     { id: "active", name: "active" },
                     { id: "pending", name: "pending" },
                     { id: "fruad", name: "fruad" },
@@ -46,7 +47,7 @@ export const EditOrders = (props: any) =>
                 ]} />
             </FormTab>
             <FormTab label="Payments">
-                <SelectInput required={true} source="payment_method" choices={[
+                <AutocompleteInput required={true} source="payment_method" choices={[
                     { id: "none", name: "none" },
                     { id: "manual", name: "manual" },
                     { id: "bank", name: "bank" },
@@ -54,12 +55,12 @@ export const EditOrders = (props: any) =>
                     { id: "credit_card", name: "credit_card" },
                     { id: "swish", name: "swish" },
                 ]} />
-                <SelectInput required={true} source="billing_type" choices={[
+                <AutocompleteInput required={true} source="billing_type" choices={[
                     { id: "free", name: "free" },
                     { id: "one_time", name: "one_time" },
                     { id: "recurring", name: "recurring" },
                 ]} />
-                <SelectInput required={false} source="billing_cycle" choices={[
+                <AutocompleteInput required={false} source="billing_cycle" choices={[
                     { id: "monthly", name: "monthly" },
                     { id: "quarterly", name: "quarterly" },
                     { id: "semi_annually", name: "semi_annually" },
@@ -71,10 +72,10 @@ export const EditOrders = (props: any) =>
             <FormTab label="Invoices">
 
                 <ReferenceArrayInput source="invoices" reference="invoices">
-                    <SelectInput optionText={(record) => record.id.toString()} />
+                    <AutocompleteInput optionText={(record) => record?.id?.toString() ?? ""} />
                 </ReferenceArrayInput>
 
             </FormTab>
         </TabbedForm>
-    </Edit>
+    </Edit >
 );

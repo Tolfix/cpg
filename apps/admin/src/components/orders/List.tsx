@@ -1,4 +1,5 @@
-import { List, Datagrid, TextField, EditButton, ReferenceField, FunctionField, DateField, ReferenceArrayField, SingleFieldList, ChipField, Pagination, ArrayField } from 'react-admin';
+import { List, Datagrid, TextField, EditButton, ReferenceField, FunctionField, ReferenceArrayField, SingleFieldList, ChipField, Pagination, ArrayField } from 'react-admin';
+import RenderFullName from '../../lib/RenderFullName';
 
 const PostPagination = (props: JSX.IntrinsicAttributes) => <Pagination rowsPerPageOptions={[10, 25, 50, 100]} {...props} />;
 
@@ -9,8 +10,7 @@ export const OrderList = (props: any) => (
             <ReferenceField label="Customer" source="customer_uid" reference="customers">
                 <FunctionField
                     // @ts-ignore
-                    render={(record) =>
-                        `${record.personal.first_name} ${record.personal.last_name}`}
+                    render={RenderFullName}
                     source="personal.first_name"
                 />
             </ReferenceField>
@@ -31,8 +31,8 @@ export const OrderList = (props: any) => (
             <TextField label="Status" source="order_status" />
             <TextField label="Billing Type" source="billing_type" />
             <TextField label="Cycle" source="billing_cycle" />
-            <DateField label="Last" source="dates.last_recycle" />
-            <DateField label="Next" source="dates.next_recycle" />
+            <TextField label="Last" source="dates.last_recycle" />
+            <TextField label="Next" source="dates.next_recycle" />
             <ReferenceArrayField
                 label="Invoices"
                 reference="invoices"
