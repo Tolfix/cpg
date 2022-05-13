@@ -1,5 +1,11 @@
 import dateFormat from "date-and-time";
 
+
+export function formatDate(date: Date, format: string): string
+{
+    return dateFormat.format(date, format);
+}
+
 export function getTime() 
 {
     const D_CurrentDate = new Date();

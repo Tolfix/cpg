@@ -1,7 +1,11 @@
 "use strict";
 exports.__esModule = true;
-exports.getDate = exports.getTime = void 0;
+exports.getDate = exports.getTime = exports.formatDate = void 0;
 var date_and_time_1 = require("date-and-time");
+function formatDate(date, format) {
+    return date_and_time_1.format(date, format);
+}
+exports.formatDate = formatDate;
 function getTime() {
     var D_CurrentDate = new Date();
     return date_and_time_1.format(D_CurrentDate, "YYYY-MM-DD HH:mm:ss");
