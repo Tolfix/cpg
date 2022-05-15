@@ -8,6 +8,7 @@ import { currencyCodes, GetCurrencySymbol } from "lib/Currencies";
 
 export const A_InvoiceStatus: extendedOrderStatus[] = [
     "active",
+    "paid",
     "pending",
     "draft",
     "fraud",
