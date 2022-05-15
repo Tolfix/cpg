@@ -60,7 +60,7 @@ async function insert(req: Request, res: Response)
         // noinspection CommaExpressionJS
         customer && await SendEmail(customer.personal.email, `New order from ${"" !== await Company_Name() ? await Company_Name() : "CPG"} #${result.id}`, {
             isHTML: !0,
-            body: NewOrderCreated(result, customer)
+            body: await NewOrderCreated(result, customer)
         }), APISuccess({ uid: result.uid })(res)
     });
 }
