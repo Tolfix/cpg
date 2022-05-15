@@ -1,3 +1,4 @@
+import { currencyCodes } from "lib/Currencies";
 import
 {
     ArrayInput,
@@ -6,6 +7,8 @@ import
     ReferenceArrayInput, AutocompleteInput,
     SimpleFormIterator,
     TabbedForm,
+    TextInput,
+    FormDataConsumer,
 } from "react-admin";
 import RenderFullName from "../../lib/RenderFullName";
 
@@ -32,14 +35,27 @@ export const CreateOrders = (props: any) =>
                             <AutocompleteInput
                                 source="products"
                                 label="Products"
-                                required={true}
-                                allowEmpty={false}
+                                required={false}
                                 optionText="name"
                             />
                         </ReferenceArrayInput>
                         <NumberInput label="Quantity" defaultValue={1} source="quantity" />
                     </SimpleFormIterator>
                 </ArrayInput>
+
+                <ArrayInput source="items">
+                    <SimpleFormIterator>
+                        <TextInput label="Note" source="note" />
+                        <NumberInput label="Amount" source="amount" />
+                        <NumberInput label="Quantity" defaultValue={1} source="quantity" />
+                    </SimpleFormIterator>
+                </ArrayInput>
+
+                <FormDataConsumer>
+                    {({ formData }) => formData.items && (
+                        <NumberInput label="Tax rate" source="tax_rate" />
+                    )}
+                </FormDataConsumer>
 
                 <AutocompleteInput required={true} source="order_status" choices={[
                     { id: "active", name: "active" },
@@ -70,6 +86,10 @@ export const CreateOrders = (props: any) =>
                     { id: "biennially", name: "biennially" },
                     { id: "triennially", name: "triennially" },
                 ]} />
+                <AutocompleteInput required={true} source="currency" choices={currencyCodes.map(e =>
+                {
+                    return { id: e, name: e };
+                })} />
             </FormTab>
             <FormTab label="Invoices">
                 {/* @ts-ignore */}

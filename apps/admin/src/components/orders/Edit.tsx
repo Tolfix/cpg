@@ -1,3 +1,4 @@
+import { currencyCodes } from "lib/Currencies";
 import
 {
     ArrayInput,
@@ -6,6 +7,7 @@ import
     ReferenceArrayInput, ReferenceInput, AutocompleteInput,
     SimpleFormIterator,
     TabbedForm,
+    TextInput,
 } from "react-admin";
 import RenderFullName from "../../lib/RenderFullName";
 
@@ -39,6 +41,15 @@ export const EditOrders = (props: any) =>
                         <NumberInput label="Quantity" defaultValue={1} source="quantity" />
                     </SimpleFormIterator>
                 </ArrayInput>
+
+                <ArrayInput source="items">
+                    <SimpleFormIterator>
+                        <TextInput name="note" label="Note" source="note" />
+                        <NumberInput label="Amount" source="amount" />
+                        <NumberInput label="Quantity" defaultValue={1} source="quantity" />
+                    </SimpleFormIterator>
+                </ArrayInput>
+
                 <AutocompleteInput required={true} source="order_status" choices={[
                     { id: "active", name: "active" },
                     { id: "pending", name: "pending" },
@@ -68,6 +79,10 @@ export const EditOrders = (props: any) =>
                     { id: "biennially", name: "biennially" },
                     { id: "triennially", name: "triennially" },
                 ]} />
+                <AutocompleteInput required={true} source="currency" choices={currencyCodes.map(e =>
+                {
+                    return { id: e, name: e };
+                })} />
             </FormTab>
             <FormTab label="Invoices">
 
