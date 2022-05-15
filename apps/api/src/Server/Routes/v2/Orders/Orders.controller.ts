@@ -12,7 +12,7 @@ import CustomerModel from "../../../../Database/Models/Customers/Customer.model"
 import NewOrderCreated from "../../../../Email/Templates/Orders/NewOrderCreated";
 import { Company_Name } from "../../../../Config";
 import mainEvent from "../../../../Events/Main.event";
-import { sendInvoiceEmail } from "../../../../Lib/Invoices/SendEmail";
+// import { sendInvoiceEmail } from "../../../../Lib/Invoices/SendEmail";
 
 const API = new BaseModelAPI<IOrder>(idOrder, OrderModel);
 
@@ -58,7 +58,7 @@ async function insert(req: Request, res: Response)
         mainEvent.emit("order_created", result);
         const customer = await CustomerModel.findOne({ id: result.customer_uid });
         // We should send a email to the customer
-        customer && await sendInvoiceEmail(newInvoice, customer);
+        // customer && await sendInvoiceEmail(newInvoice, customer);
         // noinspection CommaExpressionJS
         customer && await SendEmail(customer.personal.email, `New order from ${"" !== await Company_Name() ? await Company_Name() : "CPG"} #${result.id}`, {
             isHTML: !0,
