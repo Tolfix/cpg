@@ -1,3 +1,37 @@
+import { Button } from "react-admin";
+
+/**
+ * 
+ * @stackoverflow https://stackoverflow.com/questions/4068373/center-a-popup-window-on-screen
+ */
+export const popupCenter = ({ url, title, w, h }: {
+    url: string,
+    title: string,
+    w: number,
+    h: number
+}) =>
+{
+    // Fixes dual-screen position                             Most browsers      Firefox
+    const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+    const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+
+    const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+    const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+    const systemZoom = width / window.screen.availWidth;
+    const left = (width - w) / 2 / systemZoom + dualScreenLeft;
+    const top = (height - h) / 2 / systemZoom + dualScreenTop;
+    window.open(url, title,
+        `
+        scrollbars=yes,
+        width=${w / systemZoom}, 
+        height=${h / systemZoom}, 
+        top=${top}, 
+        left=${left}
+      `
+    )
+}
+
 export const PDFButton = (props: any) =>
 {
     const {
@@ -6,32 +40,24 @@ export const PDFButton = (props: any) =>
 
     function downloadPDF()
     {
-        const url = process.env.REACT_APP_CPG_DOMAIN + '/v2/invoices/' + record.id + '/pdf';
-        fetch(url, {
-            headers: {
-                'Authorization': 'Bearer ' + `${JSON.parse(localStorage.getItem("auth") ?? "{}").token}`,
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
-            }
-        }).then(response => response.blob())
-            .then(blob =>
-            {
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `invoice${record.id}.pdf`;
-                document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
-                a.click();
-                a.remove();  //afterwards we remove the element again         
-            });
+        const url = process.env.REACT_APP_CPG_DOMAIN + '/v2/invoices/' + record.id + '/preview' + `?access_token=${JSON.parse(localStorage.getItem("auth") ?? "{}").token}`;
+        // window.open(url, '_blank');
+        popupCenter({
+            url: url,
+            title: "Invoice",
+            w: 1000,
+            h: 1000
+        })
     }
 
     return (
         <>
 
-            <a href='#' onClick={downloadPDF}>
-                PDF
-            </a>
+            <Button onClick={downloadPDF}>
+                <>
+                    Preview
+                </>
+            </Button>
 
         </>
     );

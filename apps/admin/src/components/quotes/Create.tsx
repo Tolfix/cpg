@@ -20,12 +20,13 @@
     }
 */
 
-import { ArrayInput, BooleanInput, Create, DateInput, FormTab, NumberInput, ReferenceArrayInput, SelectArrayInput, SimpleFormIterator, TabbedForm, TextInput } from "react-admin";
+import { ArrayInput, AutocompleteArrayInput, BooleanInput, Create, DateInput, FormTab, NumberInput, ReferenceArrayInput, SimpleFormIterator, TabbedForm, TextInput } from "react-admin";
 import CurrencyInput from "../../inputs/CurrencyInput";
 import CustomerInput from "../../inputs/CustomerInput";
 import PaymentMethodInput from "../../inputs/PaymentMethodInput";
 //@ts-ignore
 import MarkdownInput from 'ra-input-markdown';
+import { getDate } from "../../lib/dateFormat";
 export default function CreateQuote(props: any)
 {
     return (
@@ -33,8 +34,10 @@ export default function CreateQuote(props: any)
             <TabbedForm>
                 <FormTab label="General">
                     <CustomerInput />
-                    <ReferenceArrayInput source="promotion_codes" reference="promotion_codes">
-                        <SelectArrayInput
+                    <ReferenceArrayInput filterToQuery={(searchText: string) => ({
+                        "name": searchText,
+                    })} perPage={100} source="promotion_codes" reference="promotion_codes">
+                        <AutocompleteArrayInput
                             source="promotion_codes"
                             label="Promotion codes"
                             allowEmpty={false}
@@ -43,7 +46,7 @@ export default function CreateQuote(props: any)
                     </ReferenceArrayInput>
                     <CurrencyInput />
                     <PaymentMethodInput />
-                    <DateInput label="Due date" source="due_date" defaultValue={new Date().toLocaleDateString()} />
+                    <DateInput label="Due date" source="due_date" defaultValue={getDate()} />
                     <ArrayInput source="items">
                         <SimpleFormIterator>
                             <TextInput label="Name" source="name" />

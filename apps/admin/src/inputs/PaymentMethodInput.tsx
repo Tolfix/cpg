@@ -1,9 +1,9 @@
-import { SelectInput } from "react-admin";
+import { AutocompleteInput } from "react-admin";
 
 export default function PaymentMethodInput()
 {
     return (
-        <SelectInput required={true} source="payment_method" choices={
+        <AutocompleteInput required={true} source="payment_method" choices={
             [
                 { id: "none", name: "none" },
                 { id: "manual", name: "manual" },

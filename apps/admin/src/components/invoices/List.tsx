@@ -9,9 +9,10 @@ import
     Filter,
     SearchInput,
     ReferenceInput,
-    SelectInput,
-    ArrayField
+    AutocompleteInput,
+    ArrayField,
 } from 'react-admin';
+import RenderFullName from "../../lib/RenderFullName";
 
 const PostPagination = (props: JSX.IntrinsicAttributes) => <Pagination rowsPerPageOptions={[10, 25, 50, 100]} {...props} />;
 
@@ -22,9 +23,7 @@ const TagFilter = (props: any) =>
             <SearchInput name='Search id' source="id" alwaysOn={true} />
             {/* Search for specific customer */}
             <ReferenceInput label="Customer" source="customer_uid" reference="customers" alwaysOn={true}>
-                <SelectInput optionText={
-                    (record: { personal: { first_name: any; last_name: any; } }) =>
-                        `${record.personal.first_name} ${record.personal.last_name}`} />
+                <AutocompleteInput optionText={RenderFullName} />
             </ReferenceInput>
         </Filter>
     )
@@ -38,8 +37,7 @@ export const InvoicesList = (props: any) => (
             <ReferenceField label="Customer" source="customer_uid" reference="customers">
                 <FunctionField
                     // @ts-ignore
-                    render={(record) =>
-                        `${record.personal.first_name} ${record.personal.last_name}`}
+                    render={RenderFullName}
                     source="personal.first_name"
                 />
             </ReferenceField>

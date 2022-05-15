@@ -1,23 +1,28 @@
-import { 
+import
+{
     ArrayInput,
     BooleanInput,
     Create, FormTab,
     NumberInput,
-    ReferenceArrayInput, SelectInput,
+    ReferenceArrayInput, AutocompleteInput,
     SimpleFormIterator,
     TabbedForm,
     TextInput,
 } from "react-admin";
 //@ts-ignore
 import MarkdownInput from 'ra-input-markdown';
+import { currencyCodes } from "lib/Currencies";
 
 export const CreateProducts = (props: any) =>
 (
     <Create {...props}>
         <TabbedForm>
             <FormTab label="General">
-                <ReferenceArrayInput source="category_uid" reference="categories">
-                    <SelectInput
+                {/* @ts-ignore */}
+                <ReferenceArrayInput filterToQuery={searchText => ({
+                    "name": searchText,
+                })} perPage={100} source="category_uid" reference="categories">
+                    <AutocompleteInput
                         source="categories"
                         label="Categories"
                         required={true}
@@ -38,12 +43,16 @@ export const CreateProducts = (props: any) =>
                 <NumberInput min={0} required={true} label="Price" source="price" />
                 <NumberInput min={0} required={true} defaultValue={0} label="Setup fee" source="setup_fee" />
                 <NumberInput min={0} max={100} required={true} defaultValue={0} label="Tax Rate" source="tax_rate" />
-                <SelectInput required={true} source="payment_type" choices={[
+                <AutocompleteInput required={true} source="currency" choices={currencyCodes.map(e =>
+                {
+                    return { id: e, name: e };
+                })} />
+                <AutocompleteInput required={true} source="payment_type" choices={[
                     { id: "free", name: "free" },
                     { id: "one_time", name: "one_time" },
                     { id: "recurring", name: "recurring" },
                 ]} />
-                <SelectInput required={false} source="recurring_method" choices={[
+                <AutocompleteInput required={false} source="recurring_method" choices={[
                     { id: "monthly", name: "monthly" },
                     { id: "quarterly", name: "quarterly" },
                     { id: "semi_annually", name: "semi_annually" },

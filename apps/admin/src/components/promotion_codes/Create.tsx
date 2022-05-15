@@ -6,7 +6,7 @@
     percentage: boolean;
     products_ids: Array<IProduct["id"]>;
 */
-import { BooleanInput, Create, FormTab, NumberInput, ReferenceArrayInput, SelectArrayInput, TabbedForm, TextInput } from "react-admin";
+import { AutocompleteArrayInput, BooleanInput, Create, FormTab, NumberInput, ReferenceArrayInput, TabbedForm, TextInput } from "react-admin";
 
 export default function CreatePromotionCode(props: any)
 {
@@ -19,8 +19,10 @@ export default function CreatePromotionCode(props: any)
                     <TextInput label="Valid to" source="valid_to" defaultValue={'permanent'} />
                     <NumberInput label="Max uses" source="uses" defaultValue={'unlimited'} />
                     <BooleanInput label="Percentage" source="percentage" />
-                    <ReferenceArrayInput source="products_ids" reference="products">
-                        <SelectArrayInput
+                    <ReferenceArrayInput filterToQuery={(searchText: string) => ({
+                        "name": searchText,
+                    })} perPage={100} source="products_ids" reference="products">
+                        <AutocompleteArrayInput
                             source="products"
                             label="Products"
                             allowEmpty={false}

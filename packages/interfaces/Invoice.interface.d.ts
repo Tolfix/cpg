@@ -77,7 +77,7 @@ export interface IInvoiceMethods
 
 }
 
-export type extendedOrderStatus = TOrderStatus | "draft" | "refunded" | "collections" | "payment_pending";
+export type extendedOrderStatus = TOrderStatus | "draft" | "refunded" | "collections" | "payment_pending" | "paid";
 
 
 export interface IInvoice_Dates

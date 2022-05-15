@@ -39,7 +39,7 @@ function insert(req: Request, res: Response)
                     // Check if they wanted to mark it as paid as well
                     if (req.body.markInvoiceAsPaid)
                     {
-                        invoice.status = "collections";
+                        invoice.status = "paid";
                         invoice.markModified("status");
                         invoice.paid = true;
                         invoice.markModified("paid");

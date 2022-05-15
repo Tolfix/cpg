@@ -1,5 +1,5 @@
 import { IPromotionsCodes } from "interfaces/PromotionsCodes.interface";
-import { ReferenceArrayInput, ReferenceInput, SelectInput } from "react-admin";
+import { ReferenceArrayInput, ReferenceInput, AutocompleteInput } from "react-admin";
 
 export default function PromotionCodeInput({
     source = "promotion_code_uid",
@@ -15,7 +15,7 @@ export default function PromotionCodeInput({
         label: label,
         children:
             (
-                <SelectInput
+                <AutocompleteInput
                     source="promotion_codes"
                     label={label}
                     required={required}
