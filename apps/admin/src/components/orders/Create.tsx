@@ -78,14 +78,18 @@ export const CreateOrders = (props: any) =>
                     { id: "one_time", name: "one_time" },
                     { id: "recurring", name: "recurring" },
                 ]} />
-                <AutocompleteInput required={false} source="billing_cycle" choices={[
-                    { id: "monthly", name: "monthly" },
-                    { id: "quarterly", name: "quarterly" },
-                    { id: "semi_annually", name: "semi_annually" },
-                    { id: "yearly", name: "yearly" },
-                    { id: "biennially", name: "biennially" },
-                    { id: "triennially", name: "triennially" },
-                ]} />
+                <FormDataConsumer>
+                    {({ formData }) => formData.billing_type === "recurring" && (
+                        <AutocompleteInput required={false} source="billing_cycle" choices={[
+                            { id: "monthly", name: "monthly" },
+                            { id: "quarterly", name: "quarterly" },
+                            { id: "semi_annually", name: "semi_annually" },
+                            { id: "yearly", name: "yearly" },
+                            { id: "biennially", name: "biennially" },
+                            { id: "triennially", name: "triennially" },
+                        ]} />
+                    )}
+                </FormDataConsumer>
                 <AutocompleteInput required={true} source="currency" choices={currencyCodes.map(e =>
                 {
                     return { id: e, name: e };

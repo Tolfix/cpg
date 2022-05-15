@@ -8,6 +8,7 @@ import
     SimpleFormIterator,
     TabbedForm,
     TextInput,
+    FormDataConsumer,
 } from "react-admin";
 import RenderFullName from "../../lib/RenderFullName";
 
@@ -50,6 +51,12 @@ export const EditOrders = (props: any) =>
                     </SimpleFormIterator>
                 </ArrayInput>
 
+                <FormDataConsumer>
+                    {({ formData }) => formData.items && (
+                        <NumberInput label="Tax rate" source="tax_rate" />
+                    )}
+                </FormDataConsumer>
+
                 <AutocompleteInput required={true} source="order_status" choices={[
                     { id: "active", name: "active" },
                     { id: "pending", name: "pending" },
@@ -71,14 +78,18 @@ export const EditOrders = (props: any) =>
                     { id: "one_time", name: "one_time" },
                     { id: "recurring", name: "recurring" },
                 ]} />
-                <AutocompleteInput required={false} source="billing_cycle" choices={[
-                    { id: "monthly", name: "monthly" },
-                    { id: "quarterly", name: "quarterly" },
-                    { id: "semi_annually", name: "semi_annually" },
-                    { id: "yearly", name: "yearly" },
-                    { id: "biennially", name: "biennially" },
-                    { id: "triennially", name: "triennially" },
-                ]} />
+                <FormDataConsumer>
+                    {({ formData }) => formData.billing_type === "recurring" && (
+                        <AutocompleteInput required={false} source="billing_cycle" choices={[
+                            { id: "monthly", name: "monthly" },
+                            { id: "quarterly", name: "quarterly" },
+                            { id: "semi_annually", name: "semi_annually" },
+                            { id: "yearly", name: "yearly" },
+                            { id: "biennially", name: "biennially" },
+                            { id: "triennially", name: "triennially" },
+                        ]} />
+                    )}
+                </FormDataConsumer>
                 <AutocompleteInput required={true} source="currency" choices={currencyCodes.map(e =>
                 {
                     return { id: e, name: e };
