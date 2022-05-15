@@ -59,7 +59,18 @@ const OrderSchema = new Schema
                         quantity: Number,
                     }
                 ],
-                required: true,
+                required: false,
+            },
+
+            items: {
+                type: [
+                    {
+                        note: String,
+                        amount: Number,
+                        quantity: Number,
+                    }
+                ],
+                required: false
             },
 
             billing_type: {

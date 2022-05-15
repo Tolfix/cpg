@@ -26,13 +26,18 @@ export interface IOrder
     id: any;
     uid: `ORD_${string}`;
     customer_uid: ICustomer["uid"];
-    products: Array<{
+    products?: Array<{
         product_id: IProduct["id"],
         configurable_options?: Array<{
             id: IConfigurableOptions["id"],
             option_index: number;
         }>,
         quantity: number
+    }>;
+    items?: Array<{
+        note: string,
+        amount: number,
+        quantity: number,
     }>;
     payment_method: keyof IPayments;
     order_status: TOrderStatus;

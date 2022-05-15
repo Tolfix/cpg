@@ -18,7 +18,16 @@ export default async function printOrderProductTable(order: IOrder, customer: IC
             </tr>
         </thead>
         <tbody>
-            ${(await Promise.all(order.products.map(async (product) =>
+        ${order.items ? order.items.map((item) =>
+    {
+        return stripIndents`
+                <tr>
+                    <td>${item.note}</td>
+                    <td>${item.quantity}</td>
+                    <td>${item.amount.toFixed(2)} ${GetCurrencySymbol(order.currency)}</td>
+                </tr>`
+    }) : ""}
+            ${order.products ? (await Promise.all(order.products.map(async (product) =>
     {
         const p = await getProductById(product.product_id);
         if (!p) return 0;
@@ -75,7 +84,7 @@ export default async function printOrderProductTable(order: IOrder, customer: IC
         }
 
         return result;
-    }))).join("")}
+    }))).join("") : ""}
         </tbody>
     </table>
     `
