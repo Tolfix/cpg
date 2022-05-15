@@ -35,6 +35,7 @@ export const EditInvoices = (props: any) =>
 
                 <AutocompleteInput required={true} source="status" choices={[
                     { id: "draft", name: "draft" },
+                    { id: "paid", name: "paid" },
                     { id: "refunded", name: "refunded" },
                     { id: "collections", name: "collections" },
                     { id: "payment_pending", name: "payment_pending" },

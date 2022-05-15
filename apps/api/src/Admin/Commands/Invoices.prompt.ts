@@ -194,6 +194,7 @@ export default
                         }
 
                         invoice.paid = true;
+                        invoice.status = 'paid';
                         invoice.dates.date_paid = getDate();
                         invoice.markModified('dates');
                         await invoice.save();
