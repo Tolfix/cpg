@@ -112,7 +112,7 @@ export function cron_chargeStripePayment()
                 await ChargeCustomer(invoice.id);
                 Logger.info(`Charging ${Customer.personal.email}`);
                 // assuming it worked, we can mark it as paid
-                invoice.status = "collections";
+                invoice.status = "paid";
                 invoice.paid = true;
                 invoice.dates.date_paid = getDate();
                 mainEvent.emit("invoice_paid", invoice);

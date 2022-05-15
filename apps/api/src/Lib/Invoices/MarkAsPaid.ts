@@ -16,6 +16,7 @@ export async function getInvoiceByIdAndMarkAsPaid(id: number | string): Promise<
             return reject("Invoice is already paid");
 
         invoice.paid = true;
+        invoice.status = "paid";
         invoice.dates.date_paid = getDate();
         await invoice.save();
         // emit event as invoice is paid
