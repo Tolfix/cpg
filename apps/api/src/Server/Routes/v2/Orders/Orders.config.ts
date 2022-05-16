@@ -231,7 +231,7 @@ class OrderRoute
                 if (products.find(e => e.product_id === p.id)?.configurable_options)
                     configurable_option = products.find(e => e.product_id === p.id)?.configurable_options
 
-                _order_.products.push({
+                _order_?.products?.push({
                     product_id: p.id,
                     // @ts-ignore
                     configurable_options: configurable_option,

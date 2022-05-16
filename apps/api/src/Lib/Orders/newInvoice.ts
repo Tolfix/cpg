@@ -53,7 +53,7 @@ export async function createInvoiceFromOrder(order: IOrder)
     if (!customer)
         throw new Error(`Customer ${Customer_Id} not found`);
 
-    // Change products price based on customers.currenc
+    // Change products price based on customers.currency
     Products = await Promise.all(Products.map(async product =>
     {
         // Check if same currency
@@ -89,7 +89,7 @@ export async function createInvoiceFromOrder(order: IOrder)
             {
                 for await (const configurable_option of configurable_options)
                 {
-                    const option_index = LBProducts.get(product.id)?.configurable_options?.find(e => e.id === configurable_option.id)?.option_index ?? 0;
+                    const option_index = LBProducts.get(product.id)?.configurable_options?.find((e: any) => e.id === configurable_option.id)?.option_index ?? 0;
                     const option = configurable_option.options[
                         option_index
                     ];
@@ -118,6 +118,21 @@ export async function createInvoiceFromOrder(order: IOrder)
         });
     }
 
+    if (order.items)
+        for (const item of order.items)
+        {
+            items.push({
+                amount: item.amount,
+                notes: `${item.note}`,
+                quantity: item.quantity,
+            });
+        }
+
+    // If we have order.items and order.products is empty, tax_rate should be order.tax_rate
+    if (order.products && !order.items)
+        // @ts-ignore
+        order.tax_rate = Products?.reduce((acc, cur) => cur.tax_rate, 0);
+
     // Create invoice
     const newInvoice = await (new InvoiceModel({
         uid: idInvoice(),
@@ -136,7 +151,9 @@ export async function createInvoiceFromOrder(order: IOrder)
         items: items,
         payment_method: order.payment_method,
         status: order.order_status,
-        tax_rate: Products?.reduce((acc, cur) => cur.tax_rate, 0),
+        // This a fix if we use only items and there is no set tax_rate, then we set from our request, if that is empty we set to 0
+        // @ts-ignore
+        tax_rate: order.tax_rate,
         notes: "",
         currency: order.currency,
         paid: false,
@@ -207,6 +224,8 @@ export async function getPriceFromOrder(order: IOrder, product?: IProduct[])
 
 export async function getProductsByOrder(order: IOrder)
 {
+    if (!order.products)
+        return [];
     return ProductModel.find({
         id: {
             $in: [...order.products.map(product => product.product_id)]
@@ -216,6 +235,8 @@ export async function getProductsByOrder(order: IOrder)
 
 export function createMapProductsFromOrder(order: IOrder)
 {
+    if (!order.products)
+        return new Map();
     const a = new Map<IProduct["id"], {
         product_id: IProduct["id"],
         configurable_options?: Array<{
