@@ -1,6 +1,5 @@
-import { Request, Response } from "express"
-import Header from "../General/Header"
-import UseStyles from "../General/UseStyles"
+import { Request, Response } from "express";
+import Header from "../General/Header";
 
 export default async function FallbackTemplate({
     req,
