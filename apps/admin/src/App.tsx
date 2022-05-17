@@ -31,6 +31,7 @@ import EditPromotionCode from './components/promotion_codes/Edit';
 import ListQuotes from './components/quotes/List';
 import CreateQuote from './components/quotes/Create';
 import EditQuote from './components/quotes/Edit';
+import { ShowCustomer } from './components/customers/Show';
 
 function App()
 {
@@ -38,7 +39,7 @@ function App()
     <>
       <Admin dashboard={Dashboard} authProvider={authProvider} dataProvider={dataProvider}>
         <Resource name="categories" list={ListCategory} create={CreateCategory} edit={EditCategory} />
-        <Resource name="customers" list={CustomerList} create={CreateCustomer} edit={EditCustomer} />
+        <Resource name="customers" list={CustomerList} create={CreateCustomer} edit={EditCustomer} show={ShowCustomer} />
         <Resource name="invoices" list={InvoicesList} create={CreateInvoices} edit={EditInvoices} />
         <Resource name="products" list={ListProducts} create={CreateProducts} edit={EditProducts} />
         <Resource name="orders" list={OrderList} create={CreateOrders} edit={EditOrders} />

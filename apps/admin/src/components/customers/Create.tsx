@@ -1,5 +1,7 @@
 import { currencyCodes } from "lib/Currencies";
 import { Create, FormTab, PasswordInput, SelectInput, TabbedForm, TextInput } from "react-admin";
+//@ts-ignore
+import MarkdownInput from 'ra-input-markdown';
 
 export const CreateCustomer = (props: any) =>
 (
@@ -11,6 +13,7 @@ export const CreateCustomer = (props: any) =>
                 <TextInput label="Email" required={true} source="personal.email" />
                 <PasswordInput label="Password" required={true} source="password" />
                 <TextInput label="Phone number" required={true} source="personal.phone" />
+                <MarkdownInput source="notes" />
             </FormTab>
             <FormTab label="Billing">
                 <TextInput label="Company" required={false} source="billing.company" />
