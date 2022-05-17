@@ -2,6 +2,7 @@ import stripe from "stripe";
 import { Company_Currency, DebugMode, Full_Domain, Stripe_SK_Live, Stripe_SK_Test } from "../Config";
 import CustomerModel from "../Database/Models/Customers/Customer.model";
 import InvoiceModel from "../Database/Models/Invoices.model";
+import { ICreateCreditIntentOptions } from "interfaces/Stripe.interface";
 import TransactionsModel from "../Database/Models/Transactions.model";
 import { sendEmail } from "../Email/Send";
 import NewTransactionTemplate from "../Email/Templates/Transaction/NewTransaction.template";
@@ -35,10 +36,26 @@ const Stripe = new stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
         });
 })();
 
-
-
 const cacheIntents = new Map<string, stripe.Response<stripe.PaymentIntent>>();
 const cacheSetupIntents = new Map<string, stripe.Response<stripe.SetupIntent>>();
+
+
+export const createCreditIntent = async ({
+    amount,
+    currency,
+    customer,
+}: ICreateCreditIntentOptions) =>
+{
+    const intent = await Stripe.paymentIntents.create({
+        amount: 0,
+        currency: Company_Currency,
+        payment_method_types: ["card"],
+        confirm: true,
+        return_url: `${Full_Domain}/v2/payments/stripe/webhook`,
+    });
+    cacheIntents.set(intent.id, intent);
+    return intent;
+}
 
 // Create a method that will create a payment intent from an order
 export const CreatePaymentIntent = async (invoice: IInvoice) =>
