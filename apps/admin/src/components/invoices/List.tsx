@@ -69,7 +69,7 @@ export const InvoicesList = (props: any) => (
             <EditButton />
             {/* @ts-ignore */}
             <PDFButton />
-            {/* <EditButton redirect={""} /> */}
+            {/* <Edit mutationMode="pessimistic"Button redirect={""} /> */}
         </Datagrid>
     </List>
 );

@@ -5,7 +5,7 @@ import MarkdownInput from 'ra-input-markdown';
 
 export const EditCustomer = (props: any) =>
 (
-    <Edit {...props}>
+    <Edit mutationMode="pessimistic" {...props}>
         <TabbedForm>
             <FormTab label="Personal">
                 <TextInput label="First name" required={true} source="personal.first_name" />

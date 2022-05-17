@@ -29,7 +29,7 @@ import RenderFullName from "../../lib/RenderFullName";
 export default function EditQuote(props: any)
 {
     return (
-        <Edit {...props}>
+        <Edit mutationMode="pessimistic" {...props}>
             <TabbedForm>
                 <FormTab label="General">
                     <ReferenceInput filterToQuery={(searchText: string) => ({

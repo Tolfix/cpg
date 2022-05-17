@@ -12,7 +12,7 @@ import
 
 export const Edit_configurable_options = (props: any) =>
 (
-    <Edit {...props}>
+    <Edit mutationMode="pessimistic" {...props}>
         <TabbedForm>
             <FormTab label="General">
                 <TextInput label="Name" required={true} source="name" />

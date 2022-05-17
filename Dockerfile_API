@@ -48,6 +48,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 LABEL author="Tolfix" maintainer="support@tolfix.com"
 
 ENV PLUGINS "[]"
+ENV DISABLE_JSON_ERROR "true"
 
 EXPOSE 3001
 

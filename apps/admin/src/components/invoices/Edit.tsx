@@ -15,7 +15,7 @@ import { currencyCodes } from "lib/Currencies";
 import RenderFullName from "../../lib/RenderFullName";
 export const EditInvoices = (props: any) =>
 (
-    <Edit {...props}>
+    <Edit mutationMode="pessimistic" {...props}>
         <TabbedForm>
 
             <FormTab label="General">
