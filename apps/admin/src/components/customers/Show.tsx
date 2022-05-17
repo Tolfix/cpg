@@ -18,9 +18,9 @@ export const ShowCustomer = (props: any) =>
                     <TextField label="Id" source="id" />
                     <TextField label="First name" source="personal.first_name" />
                     <TextField label="Last name" source="personal.last_name" />
-                    <TextField label="Notes" source="notes" />
                     <TextField label="Email" source="personal.email" />
                     <TextField label="Phone" source="personal.phone" />
+                    <TextField label="Notes" source="notes" />
                 </Tab>
                 <Tab label="Billing">
                     <TextField label="Company" source="billing.company" />
