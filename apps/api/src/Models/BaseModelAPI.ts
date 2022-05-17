@@ -103,14 +103,14 @@ export default class BaseModelAPI<IModel extends { uid: string }>
             return obj;
         }
 
-        let d = removeKeys(data, ["_id"]);
+        const newData = removeKeys(data, ["_id"]);
 
         return this.iModel.findOneAndUpdate({
             $or: [
                 { id: uid },
                 { uid: uid }
             ]
-        }, d);
+        }, newData);
     }
 
     public removeByUid(uid: IModel["uid"])
