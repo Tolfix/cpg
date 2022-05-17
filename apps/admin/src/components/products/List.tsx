@@ -19,7 +19,7 @@ export const ListProducts = (props: any) => (
             <NumberField label="Type" source="payment_type" />
             <NumberField label="Recurring" source="recurring_method" />
             <NumberField label="Setup Fee" source="setup_fee" />
-            <EditButton />
+            <Edit mutationMode="pessimistic" Button />
         </Datagrid>
     </List>
 );

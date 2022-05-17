@@ -3,7 +3,7 @@ import { Edit, FormTab, PasswordInput, AutocompleteInput, TabbedForm, TextInput 
 
 export const EditCustomer = (props: any) =>
 (
-    <Edit {...props}>
+    <Edit mutationMode="pessimistic" {...props}>
         <TabbedForm>
             <FormTab label="Personal">
                 <TextInput label="First name" required={true} source="personal.first_name" />

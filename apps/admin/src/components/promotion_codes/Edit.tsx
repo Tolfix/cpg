@@ -11,7 +11,7 @@ import { AutocompleteArrayInput, BooleanInput, Edit, FormTab, NumberInput, Refer
 export default function EditPromotionCode(props: any)
 {
     return (
-        <Edit {...props}>
+        <Edit mutationMode="pessimistic" {...props}>
             <TabbedForm>
                 <FormTab label="General">
                     <TextInput label="Name" source="name" />

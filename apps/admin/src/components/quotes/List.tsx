@@ -50,7 +50,7 @@ export default function ListQuotes(props: any)
                 <TextField label="Currency" source="currency" />
                 <BooleanField label="Accepted" source="accepted" />
                 <BooleanField label="Declined" source="declined" />
-                <EditButton />
+                <Edit mutationMode="pessimistic" Button />
             </Datagrid>
         </List>
     )

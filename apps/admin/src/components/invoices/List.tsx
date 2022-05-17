@@ -66,10 +66,10 @@ export const InvoicesList = (props: any) => (
                     <ChipField source="id" />
                 </SingleFieldList>
             </ReferenceArrayField>
-            <EditButton />
+            <Edit mutationMode="pessimistic" Button />
             {/* @ts-ignore */}
             <PDFButton />
-            {/* <EditButton redirect={""} /> */}
+            {/* <Edit mutationMode="pessimistic"Button redirect={""} /> */}
         </Datagrid>
     </List>
 );

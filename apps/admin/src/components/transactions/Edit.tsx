@@ -3,7 +3,7 @@ import { DateInput, Edit, FormDataConsumer, FormTab, NumberInput, ReferenceInput
 
 export const EditTrans = (props: any) =>
 (
-    <Edit {...props}>
+    <Edit mutationMode="pessimistic" {...props}>
         <TabbedForm>
             <FormTab label="Info">
                 <AutocompleteInput required={true} source="statement" choices={[

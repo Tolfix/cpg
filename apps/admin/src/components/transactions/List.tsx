@@ -46,7 +46,7 @@ export const ListTransactions = (props: any) =>
                 <TextField label="Currency" source="currency" />
                 <TextField label="Fees" source="fees" />
                 <TextField label="Method" source="payment_method" />
-                <EditButton />
+                <Edit mutationMode="pessimistic" Button />
             </Datagrid>
         </List>
     )

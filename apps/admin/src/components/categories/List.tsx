@@ -10,7 +10,7 @@ export const ListCategory = (props: any) =>
                 <TextField label="Name" source="name" />
                 <RichTextField label="Description" source="description" />
                 <BooleanField label="Private" source="private" />
-                <EditButton />
+                <Edit mutationMode="pessimistic" Button />
             </Datagrid>
         </List>
     )
