@@ -42,7 +42,7 @@ export const OrderList = (props: any) => (
                     <ChipField source="id" />
                 </SingleFieldList>
             </ReferenceArrayField>
-            <Edit mutationMode="pessimistic" Button />
+            <EditButton />
         </Datagrid>
     </List>
 );

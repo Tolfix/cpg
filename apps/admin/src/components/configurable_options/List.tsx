@@ -25,7 +25,7 @@ export const configurable_options_List = (props: any) =>
                         <TextField source="price" />
                     </Datagrid>
                 </ArrayField>
-                <Edit mutationMode="pessimistic" Button />
+                <EditButton />
             </Datagrid>
         </List>
     );

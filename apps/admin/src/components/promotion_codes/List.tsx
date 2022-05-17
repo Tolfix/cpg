@@ -39,7 +39,7 @@ export default function ListPromotionCodes(props: any)
                         <ChipField source="name" />
                     </SingleFieldList>
                 </ReferenceArrayField>
-                <Edit mutationMode="pessimistic" Button />
+                <EditButton />
             </Datagrid>
         </List>
     )

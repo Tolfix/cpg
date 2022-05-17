@@ -66,7 +66,7 @@ export const InvoicesList = (props: any) => (
                     <ChipField source="id" />
                 </SingleFieldList>
             </ReferenceArrayField>
-            <Edit mutationMode="pessimistic" Button />
+            <EditButton />
             {/* @ts-ignore */}
             <PDFButton />
             {/* <Edit mutationMode="pessimistic"Button redirect={""} /> */}
