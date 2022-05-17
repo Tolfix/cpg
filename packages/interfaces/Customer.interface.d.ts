@@ -29,9 +29,29 @@ export interface ICustomer
     profile_picture: IImage["id"] | null;
     currency: TPaymentCurrency;
     notes: string;
+    /**
+     * Here we store credits the customer has issued.
+     * It will be used to invoices to auto pay the customer.
+     */
+    credits: Array<ICreditCustomer>;
     extra: {
         [key: string]: any;
     };
+}
+
+/**
+ * Credit will contain the amount of credits the customer has
+ * it will have property of amount which will the amount of credits
+ * then property of currency to handle exchange
+ * 
+ * It should also have a optional property of invoice_id
+ * which it can check which invoice it will be used, if undefined we use 
+ * it on any invoice the customer needs to pay
+ */
+export interface ICreditCustomer
+{
+    amount: number;
+    currency: TPaymentCurrency;
 }
 
 export interface ICustomerMethods
