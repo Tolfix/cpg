@@ -17,9 +17,17 @@ export default class BaseModelAPI<IModel extends { uid: string }>
 
     public create(data: (IModel)): Promise<IModel>
     {
-        data.uid = this.idFunction();
-        const a = new this.iModel(data)
-        return a.save();
+        try
+        {
+
+            data.uid = this.idFunction();
+            const a = new this.iModel(data)
+            return a.save();
+        }
+        catch (error)
+        {
+            return Promise.reject(error);
+        }
     }
 
     public findByUid(uid: IModel["uid"]): Promise<IModel | []>
@@ -78,9 +86,6 @@ export default class BaseModelAPI<IModel extends { uid: string }>
         data: IModel
     ): Promise<IModel>
     {
-        if (!uid || uid === "undefined")
-            return Promise.reject("No uid provided");
-
         // The data should be filter, thus meaning we will delete the objects _id to ensure
         // it doesn't complain
         // It has to go through deep search and delete
@@ -102,39 +107,58 @@ export default class BaseModelAPI<IModel extends { uid: string }>
 
             return obj;
         }
-
-        const newData = removeKeys(data, ["_id"]);
-
-        return this.iModel.findOneAndUpdate({
-            $or: [
-                { id: uid },
-                { uid: uid }
-            ]
-        }, newData);
-    }
-
-    public removeByUid(uid: IModel["uid"])
-    {
-        if (!uid || uid === "undefined")
-            return Promise.resolve([]);
-        return new Promise((resolve, reject) =>
+        try
         {
-            this.iModel.deleteMany({
+
+            if (!uid || uid === "undefined")
+                return Promise.reject("No uid provided");
+
+
+            const newData = removeKeys(data, ["_id"]);
+
+            return this.iModel.findOneAndUpdate({
                 $or: [
                     { id: uid },
                     { uid: uid }
                 ]
-            }, (err: any) =>
+            }, newData);
+        }
+        catch (error)
+        {
+            return Promise.reject(error);
+        }
+    }
+
+    public removeByUid(uid: IModel["uid"])
+    {
+        try
+        {
+
+            if (!uid || uid === "undefined")
+                return Promise.resolve([]);
+            return new Promise((resolve, reject) =>
             {
-                if (err)
+                this.iModel.deleteMany({
+                    $or: [
+                        { id: uid },
+                        { uid: uid }
+                    ]
+                }, (err: any) =>
                 {
-                    reject(err);
-                }
-                else
-                {
-                    resolve(err);
-                }
+                    if (err)
+                    {
+                        reject(err);
+                    }
+                    else
+                    {
+                        resolve(err);
+                    }
+                });
             });
-        });
+        }
+        catch (error)
+        {
+            return Promise.reject(error);
+        }
     }
 }
