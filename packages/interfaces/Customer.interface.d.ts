@@ -1,5 +1,6 @@
 import { TPaymentCurrency } from "./types/Currencies";
 import { IImage } from "./Images.interface";
+import { IInvoice } from "./Invoice.interface";
 
 /**
  * @typedef Customer
@@ -32,6 +33,9 @@ export interface ICustomer
     /**
      * Here we store credits the customer has issued.
      * It will be used to invoices to auto pay the customer.
+     * 
+     * Credits can also be added if the customer has paid a invoice but was too much,
+     * then we as a company owes the customer money, thus we add credit.
      */
     credits: Array<ICreditCustomer>;
     status: "active" | "inactive";
@@ -51,8 +55,20 @@ export interface ICustomer
  */
 export interface ICreditCustomer
 {
+    id: string;
+
     amount: number;
+    /**
+     * Default to ""
+     */
+    notes: string;
     currency: TPaymentCurrency;
+
+    /**
+     * If this is not undefined, we assume it wants to be used on a invoice
+     * Otherwise this credit can be used for something else.
+     */
+    invoice_id?: IInvoice["id"];
 }
 
 export interface ICustomerMethods
