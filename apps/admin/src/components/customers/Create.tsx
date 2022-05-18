@@ -13,6 +13,10 @@ export const CreateCustomer = (props: any) =>
                 <TextInput label="Email" required={true} source="personal.email" />
                 <PasswordInput label="Password" required={true} source="password" />
                 <TextInput label="Phone number" required={true} source="personal.phone" />
+                <SelectInput label="Status" source="status" choices={[
+                    { id: "active", name: "Active" },
+                    { id: "inactive", name: "Inactive" },
+                ]} />
                 <MarkdownInput source="notes" />
             </FormTab>
             <FormTab label="Billing">
