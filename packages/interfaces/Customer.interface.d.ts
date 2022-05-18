@@ -34,6 +34,7 @@ export interface ICustomer
      * It will be used to invoices to auto pay the customer.
      */
     credits: Array<ICreditCustomer>;
+    status: "active" | "inactive";
     extra: {
         [key: string]: any;
     };

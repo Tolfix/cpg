@@ -138,7 +138,7 @@ export default class BaseModelAPI<IModel extends { uid: string }>
                 return Promise.resolve([]);
             return new Promise((resolve, reject) =>
             {
-                this.iModel.deleteMany({
+                this.iModel.deleteOne({
                     $or: [
                         { id: uid },
                         { uid: uid }
