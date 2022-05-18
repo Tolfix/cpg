@@ -21,9 +21,6 @@ import "./Events/Node.events";
 !CLI_MODE ? Logger.info(`Loading ./Server`) : null;
 !CLI_MODE ? import("./Server/Server") : null;
 
-DebugMode ? Logger.info(`Loading ./Database/Postgres`) : null;
-DebugMode ? import("./Database/Postgres") : null;
-
 !CLI_MODE ? Logger.info(`Loading ./Handlers/CronHandler`) : null;
 !CLI_MODE ? import("./Handlers/Cron.handler") : null;
 
