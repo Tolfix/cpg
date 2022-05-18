@@ -9,6 +9,10 @@ import { ChargeCustomer } from "../../Payments/Stripe";
 import { InvoiceLateReport, InvoiceNotifiedReport } from "../../Email/Reports/InvoiceReport";
 import mainEvent from "../../Events/Main.event";
 import { getDate } from "lib/Time";
+import { convertCurrency } from "lib/Currencies";
+import { getInvoiceByIdAndMarkAsPaid } from "../../Lib/Invoices/MarkAsPaid";
+import sendEmailOnTransactionCreation from "../../Lib/Transaction/SendEmailOnCreation";
+import createCredit from "../../Lib/Customers/createCredit";
 
 export const getDates30DaysAgo = () =>
 {
@@ -35,7 +39,7 @@ export function cron_notifyInvoices()
         },
         notified: false,
         status: {
-            $not: /fraud|cancelled|draft|refunded/g
+            $not: /fraud|cancelled|draft|refunded|paid/g
         }
     }).then(async (invoices) =>
     {
@@ -59,6 +63,116 @@ export function cron_notifyInvoices()
     });
 }
 
+export function cron_findCreditForInvoice()
+{
+    return new Promise((resolve) =>
+    {
+        // Trigger if a invoice has stripe_setup_intent enabled and is due in the next 2 weeks.
+        InvoiceModel.find({
+            "dates.due_date": {
+                $in: [...(getDatesAhead(DebugMode ? 60 : 14))]
+            },
+            status: {
+                $not: /fraud|cancelled|draft|refunded|paid/g
+            },
+            paid: false,
+        }).then(async (invoices) =>
+        {
+            for await (const invoice of invoices)
+            {
+                // Get customer
+                const Customer = await CustomerModel.findOne({
+                    $or: [
+                        { id: invoice.customer_uid },
+                        { uid: invoice.customer_uid }
+                    ]
+                });
+                if (!Customer)
+                    continue;
+
+                // Check if customer has credits
+                if (Customer.credits.length <= 0)
+                    continue;
+
+                // check if the we got a credit linked to this invoice
+                const credit = Customer.credits.find(c => c.invoice_id === invoice.id);
+                if (!credit)
+                    continue;
+
+                // Check if credit has the same currency, if not we convert it to invoice currency
+                if (credit.currency !== invoice.currency)
+                {
+                    // Convert credit.amount to invoice currency
+                    const newPrice = await convertCurrency(credit.amount, credit.currency, invoice.currency);
+                    credit.amount = newPrice;
+                    credit.currency = invoice.currency;
+                }
+
+                // Should this process be done when we create invoice?
+                // The customer won't know credit has been added.. 
+                // We can either send a new invoice with the update
+                // Or we remove this and add it on invoice creation, and just assume they should always
+                // have the right amount of credits.
+                // Check if the credit is enough to cover the invoice
+                if (credit.amount <= invoice.amount)
+                    continue;
+                // if (credit.amount <= invoice.amount)
+                // {
+                //     // Assuming it wasn't enough, instead we add discount to the invoice
+                //     // We will do so by adding a item to the invoice
+                //     invoice.items.push({
+                //         notes: "- DISCOUNT CREDIT",
+                //         amount: -(credit.amount),
+                //         quantity: 1,
+                //     });
+                //     invoice.amount -= credit.amount;
+                //     // Now we delete the credit from the customer
+                //     Customer.credits = Customer.credits.filter(c => c.id !== credit.id);
+                //     // And we save the customer
+                //     await Customer.save();
+                //     // And we save the invoice
+                //     await invoice.save();
+                //     // Assuming we are done we continue
+                //     continue;
+                // }
+
+                // If we are here, we assume the credit is enough to cover the invoice
+                // Then we will just mark the invoice as paid and create a transaction
+                const {
+                    invoice: paidInvoice,
+                    transaction
+                } = await getInvoiceByIdAndMarkAsPaid(invoice.id, true);
+                // And we will send an email to the customer
+                await sendEmailOnTransactionCreation(transaction);
+                paidInvoice.transactions.push(transaction.id);
+                await paidInvoice.save();
+
+                // Now we delete the old credit from the customer
+                Customer.credits = Customer.credits.filter(c => c.id !== credit.id);
+
+                // Now we check how much credit we got left
+                const remainingCredit = credit.amount - invoice.amount;
+                // If we have remaining credit, we will add it to the customer
+                if (remainingCredit > 0)
+                {
+                    // We will add the remaining credit to the customer
+                    Customer.credits.push(
+                        createCredit(
+                            remainingCredit,
+                            credit.currency,
+                            `Left overs from invoice #${paidInvoice.id}`
+                        )
+                    );
+                }
+
+                // And we save the customer
+                await Customer.save();
+            }
+            resolve(true);
+        });
+    })
+}
+
 export function cron_chargeStripePayment()
 {
     // Trigger if a invoice has stripe_setup_intent enabled and is due in the next 2 weeks.
@@ -67,7 +181,7 @@ export function cron_chargeStripePayment()
             $in: [...(getDatesAhead(DebugMode ? 60 : 14))]
         },
         status: {
-            $not: /fraud|cancelled|draft|refunded/g
+            $not: /fraud|cancelled|draft|refunded|paid/g
         },
         paid: false,
         // Idk why I thought of doing this, this is customer only...
@@ -135,7 +249,7 @@ export function cron_notifyLateInvoicePaid()
         },
         paid: false,
         status: {
-            $not: /fraud|cancelled|draft|refunded/g
+            $not: /fraud|cancelled|draft|refunded|paid/g
         }
     }).then(async (invoices) =>
     {
