@@ -1,5 +1,5 @@
 import { currencyCodes } from "lib/Currencies";
-import { Create, FormTab, PasswordInput, SelectInput, TabbedForm, TextInput } from "react-admin";
+import { ArrayInput, Create, FormTab, NumberInput, PasswordInput, SelectInput, SimpleFormIterator, TabbedForm, TextInput } from "react-admin";
 //@ts-ignore
 import MarkdownInput from 'ra-input-markdown';
 
@@ -32,6 +32,17 @@ export const CreateCustomer = (props: any) =>
                 {
                     return { id: e, name: e };
                 })} />
+
+                <ArrayInput required={false} source="credits">
+                    <SimpleFormIterator>
+                        <NumberInput label="Amount" source="amount" />
+                        <TextInput label="Notes" source="notes" />
+                        <SelectInput label="Currency" source="currency" choices={currencyCodes.map(e =>
+                        {
+                            return { id: e, name: e };
+                        })} />
+                    </SimpleFormIterator>
+                </ArrayInput>
             </FormTab>
         </TabbedForm>
     </Create>
