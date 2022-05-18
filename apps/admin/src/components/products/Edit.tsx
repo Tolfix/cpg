@@ -15,7 +15,7 @@ import { currencyCodes } from "lib/Currencies";
 
 export const EditProducts = (props: any) =>
 (
-    <Edit {...props}>
+    <Edit mutationMode="pessimistic" {...props}>
         <TabbedForm>
             <FormTab label="General">
                 {/* @ts-ignore */}

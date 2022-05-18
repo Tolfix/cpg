@@ -1,9 +1,11 @@
 import { currencyCodes } from "lib/Currencies";
-import { Edit, FormTab, PasswordInput, AutocompleteInput, TabbedForm, TextInput } from "react-admin";
+import { Edit, FormTab, PasswordInput, AutocompleteInput, TabbedForm, TextInput, SelectInput } from "react-admin";
+//@ts-ignore
+import MarkdownInput from 'ra-input-markdown';
 
 export const EditCustomer = (props: any) =>
 (
-    <Edit {...props}>
+    <Edit mutationMode="pessimistic" {...props}>
         <TabbedForm>
             <FormTab label="Personal">
                 <TextInput label="First name" required={true} source="personal.first_name" />
@@ -11,6 +13,11 @@ export const EditCustomer = (props: any) =>
                 <TextInput label="Email" required={true} source="personal.email" />
                 <PasswordInput label="Password" required={true} source="password" />
                 <TextInput label="Phone number" required={true} source="personal.phone" />
+                <SelectInput label="Status" source="status" choices={[
+                    { id: "active", name: "Active" },
+                    { id: "inactive", name: "Inactive" },
+                ]} />
+                <MarkdownInput source="notes" />
             </FormTab>
             <FormTab label="Billing">
                 <TextInput label="Company" required={false} source="billing.company" />

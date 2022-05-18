@@ -28,6 +28,8 @@ export interface ICustomer
     createdAt: Date;
     profile_picture: IImage["id"] | null;
     currency: TPaymentCurrency;
+    notes: string;
+    status: "active" | "inactive";
     extra: {
         [key: string]: any;
     };

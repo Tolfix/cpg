@@ -14,7 +14,7 @@ import RenderFullName from "../../lib/RenderFullName";
 
 export const EditOrders = (props: any) =>
 (
-    <Edit {...props}>
+    <Edit mutationMode="pessimistic" {...props}>
         <TabbedForm>
             <FormTab label="General">
                 <ReferenceInput filterToQuery={searchText => ({

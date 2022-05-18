@@ -76,11 +76,6 @@ const CustomerSchema = new Schema
                 required: true,
             },
 
-            createdAt: {
-                type: Date,
-                default: Date.now,
-            },
-
             profile_picture: {
                 type: Number,
                 ref: "images",
@@ -97,6 +92,17 @@ const CustomerSchema = new Schema
                 type: Object,
                 required: false,
                 default: {},
+            },
+
+            notes: {
+                type: String,
+                default: "",
+            },
+
+            status: {
+                type: String,
+                enum: ["active", "inactive"],
+                default: "active",
             },
 
             currency: {
