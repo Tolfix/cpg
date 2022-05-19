@@ -24,7 +24,7 @@ export interface IProduct
     uid: `PROD_${string}`;
     name: string;
     description: string;
-    category_uid: ICategory["uid"];
+    category_uid: ICategory["id"];
     stock: number;
     BStock: boolean;
     hidden: boolean;
