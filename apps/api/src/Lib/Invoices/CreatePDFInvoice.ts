@@ -86,12 +86,18 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                         ||
                         Customer.billing.country.toLocaleLowerCase() === "sverige"
                     ) ? `
-                    <div style="display:inline-block;">    
-                        ${(Swish_Payee_Number && Customer.personal.phone) ? `
+                    <div style="display:inline-block;">
+                        ${(Swish_Payee_Number && Customer.personal.phone && invoice.amount !== 0) ? `
                         Swish
                         <div>
                             <img 
-                            src="data:image/png;base64,${await createSwishQRCode(Swish_Payee_Number, await convertCurrency((invoice.amount) + (invoice.amount) * (invoice.tax_rate / 100), invoice.currency, "SEK"), `OCR ${GetOCRNumber(invoice)}`)}" 
+                            src="data:image/png;base64,${await createSwishQRCode(
+                        Swish_Payee_Number,
+                        await convertCurrency(
+                            (invoice.amount) + (invoice.amount) * (invoice.tax_rate / 100),
+                            invoice.currency,
+                            "SEK"
+                        ), `OCR ${GetOCRNumber(invoice)}`)}" 
                             width="64">
                         </div>
                         ` : ''}
@@ -99,7 +105,7 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                         ` : ""}
                     <div style="display:inline-block;">
 
-                        ${(Paypal_Client_Secret && invoice.payment_method === "paypal") ? `
+                        ${(Paypal_Client_Secret && invoice.payment_method === "paypal" && invoice.amount !== 0) ? `
                         Paypal
                         <div>
                             <a href="${Full_Domain}/v2/paypal/pay/${invoice.uid}" target="_blank">
@@ -111,7 +117,7 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                     
                     <div style="display:inline-block;">
 
-                        ${(Stripe_PK_Public_Test && Stripe_SK_Test) || (Stripe_PK_Public && Stripe_SK_Live) ? `
+                        ${((Stripe_PK_Public_Test && Stripe_SK_Test) || (Stripe_PK_Public && Stripe_SK_Live) && invoice.amount !== 0) ? `
                         Credit Card
                         <div>
                             <a href="${Full_Domain}/v2/stripe/pay/${invoice.uid}" target="_blank">
@@ -135,13 +141,15 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
                     "quantity": item.quantity,
                     "description": item.notes,
                     "tax-rate": invoice.tax_rate,
-                    "price": item.amount.toFixed(2)
+                    "price": item.amount?.toFixed(2)
                 }
             }),
             "bottomNotice": `
             
             `,
         };
+
+        console.log(data);
 
         if (
             Customer.billing.country.toLowerCase() === "sweden" ||
@@ -157,10 +165,21 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
             // @ts-ignore
             data["images"]["background"] = PDF_Template_Url;
 
-        //@ts-ignore
-        await easyinvoice.createInvoice(data, (result: { pdf: any; }) =>
+        console.log(`hello, we are here!`)
+
+        try
         {
-            return resolve(result.pdf);
-        });
+            //@ts-ignore
+            await easyinvoice.createInvoice(data, (result: { pdf: any; }) =>
+            {
+                console.log(result);
+                return resolve(result.pdf);
+            });
+        }
+        catch (error)
+        {
+            console.log(error)
+            reject(`Uh oh,`)
+        }
     })
 }
