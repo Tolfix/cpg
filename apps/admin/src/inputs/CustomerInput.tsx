@@ -18,8 +18,7 @@ export default function CustomerInput({
                 <AutocompleteInput
                     source="customers"
                     label={label}
-                    required={required}
-                    allowEmpty={false}
+                    isRequired={required}
                     optionText={RenderFullName}
                 />
             )

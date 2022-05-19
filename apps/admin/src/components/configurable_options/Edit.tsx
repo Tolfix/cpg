@@ -15,7 +15,7 @@ export const Edit_configurable_options = (props: any) =>
     <Edit mutationMode="pessimistic" {...props}>
         <TabbedForm>
             <FormTab label="General">
-                <TextInput label="Name" required={true} source="name" />
+                <TextInput label="Name" isRequired={true} source="name" />
                 {/* @ts-ignore */}
                 <ReferenceArrayInput filterToQuery={searchText => ({
                     "name": searchText,
@@ -23,15 +23,15 @@ export const Edit_configurable_options = (props: any) =>
                     <AutocompleteArrayInput
                         source="products"
                         label="Products"
-                        required={true}
-                        allowEmpty={false}
+                        isRequired={true}
+
                         optionText="name"
                     />
                 </ReferenceArrayInput>
-                <ArrayInput required={true} source="options">
+                <ArrayInput isRequired={true} source="options">
                     <SimpleFormIterator>
-                        <TextInput required={true} label="Name" source="name" />
-                        <NumberInput required={true} label="Price" source="price" />
+                        <TextInput isRequired={true} label="Name" source="name" />
+                        <NumberInput isRequired={true} label="Price" source="price" />
                     </SimpleFormIterator>
                 </ArrayInput>
             </FormTab>

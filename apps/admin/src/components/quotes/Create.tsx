@@ -40,7 +40,7 @@ export default function CreateQuote(props: any)
                         <AutocompleteArrayInput
                             source="promotion_codes"
                             label="Promotion codes"
-                            allowEmpty={false}
+
                             optionText="name"
                         />
                     </ReferenceArrayInput>

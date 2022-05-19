@@ -26,12 +26,12 @@ export const CreateInvoices = (props: any) =>
                     <AutocompleteInput
                         source="customers"
                         label="Customer"
-                        required={true}
-                        allowEmpty={false}
+                        isRequired={true}
+
                         optionText={RenderFullName}
                     />
                 </ReferenceArrayInput>
-                <AutocompleteInput required={true} source="status" choices={[
+                <AutocompleteInput isRequired={true} source="status" choices={[
                     { id: "draft", name: "draft" },
                     { id: "refunded", name: "refunded" },
                     { id: "collections", name: "collections" },
@@ -39,7 +39,7 @@ export const CreateInvoices = (props: any) =>
                     { id: "active", name: "active" },
                     { id: "pending", name: "pending" },
                 ]} />
-                <AutocompleteInput required={true} source="payment_method" choices={[
+                <AutocompleteInput isRequired={true} source="payment_method" choices={[
                     { id: "none", name: "none" },
                     { id: "manual", name: "manual" },
                     { id: "bank", name: "bank" },
@@ -47,12 +47,12 @@ export const CreateInvoices = (props: any) =>
                     { id: "credit_card", name: "credit_card" },
                     { id: "swish", name: "swish" },
                 ]} />
-                <NumberInput required={true} label="Amount" source="amount" />
-                <AutocompleteInput required={true} source="currency" choices={currencyCodes.map(e =>
+                <NumberInput isRequired={true} label="Amount" source="amount" />
+                <AutocompleteInput isRequired={true} source="currency" choices={currencyCodes.map(e =>
                 {
                     return { id: e, name: e };
                 })} />
-                <NumberInput min={0} max={100} required={true} label="Tax Rate" source="tax_rate" />
+                <NumberInput min={0} max={100} isRequired={true} label="Tax Rate" source="tax_rate" />
                 <BooleanInput label="Paid" defaultValue={false} source="paid" />
                 <BooleanInput label="Notified" defaultValue={false} source="notified" />
             </FormTab>
@@ -64,10 +64,10 @@ export const CreateInvoices = (props: any) =>
 
                 <MarkdownInput source="notes" />
 
-                <ArrayInput required={true} source="items">
+                <ArrayInput isRequired={true} source="items">
                     <SimpleFormIterator>
                         <MarkdownInput source="notes" />
-                        <NumberInput required={true} label="Amount" source="amount" />
+                        <NumberInput isRequired={true} label="Amount" source="amount" />
                         <NumberInput label="Quantity" defaultValue={1} source="quantity" />
                         {/* @ts-ignore */}
                         <ReferenceArrayInput filterToQuery={searchText => ({
@@ -76,8 +76,8 @@ export const CreateInvoices = (props: any) =>
                             <AutocompleteInput
                                 source="product"
                                 label="Product"
-                                required={true}
-                                allowEmpty={false}
+                                isRequired={true}
+
                                 optionText={"name"}
                             />
                         </ReferenceArrayInput>

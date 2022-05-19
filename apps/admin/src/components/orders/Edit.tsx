@@ -17,14 +17,14 @@ export const EditOrders = (props: any) =>
     <Edit mutationMode="pessimistic" {...props}>
         <TabbedForm>
             <FormTab label="General">
-                <ReferenceInput filterToQuery={searchText => ({
+                <ReferenceInput filterToQuery={(searchText: any) => ({
                     "personal.first_name": searchText,
                 })} perPage={100} source="customer_uid" reference="customers">
                     <AutocompleteInput
                         source="customers"
                         label="Customers"
-                        required={true}
-                        // allowEmpty={false}
+                        isRequired={true}
+                        // 
                         optionText={RenderFullName}
                     />
                 </ReferenceInput>
@@ -34,8 +34,8 @@ export const EditOrders = (props: any) =>
                             <AutocompleteInput
                                 source="products"
                                 label="Products"
-                                required={true}
-                                allowEmpty={false}
+                                isRequired={true}
+
                                 optionText="name"
                             />
                         </ReferenceInput>
@@ -57,7 +57,7 @@ export const EditOrders = (props: any) =>
                     )}
                 </FormDataConsumer>
 
-                <AutocompleteInput required={true} source="order_status" choices={[
+                <AutocompleteInput isRequired={true} source="order_status" choices={[
                     { id: "active", name: "active" },
                     { id: "pending", name: "pending" },
                     { id: "fruad", name: "fruad" },
@@ -65,7 +65,7 @@ export const EditOrders = (props: any) =>
                 ]} />
             </FormTab>
             <FormTab label="Payments">
-                <AutocompleteInput required={true} source="payment_method" choices={[
+                <AutocompleteInput isRequired={true} source="payment_method" choices={[
                     { id: "none", name: "none" },
                     { id: "manual", name: "manual" },
                     { id: "bank", name: "bank" },
@@ -73,14 +73,14 @@ export const EditOrders = (props: any) =>
                     { id: "credit_card", name: "credit_card" },
                     { id: "swish", name: "swish" },
                 ]} />
-                <AutocompleteInput required={true} source="billing_type" choices={[
+                <AutocompleteInput isRequired={true} source="billing_type" choices={[
                     { id: "free", name: "free" },
                     { id: "one_time", name: "one_time" },
                     { id: "recurring", name: "recurring" },
                 ]} />
                 <FormDataConsumer>
                     {({ formData }) => formData.billing_type === "recurring" && (
-                        <AutocompleteInput required={false} source="billing_cycle" choices={[
+                        <AutocompleteInput isRequired={false} source="billing_cycle" choices={[
                             { id: "monthly", name: "monthly" },
                             { id: "quarterly", name: "quarterly" },
                             { id: "semi_annually", name: "semi_annually" },
@@ -90,7 +90,7 @@ export const EditOrders = (props: any) =>
                         ]} />
                     )}
                 </FormDataConsumer>
-                <AutocompleteInput required={true} source="currency" choices={currencyCodes.map(e =>
+                <AutocompleteInput isRequired={true} source="currency" choices={currencyCodes.map(e =>
                 {
                     return { id: e, name: e };
                 })} />

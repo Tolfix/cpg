@@ -8,7 +8,7 @@ export const CreateTransactions = (props: any) =>
     <Create {...props}>
         <TabbedForm>
             <FormTab label="Info">
-                <SelectInput required={true} source="statement" choices={[
+                <SelectInput isRequired={true} source="statement" choices={[
                     { id: "income", name: "income" },
                     { id: "expense", name: "expense" },
                 ]} defaultValue="income" />
@@ -21,8 +21,7 @@ export const CreateTransactions = (props: any) =>
                                 <AutocompleteInput
                                     source="customers"
                                     label="Customers"
-                                    required={formData.statement === "income"}
-                                    allowEmpty={false}
+                                    isRequired={formData.statement === "income"}
                                     optionText={RenderFullName}
                                 />
                             </ReferenceArrayInput>
@@ -32,7 +31,7 @@ export const CreateTransactions = (props: any) =>
                                 })} perPage={100} source="invoice_uid"
                                     reference="invoices" allowEmpty>
                                     <AutocompleteInput
-                                        required={formData.statement === "income"}
+                                        isRequired={formData.statement === "income"}
                                         optionText={(record) => record?.id?.toString() ?? ""} />
                                 </ReferenceArrayInput>
                             </div>
@@ -63,14 +62,14 @@ export const CreateTransactions = (props: any) =>
                         </>
                     }
                 </FormDataConsumer>
-                <NumberInput required={true} label="Amount" source="amount" />
-                <AutocompleteInput required={true} source="currency" choices={currencyCodes.map(e =>
+                <NumberInput isRequired={true} label="Amount" source="amount" />
+                <AutocompleteInput isRequired={true} source="currency" choices={currencyCodes.map(e =>
                 {
                     return { id: e, name: e };
                 })} />
-                <NumberInput required={true} label="Fees" source="fees" />
+                <NumberInput isRequired={true} label="Fees" source="fees" />
                 <DateInput label="Payed at" source="date" defaultValue={getDate()} />
-                <AutocompleteInput required={true} source="payment_method" choices={[
+                <AutocompleteInput isRequired={true} source="payment_method" choices={[
                     { id: "none", name: "none" },
                     { id: "manual", name: "manual" },
                     { id: "bank", name: "bank" },
