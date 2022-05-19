@@ -1,6 +1,26 @@
 import { Request, Response } from "express";
 import MongoFind from "../Lib/MongoFind";
+// The data should be filter, thus meaning we will delete the objects _id to ensure
+// it doesn't complain
+// It has to go through deep search and delete
+// So we need to recursively search for the object
+// So we create a method that takes data, and then deep search for _id and if we
+// find it we delete it from object
+// We then return the object
+function removeKeys(obj: any, keys: string[]): any
+{
+    if (Array.isArray(obj)) return obj.map(item => removeKeys(item, keys));
 
+    if (typeof obj === 'object' && obj !== null)
+    {
+        return Object.keys(obj).reduce((previousValue, key) =>
+        {
+            return keys.includes(key) ? previousValue : { ...previousValue, [key]: removeKeys(obj[key], keys) };
+        }, {});
+    }
+
+    return obj;
+}
 export default class BaseModelAPI<IModel extends { uid: string }>
 {
     private idFunction;
@@ -86,27 +106,7 @@ export default class BaseModelAPI<IModel extends { uid: string }>
         data: IModel
     ): Promise<IModel>
     {
-        // The data should be filter, thus meaning we will delete the objects _id to ensure
-        // it doesn't complain
-        // It has to go through deep search and delete
-        // So we need to recursively search for the object
-        // So we create a method that takes data, and then deep search for _id and if we
-        // find it we delete it from object
-        // We then return the object
-        function removeKeys(obj: any, keys: string[]): any
-        {
-            if (Array.isArray(obj)) return obj.map(item => removeKeys(item, keys));
 
-            if (typeof obj === 'object' && obj !== null)
-            {
-                return Object.keys(obj).reduce((previousValue, key) =>
-                {
-                    return keys.includes(key) ? previousValue : { ...previousValue, [key]: removeKeys(obj[key], keys) };
-                }, {});
-            }
-
-            return obj;
-        }
         try
         {
 
