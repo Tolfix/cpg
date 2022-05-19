@@ -1,8 +1,9 @@
 import { Application, Router } from "express";
-import { 
+import
+{
     Company_Currency,
-    Company_Website, DebugMode, Full_Domain, 
-    Stripe_PK_Public, Stripe_PK_Public_Test, 
+    Company_Website, DebugMode, Full_Domain,
+    Stripe_PK_Public, Stripe_PK_Public_Test,
     Stripe_SK_Live, Stripe_SK_Test, Stripe_Webhook_Secret
 } from "../../../../Config";
 import InvoiceModel from "../../../../Database/Models/Invoices.model";
@@ -15,7 +16,7 @@ const stripe = new Stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
     apiVersion: "2020-08-27",
 });
 
-export = StripeRouter; 
+export = StripeRouter;
 class StripeRouter
 {
     private server: Application;
@@ -29,7 +30,7 @@ class StripeRouter
         this.router.get("/pay/:invoiceId", async (req, res) =>
         {
             const invoiceId = req.params.invoiceId as any;
-            const invoice = await InvoiceModel.findOne( { uid: invoiceId } );
+            const invoice = await InvoiceModel.findOne({ uid: invoiceId });
             if (!invoice)
                 return APIError("Couldn't find invoice")(res);
 
@@ -38,10 +39,12 @@ class StripeRouter
 
             const intent = await CreatePaymentIntent(invoice);
 
-            const customer = await CustomerModel.findOne({ $or: [
-                { id: invoice.customer_uid },
-                { uid: invoice.customer_uid }
-            ] });
+            const customer = await CustomerModel.findOne({
+                $or: [
+                    { id: invoice.customer_uid },
+                    { uid: invoice.customer_uid }
+                ]
+            });
             const fAmount = parseInt((invoice.amount).toFixed(2));
             res.send(`
             <head>
@@ -101,7 +104,7 @@ class StripeRouter
                             </tr>
                             <tr>
                                 <td>Total</td>
-                                <td>${fAmount+fAmount*invoice.tax_rate/100} ${(!customer?.currency ? await Company_Currency() : customer?.currency ?? "sek").toUpperCase()}</td>
+                                <td>${fAmount + fAmount * invoice.tax_rate / 100} ${(!customer?.currency ? await Company_Currency() : customer?.currency ?? "sek").toUpperCase()}</td>
                             </tr>
                         </table>
 
@@ -200,7 +203,7 @@ class StripeRouter
         {
             const invoiceId = req.params.invoiceId;
             const payment_intent = req.query.payment_intent as string;
-            const invoice = await InvoiceModel.findOne( { id: invoiceId } );
+            const invoice = await InvoiceModel.findOne({ id: invoiceId });
             if (!invoice)
                 return APIError("Couldn't find invoice")(res);
 
@@ -221,13 +224,13 @@ class StripeRouter
                     status = intent.status;
                     markInvoicePaid(intent);
                     break;
-            
+
                 case 'processing':
                     message = "Payment processing. We'll update you when payment is received.";
                     href = await Company_Website();
                     status = intent.status;
                     break;
-            
+
                 case 'requires_payment_method':
                     message = 'Payment failed. Please try another payment method.';
                     href = `${Full_Domain}/v2/stripe/pay/${invoice.id}`;
@@ -235,7 +238,7 @@ class StripeRouter
                     // Redirect your user back to your payment page to attempt collecting
                     // payment again
                     break;
-            
+
                 default:
                     status = "failed";
                     message = 'Something went wrong.';
@@ -292,7 +295,7 @@ class StripeRouter
         this.router.get("/setup/:customer_uid", async (req, res) =>
         {
             const customer_uid = req.params.customer_uid;
-            const customer = await CustomerModel.findOne( { uid: customer_uid } );
+            const customer = await CustomerModel.findOne({ uid: customer_uid });
             if (!customer)
                 return APIError("Couldn't find customer")(res);
 
@@ -429,7 +432,13 @@ class StripeRouter
                 return APIError("No payment_intent")(res);
 
             const intent = await RetrieveSetupIntent(payment_intent);
-            const customer = await CustomerModel.findOne( { uid: intent.metadata?.customer_uid } );
+            const customer = await CustomerModel.findOne({
+                $or: [
+                    { uid: intent.metadata?.customer_uid },
+                    { id: intent.metadata?.customer_uid },
+                    { id: intent.metadata?.customer_id }
+                ]
+            });
             if (!customer)
                 return APIError("Couldn't find customer")(res);
 
@@ -447,19 +456,19 @@ class StripeRouter
                     await customer.save();
                     status = intent.status;
                     break;
-            
+
                 case 'processing':
                     message = "Payment processing. We'll update you when payment is received.";
                     href = await Company_Website();
                     status = intent.status;
                     break;
-            
+
                 case 'requires_payment_method':
                     message = 'Failed to process payment details. Please try another payment method.';
                     href = `${Full_Domain}/v2/stripe/setup/${customer.uid}`;
                     status = intent.status;
                     break;
-            
+
                 default:
                     status = "failed";
                     message = 'Something went wrong.';
@@ -522,7 +531,7 @@ class StripeRouter
             {
                 // @ts-ignore
                 event = stripe.webhooks.constructEvent(req.rawBody, sig, Stripe_Webhook_Secret);
-            } 
+            }
             catch (err)
             {
                 // @ts-ignore

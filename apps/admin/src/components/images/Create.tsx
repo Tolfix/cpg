@@ -1,6 +1,6 @@
 import
 {
-    Create, FileField, FileInput, FormTab,
+    Create, FormTab,
     TabbedForm,
 } from "react-admin";
 

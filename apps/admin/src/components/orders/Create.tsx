@@ -95,15 +95,6 @@ export const CreateOrders = (props: any) =>
                     return { id: e, name: e };
                 })} />
             </FormTab>
-            <FormTab label="Invoices">
-                {/* @ts-ignore */}
-                <ReferenceArrayInput filterToQuery={searchText => ({
-                    "id": searchText,
-                })} perPage={100} source="invoices" reference="invoices">
-                    <AutocompleteInput optionText={(record) => record?.id?.toString() ?? ""} />
-                </ReferenceArrayInput>
-
-            </FormTab>
         </TabbedForm>
     </Create>
 );

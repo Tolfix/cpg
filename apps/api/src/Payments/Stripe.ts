@@ -40,22 +40,22 @@ const cacheIntents = new Map<string, stripe.Response<stripe.PaymentIntent>>();
 const cacheSetupIntents = new Map<string, stripe.Response<stripe.SetupIntent>>();
 
 
-export const createCreditIntent = async ({
-    amount,
-    currency,
-    customer,
-}: ICreateCreditIntentOptions) =>
-{
-    const intent = await Stripe.paymentIntents.create({
-        amount: 0,
-        currency: Company_Currency,
-        payment_method_types: ["card"],
-        confirm: true,
-        return_url: `${Full_Domain}/v2/payments/stripe/webhook`,
-    });
-    cacheIntents.set(intent.id, intent);
-    return intent;
-}
+// export const createCreditIntent = async ({
+//     amount,
+//     currency,
+//     customer,
+// }: ICreateCreditIntentOptions) =>
+// {
+//     const intent = await Stripe.paymentIntents.create({
+//         amount: 0,
+//         currency: Company_Currency,
+//         payment_method_types: ["card"],
+//         confirm: true,
+//         return_url: `${Full_Domain}/v2/payments/stripe/webhook`,
+//     });
+//     cacheIntents.set(intent.id, intent);
+//     return intent;
+// }
 
 // Create a method that will create a payment intent from an order
 export const CreatePaymentIntent = async (invoice: IInvoice) =>

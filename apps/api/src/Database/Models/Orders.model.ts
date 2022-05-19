@@ -27,7 +27,7 @@ const OrderSchema = new Schema
             },
 
             customer_uid: {
-                type: String,
+                type: Number,
                 required: true,
             },
 
