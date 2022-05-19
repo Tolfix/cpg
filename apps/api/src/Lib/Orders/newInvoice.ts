@@ -147,7 +147,7 @@ export async function createInvoiceFromOrder(order: IOrder)
     // And remove the credit from the customer, and create a new credit of the rest
     // then we should also ensure to mark the invoice as paid later
     const credits = customer.credits.filter(e => !e.invoice_id);
-    if (credits.length > 0)
+    if (credits.length > 0 && !(true))
     {
         const invoiceAmount = items.reduce((acc, item) =>
         {
@@ -160,7 +160,7 @@ export async function createInvoiceFromOrder(order: IOrder)
         let totalCredit = 0;
         const usingCredits = new Map<string, number>();
         for await (const credit of credits)
-            if ((credit.amount + totalCredit) < invoiceAmount)
+            if ((credit.amount + totalCredit) <= invoiceAmount)
             {
                 usingCredits.set(credit.id, credit.amount);
                 totalCredit += credit.amount;
@@ -171,20 +171,52 @@ export async function createInvoiceFromOrder(order: IOrder)
         {
             // Assuming we have used the amount of credits we can use
             // So we will add the discount to the invoice by adding items to the invoice
-            for (const [id, amount] of usingCredits)
+            // for (const [id, amount] of usingCredits)
+            // {
+            // }
+
+            let totalAmountFromCredit = [...(usingCredits.values())].reduce((acc, amount) =>
             {
-                items.push({
-                    amount: amount,
-                    notes: "- DISCOUNT CREDIT",
-                    quantity: 1,
-                });
+                return acc + amount;
+            }, 0);
+            // Lets go through each item and add the discount to it
+            for (const item of items)
+            {
+                if (~~(totalAmountFromCredit) === 0)
+                    break;
+                // We should check how much credit we have
+                // Then we go through a item and remove the price from it
+                // And we should also ensure it doesn't go -,
+                // So it shouldn't be allowed to hit zero
+
+                const amount = item.amount * item.quantity;
+                if (amount <= totalAmountFromCredit)
+                {
+                    // We have more credits then the item amount
+                    // So we will just remove the price from the item
+                    item.amount = ~~(amount - totalAmountFromCredit);
+                    item.notes = `${item.notes} - Discount ${totalAmountFromCredit}`;
+                    totalAmountFromCredit = totalAmountFromCredit - amount;
+                    break;
+                }
+
+                if (amount > totalAmountFromCredit)
+                {
+                    item.amount = (amount - totalAmountFromCredit);
+                    item.notes = `${item.notes} - Discount ${totalAmountFromCredit}`;
+                    totalAmountFromCredit = totalAmountFromCredit - amount;
+                    break;
+                }
+                // Assuming we still have credits left due to amount wasn't larger then the item amount
+                // So we remove subtract the amount we have from `totalAmountFromCredit` with amount
+                continue;
             }
 
             // Lets check if we have anything left to use
             // If we have we will create a new credit for the rest
             // And mark the invoice as paid
             const rest = invoiceAmount - totalCredit;
-            if (rest > 0)
+            if (rest >= 0)
             {
                 // Assuming we got left overs and we need to create a new credit
                 // We will create a new credit with the rest
@@ -242,7 +274,6 @@ export async function createInvoiceFromOrder(order: IOrder)
         // Before the email is sent.
         p_markInvoiceAsPaid(newInvoice);
     }
-
     return newInvoice;
 }
 

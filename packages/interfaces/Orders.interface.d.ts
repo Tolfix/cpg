@@ -25,7 +25,7 @@ export interface IOrder
 {
     id: any;
     uid: `ORD_${string}`;
-    customer_uid: ICustomer["uid"];
+    customer_uid: ICustomer["id"];
     products?: Array<{
         product_id: IProduct["id"],
         configurable_options?: Array<{

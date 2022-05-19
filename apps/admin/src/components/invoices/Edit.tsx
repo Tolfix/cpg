@@ -8,22 +8,16 @@ import
     ReferenceArrayInput, ReferenceInput, AutocompleteInput,
     SimpleFormIterator,
     TabbedForm,
-    useGetOne,
-    SelectInput,
     useEditController,
 } from "react-admin";
 //@ts-ignore
 import MarkdownInput from 'ra-input-markdown';
 import { currencyCodes } from "lib/Currencies";
 import RenderFullName from "../../lib/RenderFullName";
-import React from "react";
-import { ICustomer } from "interfaces/Customer.interface";
 
 export const EditInvoices = (props: any) =>
 {
     const controllerProps = useEditController(props);
-    const { resource, record, save } = controllerProps;
-    console.log(record)
     return (
         <Edit value={controllerProps} mutationMode="pessimistic" {...props}>
             <TabbedForm>
@@ -100,8 +94,7 @@ export const EditInvoices = (props: any) =>
                         </SimpleFormIterator>
                     </ArrayInput>
 
-                    {/* @ts-ignore */}
-                    <ReferenceArrayInput filterToQuery={searchText => ({
+                    <ReferenceArrayInput filterToQuery={(searchText: any) => ({
                         "id": searchText,
                     })} perPage={100} source="transactions" reference="transactions">
                         <AutocompleteArrayInput

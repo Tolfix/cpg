@@ -47,7 +47,7 @@ export interface IInvoice
 {
     id: any;
     uid: `INV_${string}`;
-    customer_uid: ICustomer["uid"];
+    customer_uid: ICustomer["id"];
     dates: IInvoice_Dates;
     amount: number;
     fees?: number;

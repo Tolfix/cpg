@@ -2,14 +2,10 @@ import { currencyCodes } from "lib/Currencies";
 import { Edit, FormTab, PasswordInput, AutocompleteInput, TabbedForm, TextInput, SelectInput, ArrayInput, SimpleFormIterator, NumberInput, ReferenceInput, useEditController } from "react-admin";
 //@ts-ignore
 import MarkdownInput from 'ra-input-markdown';
-import React from "react";
-import { IInvoice } from "interfaces/Invoice.interface";
 
 export const EditCustomer = (props: any) =>
 {
     const controllerProps = useEditController(props);
-    const { resource, record, save } = controllerProps;
-
     // get id
     const id = props.id;
 
@@ -53,7 +49,7 @@ export const EditCustomer = (props: any) =>
                             <ReferenceInput filterToQuery={(searchText: any) => ({
                                 "id": searchText,
                                 customer_uid: id,
-                            })} perPage={100} label="Invoice id" source="invoice_id" reference="invoices">
+                            })} perPage={100} allowEmpty label="Invoice id" source="invoice_id" reference="invoices">
                                 <AutocompleteInput
                                     isRequired={false}
                                     optionText="id"

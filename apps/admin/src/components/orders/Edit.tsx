@@ -9,6 +9,7 @@ import
     TabbedForm,
     TextInput,
     FormDataConsumer,
+    AutocompleteArrayInput,
 } from "react-admin";
 import RenderFullName from "../../lib/RenderFullName";
 
@@ -98,7 +99,7 @@ export const EditOrders = (props: any) =>
             <FormTab label="Invoices">
 
                 <ReferenceArrayInput source="invoices" reference="invoices">
-                    <AutocompleteInput optionText={(record) => record?.id?.toString() ?? ""} />
+                    <AutocompleteArrayInput optionText={(record) => record?.id?.toString() ?? ""} />
                 </ReferenceArrayInput>
 
             </FormTab>
