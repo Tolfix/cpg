@@ -8,8 +8,8 @@ export default function createCredit(
     notes = ""
 ): ICreditCustomer
 {
+    // @ts-ignore
     return {
-        id: crypto.randomBytes(16).toString("hex"),
         notes,
         amount,
         currency,

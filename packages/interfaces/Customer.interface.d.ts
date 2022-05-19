@@ -55,7 +55,7 @@ export interface ICustomer
  */
 export interface ICreditCustomer
 {
-    id: string;
+    _id: string;
 
     amount: number;
     /**

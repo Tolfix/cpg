@@ -108,10 +108,6 @@ const CustomerSchema = new Schema
             credits: {
                 type: [
                     {
-                        id: {
-                            type: Number,
-                            required: true,
-                        },
                         amount: {
                             type: Number,
                             required: true,

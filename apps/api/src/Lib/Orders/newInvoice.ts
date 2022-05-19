@@ -162,7 +162,7 @@ export async function createInvoiceFromOrder(order: IOrder)
         for await (const credit of credits)
             if ((credit.amount + totalCredit) <= invoiceAmount)
             {
-                usingCredits.set(credit.id, credit.amount);
+                usingCredits.set(credit._id, credit.amount);
                 totalCredit += credit.amount;
             }
 
@@ -224,7 +224,7 @@ export async function createInvoiceFromOrder(order: IOrder)
                 customer.credits.push(createCredit(rest, customer.currency, `Left overs from invoice`));
                 // Lets delete the credit we used
                 for (const id of usingCredits.keys())
-                    customer.credits = customer.credits.filter(e => e.id !== id);
+                    customer.credits = customer.credits.filter(e => e._id !== id);
                 await customer.save();
                 markThisInvoiceAsPaid = true;
             }

@@ -45,6 +45,7 @@ class StripeRouter
                     { uid: invoice.customer_uid }
                 ]
             });
+
             const fAmount = parseInt((invoice.amount).toFixed(2));
             res.send(`
             <head>

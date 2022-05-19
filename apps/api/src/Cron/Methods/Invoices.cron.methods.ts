@@ -148,7 +148,7 @@ export function cron_findCreditForInvoice()
                 await paidInvoice.save();
 
                 // Now we delete the old credit from the customer
-                Customer.credits = Customer.credits.filter(c => c.id !== credit.id);
+                Customer.credits = Customer.credits.filter(c => c._id !== credit._id);
 
                 // Now we check how much credit we got left
                 const remainingCredit = credit.amount - invoice.amount;
