@@ -25,7 +25,7 @@ export default function EditPromotionCode(props: any)
                         <AutocompleteArrayInput
                             source="products"
                             label="Products"
-                            allowEmpty={false}
+
                             optionText="name"
                         />
                     </ReferenceArrayInput>

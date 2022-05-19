@@ -38,8 +38,8 @@ export default function EditQuote(props: any)
                         <AutocompleteInput
                             source="customers"
                             label="Customer"
-                            required={true}
-                            allowEmpty={false}
+                            isRequired={true}
+
                             optionText={RenderFullName}
                         />
                     </ReferenceInput>
@@ -49,7 +49,7 @@ export default function EditQuote(props: any)
                         <AutocompleteArrayInput
                             source="promotion_codes"
                             label="Promotion codes"
-                            allowEmpty={false}
+
                             optionText="name"
                         />
                     </ReferenceArrayInput>
