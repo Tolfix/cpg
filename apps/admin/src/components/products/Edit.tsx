@@ -26,7 +26,7 @@ export const EditProducts = (props: any) =>
                         label="Categorie"
                         isRequired={true}
                         fullWidth
-                        optionText="name"
+                        optionText={(r: any) => `${r.name} - (${r.id})`}
                     />
                 </ReferenceInput>
                 <TextInput fullWidth isRequired={true} label="Name" source="name" />

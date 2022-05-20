@@ -19,7 +19,7 @@ export const CreateOrders = (props: any) =>
         <TabbedForm>
             <FormTab label="General">
                 {/* @ts-ignore */}
-                <ReferenceArrayInput filterToQuery={searchText => ({
+                <ReferenceInput filterToQuery={searchText => ({
                     "personal.first_name": searchText,
                 })} perPage={100} source="customer_uid" reference="customers">
                     <AutocompleteInput
@@ -29,7 +29,7 @@ export const CreateOrders = (props: any) =>
                         fullWidth
                         optionText={RenderFullName}
                     />
-                </ReferenceArrayInput>
+                </ReferenceInput>
                 <ArrayInput source="products">
                     <SimpleFormIterator>
                         <ReferenceInput source="product_id" reference="products">

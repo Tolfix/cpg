@@ -81,7 +81,7 @@ export const EditInvoices = (props: any) =>
                                     source="product"
                                     label="Product"
                                     isRequired={true}
-                                    optionText={"name"}
+                                    optionText={(r: any) => `${r.name} - (${r.id})`}
                                     fullWidth
                                 />
                             </ReferenceInput>
