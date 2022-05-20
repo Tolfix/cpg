@@ -24,8 +24,7 @@ export const Create_configurable_options = (props: any) =>
                         source="products"
                         label="Products"
                         isRequired={true}
-
-                        optionText="name"
+                        optionText={(r: any) => `${r.name} - (${r.id})`}
                     />
                 </ReferenceArrayInput>
                 <ArrayInput isRequired={true} source="options">

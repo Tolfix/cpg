@@ -5,26 +5,28 @@ import
     ArrayInput,
     Create, FormTab,
     NumberInput,
-    ReferenceArrayInput, AutocompleteInput,
+    AutocompleteInput,
     SimpleFormIterator,
     TabbedForm,
     TextInput,
     FormDataConsumer,
+    ReferenceInput,
+    ReferenceArrayInput,
 } from "react-admin";
 import RenderFullName from "../../lib/RenderFullName";
 
 export const CreateOrders = (props: any) =>
 {
 
-    // const [products, setProducts] = React.useState<any[]>([]);
-    // console.log(products)
+    const [products, setProducts] = React.useState<any[]>([]);
+    console.log(products)
 
     return (
         <Create {...props}>
             <TabbedForm>
                 <FormTab label="General">
                     {/* @ts-ignore */}
-                    <ReferenceArrayInput filterToQuery={searchText => ({
+                    <ReferenceInput filterToQuery={searchText => ({
                         "personal.first_name": searchText,
                     })} perPage={100} source="customer_uid" reference="customers">
                         <AutocompleteInput
@@ -34,18 +36,19 @@ export const CreateOrders = (props: any) =>
                             fullWidth
                             optionText={RenderFullName}
                         />
-                    </ReferenceArrayInput>
+                    </ReferenceInput>
                     <ArrayInput source="products">
                         <SimpleFormIterator>
-                            <ReferenceArrayInput source="product_id" reference="products">
+                            <ReferenceInput source="product_id" reference="products">
                                 <AutocompleteInput
-                                    source="id"
+                                    source="products"
+                                    label="Products"
                                     isRequired={false}
-                                    optionText={(option: any) => `${option.name} - ${option.id}`}
-                                    inputText={(option: any) => `${option.name} - ${option.id}`}
+                                    optionText={(r: any) => `${r.name} - (${r.id})`}
+                                    onChange={(e) => setProducts(e.target.value)}
                                     fullWidth
                                 />
-                            </ReferenceArrayInput>
+                            </ReferenceInput>
                             <NumberInput label="Quantity" defaultValue={1} source="quantity" />
                             {/*   
                         configurable_options?: Array<{
@@ -55,7 +58,7 @@ export const CreateOrders = (props: any) =>
                         */}
                             <ArrayInput source="configurable_options" label="Configurable options">
                                 <SimpleFormIterator>
-                                    <ReferenceArrayInput filterToQuery={(searchText: string) => ({
+                                    <ReferenceInput filterToQuery={(searchText: string) => ({
                                         products_ids: []
                                     })} source="option_id" reference="configurable_options">
                                         <AutocompleteInput
@@ -65,7 +68,7 @@ export const CreateOrders = (props: any) =>
                                             optionText="name"
                                             fullWidth
                                         />
-                                    </ReferenceArrayInput>
+                                    </ReferenceInput>
                                 </SimpleFormIterator>
                             </ArrayInput>
                         </SimpleFormIterator>

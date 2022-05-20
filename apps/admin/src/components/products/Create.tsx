@@ -27,7 +27,7 @@ export const CreateProducts = (props: any) =>
                         label="Categories"
                         isRequired={true}
                         fullWidth
-                        optionText="name"
+                        optionText={(r: any) => `${r.name} - (${r.id})`}
                     />
                 </ReferenceArrayInput>
                 <TextInput fullWidth isRequired={true} label="Name" source="name" />

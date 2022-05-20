@@ -78,7 +78,7 @@ export const CreateInvoices = (props: any) =>
                                 label="Product"
                                 isRequired={true}
                                 fullWidth
-                                optionText={"name"}
+                                optionText={(r: any) => `${r.name} - (${r.id})`}
                             />
                         </ReferenceArrayInput>
                     </SimpleFormIterator>

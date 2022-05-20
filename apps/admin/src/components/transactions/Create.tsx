@@ -1,5 +1,5 @@
 import { currencyCodes } from "lib/Currencies";
-import { Create, DateInput, FormDataConsumer, FormTab, NumberInput, ReferenceArrayInput, AutocompleteInput, TabbedForm, TextInput, SelectInput } from "react-admin";
+import { Create, DateInput, FormDataConsumer, FormTab, NumberInput, AutocompleteInput, TabbedForm, TextInput, SelectInput, ReferenceInput } from "react-admin";
 import { getDate } from "../../lib/dateFormat";
 import RenderFullName from "../../lib/RenderFullName";
 
@@ -15,7 +15,7 @@ export const CreateTransactions = (props: any) =>
                 <FormDataConsumer>
                     {({ formData }) => formData.statement === "income" &&
                         <>
-                            <ReferenceArrayInput filterToQuery={(searchText: string) => ({
+                            <ReferenceInput filterToQuery={(searchText: string) => ({
                                 "personal.first_name": searchText,
                             })} perPage={100} source="customer_uid" reference="customers" allowEmpty>
                                 <AutocompleteInput
@@ -25,9 +25,9 @@ export const CreateTransactions = (props: any) =>
                                     isRequired={formData.statement === "income"}
                                     optionText={RenderFullName}
                                 />
-                            </ReferenceArrayInput>
+                            </ReferenceInput>
                             <div>
-                                <ReferenceArrayInput filterToQuery={(searchText: string) => ({
+                                <ReferenceInput filterToQuery={(searchText: string) => ({
                                     "id": searchText,
                                 })} perPage={100} source="invoice_uid"
                                     reference="invoices" allowEmpty>
@@ -35,7 +35,7 @@ export const CreateTransactions = (props: any) =>
                                         fullWidth
                                         isRequired={formData.statement === "income"}
                                         optionText={(record) => record?.id?.toString() ?? ""} />
-                                </ReferenceArrayInput>
+                                </ReferenceInput>
                             </div>
                         </>
                     }
