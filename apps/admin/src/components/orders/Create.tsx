@@ -11,15 +11,14 @@ import
     TextInput,
     FormDataConsumer,
     ReferenceInput,
-    ReferenceArrayInput,
 } from "react-admin";
 import RenderFullName from "../../lib/RenderFullName";
 
 export const CreateOrders = (props: any) =>
 {
 
-    const [products, setProducts] = React.useState<any[]>([]);
-    console.log(products)
+    const [product, setProduct] = React.useState<any[]>([]);
+    console.log(product)
 
     return (
         <Create {...props}>
@@ -45,7 +44,10 @@ export const CreateOrders = (props: any) =>
                                     label="Products"
                                     isRequired={false}
                                     optionText={(r: any) => `${r.name} - (${r.id})`}
-                                    onChange={(e) => setProducts(e.target.value)}
+                                    onChange={(e) =>
+                                    {
+                                        setProduct(e);
+                                    }}
                                     fullWidth
                                 />
                             </ReferenceInput>
@@ -58,9 +60,7 @@ export const CreateOrders = (props: any) =>
                         */}
                             <ArrayInput source="configurable_options" label="Configurable options">
                                 <SimpleFormIterator>
-                                    <ReferenceInput filterToQuery={(searchText: string) => ({
-                                        products_ids: []
-                                    })} source="option_id" reference="configurable_options">
+                                    <ReferenceInput source="option_id" reference="configurable_options">
                                         <AutocompleteInput
                                             source="configurable_options"
                                             label="Configurable Options"
