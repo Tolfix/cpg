@@ -29,6 +29,6 @@ CLI_MODE ? import("./Handlers/Commands.handler") : null;
 
 if (CLI_MODE)
 {
-  Logger.info(`Loading ./Admin/AdminHandler`);
-  import("./Admin/AdminHandler").then(AdminHandler => new AdminHandler());
+    Logger.info(`Loading ./Admin/AdminHandler`);
+    import("./Admin/AdminHandler").then((AdminHandler) => new AdminHandler.default());
 }
