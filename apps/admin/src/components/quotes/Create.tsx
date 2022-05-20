@@ -25,7 +25,7 @@ import CurrencyInput from "../../inputs/CurrencyInput";
 import CustomerInput from "../../inputs/CustomerInput";
 import PaymentMethodInput from "../../inputs/PaymentMethodInput";
 //@ts-ignore
-import MarkdownInput from 'ra-input-markdown';
+import { RichTextInput } from 'ra-input-rich-text';
 import { getDate } from "../../lib/dateFormat";
 export default function CreateQuote(props: any)
 {
@@ -40,7 +40,7 @@ export default function CreateQuote(props: any)
                         <AutocompleteArrayInput
                             source="promotion_codes"
                             label="Promotion codes"
-
+                            fullWidth
                             optionText="name"
                         />
                     </ReferenceArrayInput>
@@ -49,12 +49,12 @@ export default function CreateQuote(props: any)
                     <DateInput label="Due date" source="due_date" defaultValue={getDate()} />
                     <ArrayInput source="items">
                         <SimpleFormIterator>
-                            <TextInput label="Name" source="name" />
+                            <TextInput fullWidth label="Name" source="name" />
                             <NumberInput label="Price" source="price" defaultValue={1} />
                             <NumberInput label="Quantity" defaultValue={1} source="quantity" />
                         </SimpleFormIterator>
                     </ArrayInput>
-                    <MarkdownInput source="memo" />
+                    <RichTextInput source="memo" />
                     <BooleanInput source="send_email" defaultValue={true} />
                 </FormTab>
             </TabbedForm>

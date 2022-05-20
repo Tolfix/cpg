@@ -10,7 +10,7 @@ import
     TabbedForm,
 } from "react-admin";
 //@ts-ignore
-import MarkdownInput from 'ra-input-markdown';
+import { RichTextInput } from 'ra-input-rich-text';
 import { currencyCodes } from "lib/Currencies";
 import RenderFullName from "../../lib/RenderFullName";
 
@@ -27,7 +27,7 @@ export const CreateInvoices = (props: any) =>
                         source="customers"
                         label="Customer"
                         isRequired={true}
-
+                        fullWidth
                         optionText={RenderFullName}
                     />
                 </ReferenceArrayInput>
@@ -38,8 +38,8 @@ export const CreateInvoices = (props: any) =>
                     { id: "payment_pending", name: "payment_pending" },
                     { id: "active", name: "active" },
                     { id: "pending", name: "pending" },
-                ]} />
-                <AutocompleteInput isRequired={true} source="payment_method" choices={[
+                ]} fullWidth />
+                <AutocompleteInput fullWidth isRequired={true} source="payment_method" choices={[
                     { id: "none", name: "none" },
                     { id: "manual", name: "manual" },
                     { id: "bank", name: "bank" },
@@ -47,12 +47,12 @@ export const CreateInvoices = (props: any) =>
                     { id: "credit_card", name: "credit_card" },
                     { id: "swish", name: "swish" },
                 ]} />
-                <NumberInput isRequired={true} label="Amount" source="amount" />
+                <NumberInput fullWidth isRequired={true} label="Amount" source="amount" />
                 <AutocompleteInput isRequired={true} source="currency" choices={currencyCodes.map(e =>
                 {
                     return { id: e, name: e };
-                })} />
-                <NumberInput min={0} max={100} isRequired={true} label="Tax Rate" source="tax_rate" />
+                })} fullWidth />
+                <NumberInput fullWidth min={0} max={100} isRequired={true} label="Tax Rate" source="tax_rate" />
                 <BooleanInput label="Paid" defaultValue={false} source="paid" />
                 <BooleanInput label="Notified" defaultValue={false} source="notified" />
             </FormTab>
@@ -62,11 +62,11 @@ export const CreateInvoices = (props: any) =>
             </FormTab>
             <FormTab label="Miscellaneous">
 
-                <MarkdownInput source="notes" />
+                <RichTextInput source="notes" />
 
                 <ArrayInput isRequired={true} source="items">
                     <SimpleFormIterator>
-                        <MarkdownInput source="notes" />
+                        <RichTextInput source="notes" />
                         <NumberInput isRequired={true} label="Amount" source="amount" />
                         <NumberInput label="Quantity" defaultValue={1} source="quantity" />
                         {/* @ts-ignore */}
@@ -77,7 +77,7 @@ export const CreateInvoices = (props: any) =>
                                 source="product"
                                 label="Product"
                                 isRequired={true}
-
+                                fullWidth
                                 optionText={"name"}
                             />
                         </ReferenceArrayInput>
@@ -87,7 +87,7 @@ export const CreateInvoices = (props: any) =>
                 <ReferenceArrayInput filterToQuery={(searchText: string) => ({
                     "id": searchText,
                 })} perPage={100} source="transactions" reference="transactions">
-                    <AutocompleteArrayInput optionText={(record) => record?.id?.toString() ?? ""} />
+                    <AutocompleteArrayInput fullWidth optionText={(record) => record?.id?.toString() ?? ""} />
                 </ReferenceArrayInput>
 
             </FormTab>

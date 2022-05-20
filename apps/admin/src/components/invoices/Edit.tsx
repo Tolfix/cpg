@@ -8,32 +8,26 @@ import
     ReferenceArrayInput, ReferenceInput, AutocompleteInput,
     SimpleFormIterator,
     TabbedForm,
-    useEditController,
 } from "react-admin";
-//@ts-ignore
-import MarkdownInput from 'ra-input-markdown';
+import { RichTextInput } from 'ra-input-rich-text';
 import { currencyCodes } from "lib/Currencies";
 import RenderFullName from "../../lib/RenderFullName";
 
 export const EditInvoices = (props: any) =>
 {
-    const controllerProps = useEditController(props);
     return (
-        <Edit value={controllerProps} mutationMode="pessimistic" {...props}>
+        <Edit mutationMode="pessimistic" {...props}>
             <TabbedForm>
-
                 <FormTab label="General">
-
-                    {/* @ts-ignore */}
                     <ReferenceInput filterToQuery={(searchText: any) => ({
                         "personal.first_name": searchText,
                     })} perPage={100} source="customer_uid" reference="customers">
                         <AutocompleteInput
                             isRequired={true}
                             optionText={RenderFullName}
+                            fullWidth
                         />
                     </ReferenceInput>
-
                     <AutocompleteInput isRequired={true} source="status" choices={[
                         { id: "draft", name: "draft" },
                         { id: "paid", name: "paid" },
@@ -44,7 +38,7 @@ export const EditInvoices = (props: any) =>
                         { id: "pending", name: "pending" },
                         { id: "fraud", name: "fruad" },
                         { id: "cancelled", name: "cancelled" },
-                    ]} />
+                    ]} fullWidth />
 
                     <AutocompleteInput isRequired={true} source="payment_method" choices={[
                         { id: "none", name: "none" },
@@ -53,14 +47,14 @@ export const EditInvoices = (props: any) =>
                         { id: "paypal", name: "paypal" },
                         { id: "credit_card", name: "credit_card" },
                         { id: "swish", name: "swish" },
-                    ]} />
+                    ]} fullWidth />
 
-                    <NumberInput isRequired={true} label="Amount" source="amount" />
+                    <NumberInput isRequired={true} label="Amount" source="amount" fullWidth />
                     <AutocompleteInput isRequired={true} source="currency" choices={currencyCodes.map(e =>
                     {
                         return { id: e, name: e };
-                    })} />
-                    <NumberInput min={0} max={100} isRequired={true} label="Tax Rate" source="tax_rate" />
+                    })} fullWidth />
+                    <NumberInput fullWidth min={0} max={100} isRequired={true} label="Tax Rate" source="tax_rate" />
                     <BooleanInput label="Paid" defaultValue={false} source="paid" />
                     <BooleanInput label="Notified" defaultValue={false} source="notified" />
                 </FormTab>
@@ -73,12 +67,11 @@ export const EditInvoices = (props: any) =>
                 </FormTab>
 
                 <FormTab label="Miscellaneous">
-
-                    <MarkdownInput source="notes" />
+                    <RichTextInput source="notes" />
 
                     <ArrayInput isRequired={true} source="items">
                         <SimpleFormIterator>
-                            <MarkdownInput source="notes" />
+                            <RichTextInput source="notes" />
                             <NumberInput isRequired={true} label="Amount" source="amount" />
                             <NumberInput label="Quantity" defaultValue={1} source="quantity" />
                             <ReferenceInput filterToQuery={(searchText: any) => ({
@@ -89,6 +82,7 @@ export const EditInvoices = (props: any) =>
                                     label="Product"
                                     isRequired={true}
                                     optionText={"name"}
+                                    fullWidth
                                 />
                             </ReferenceInput>
                         </SimpleFormIterator>
@@ -101,7 +95,8 @@ export const EditInvoices = (props: any) =>
                             source="transactions"
                             optionValue="id"
                             label="Transactions"
-                            optionText={(record) => record?.id?.toString() ?? ""}
+                            fullWidth
+                            optionText={(record: any) => record?.id?.toString() ?? ""}
                         />
                     </ReferenceArrayInput>
 

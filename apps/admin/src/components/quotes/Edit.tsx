@@ -24,7 +24,7 @@ import { ArrayInput, AutocompleteArrayInput, DateInput, Edit, FormTab, NumberInp
 import CurrencyInput from "../../inputs/CurrencyInput";
 import PaymentMethodInput from "../../inputs/PaymentMethodInput";
 //@ts-ignore
-import MarkdownInput from 'ra-input-markdown';
+import { RichTextInput } from 'ra-input-rich-text';
 import RenderFullName from "../../lib/RenderFullName";
 export default function EditQuote(props: any)
 {
@@ -39,7 +39,7 @@ export default function EditQuote(props: any)
                             source="customers"
                             label="Customer"
                             isRequired={true}
-
+                            fullWidth
                             optionText={RenderFullName}
                         />
                     </ReferenceInput>
@@ -49,7 +49,7 @@ export default function EditQuote(props: any)
                         <AutocompleteArrayInput
                             source="promotion_codes"
                             label="Promotion codes"
-
+                            fullWidth
                             optionText="name"
                         />
                     </ReferenceArrayInput>
@@ -58,12 +58,12 @@ export default function EditQuote(props: any)
                     <DateInput label="Due date" source="due_date" defaultValue={new Date().toLocaleDateString()} />
                     <ArrayInput source="items">
                         <SimpleFormIterator>
-                            <TextInput label="Name" source="name" />
+                            <TextInput fullWidth label="Name" source="name" />
                             <NumberInput label="Price" source="price" defaultValue={1} />
                             <NumberInput label="Quantity" defaultValue={1} source="quantity" />
                         </SimpleFormIterator>
                     </ArrayInput>
-                    <MarkdownInput source="memo" />
+                    <RichTextInput source="memo" />
                 </FormTab>
             </TabbedForm>
         </Edit >

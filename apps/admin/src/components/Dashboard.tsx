@@ -1,6 +1,6 @@
 // in src/Dashboard.js
 import * as React from "react";
-import { Card, CardContent, CardHeader } from '@material-ui/core';
+// import { Card, CardContent, CardHeader } from '@material-ui/core';
 import { ITransactions } from "interfaces/Transactions.interface";
 
 export default () =>
@@ -29,9 +29,10 @@ export default () =>
     }, []);
 
     return (
-        <Card>
-            <CardHeader title="Welcome to the administration" />
-            <CardContent>Lorem ipsum sic dolor amet...</CardContent>
-        </Card>
+        <></>
+        // <Card>
+        //     <CardHeader title="Welcome to the administration" />
+        //     <CardContent>Lorem ipsum sic dolor amet...</CardContent>
+        // </Card>
     )
 }

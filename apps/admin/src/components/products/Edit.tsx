@@ -10,7 +10,7 @@ import
     TextInput,
 } from "react-admin";
 //@ts-ignore
-import MarkdownInput from 'ra-input-markdown';
+import { RichTextInput } from 'ra-input-rich-text';
 import { currencyCodes } from "lib/Currencies";
 
 export const EditProducts = (props: any) =>
@@ -18,20 +18,19 @@ export const EditProducts = (props: any) =>
     <Edit mutationMode="pessimistic" {...props}>
         <TabbedForm>
             <FormTab label="General">
-                {/* @ts-ignore */}
                 <ReferenceInput filterToQuery={(searchText: string) => ({
                     "name": searchText,
                 })} perPage={100} source="category_uid" reference="categories">
                     <AutocompleteInput
                         source="categories"
-                        label="Categories"
+                        label="Categorie"
                         isRequired={true}
-
+                        fullWidth
                         optionText="name"
                     />
                 </ReferenceInput>
-                <TextInput isRequired={true} label="Name" source="name" />
-                <MarkdownInput isRequired={true} label="Description" source="description" />
+                <TextInput fullWidth isRequired={true} label="Name" source="name" />
+                <RichTextInput isRequired={true} label="Description" source="description" />
                 <BooleanInput label="Hidden" defaultValue={false} source="hidden" />
                 <BooleanInput label="Special" defaultValue={false} source="special" />
             </FormTab>

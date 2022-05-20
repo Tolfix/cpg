@@ -25,7 +25,7 @@ export const EditOrders = (props: any) =>
                         source="customers"
                         label="Customers"
                         isRequired={true}
-                        // 
+                        fullWidth
                         optionText={RenderFullName}
                     />
                 </ReferenceInput>
@@ -36,7 +36,7 @@ export const EditOrders = (props: any) =>
                                 source="products"
                                 label="Products"
                                 isRequired={true}
-
+                                fullWidth
                                 optionText="name"
                             />
                         </ReferenceInput>
@@ -46,7 +46,7 @@ export const EditOrders = (props: any) =>
 
                 <ArrayInput source="items">
                     <SimpleFormIterator>
-                        <TextInput name="note" label="Note" source="note" />
+                        <TextInput fullWidth name="note" label="Note" source="note" />
                         <NumberInput label="Amount" source="amount" />
                         <NumberInput label="Quantity" defaultValue={1} source="quantity" />
                     </SimpleFormIterator>
@@ -73,15 +73,15 @@ export const EditOrders = (props: any) =>
                     { id: "paypal", name: "paypal" },
                     { id: "credit_card", name: "credit_card" },
                     { id: "swish", name: "swish" },
-                ]} />
+                ]} fullWidth />
                 <AutocompleteInput isRequired={true} source="billing_type" choices={[
                     { id: "free", name: "free" },
                     { id: "one_time", name: "one_time" },
                     { id: "recurring", name: "recurring" },
-                ]} />
+                ]} fullWidth />
                 <FormDataConsumer>
                     {({ formData }) => formData.billing_type === "recurring" && (
-                        <AutocompleteInput isRequired={false} source="billing_cycle" choices={[
+                        <AutocompleteInput fullWidth isRequired={false} source="billing_cycle" choices={[
                             { id: "monthly", name: "monthly" },
                             { id: "quarterly", name: "quarterly" },
                             { id: "semi_annually", name: "semi_annually" },
@@ -91,7 +91,7 @@ export const EditOrders = (props: any) =>
                         ]} />
                     )}
                 </FormDataConsumer>
-                <AutocompleteInput isRequired={true} source="currency" choices={currencyCodes.map(e =>
+                <AutocompleteInput fullWidth isRequired={true} source="currency" choices={currencyCodes.map(e =>
                 {
                     return { id: e, name: e };
                 })} />
@@ -99,7 +99,7 @@ export const EditOrders = (props: any) =>
             <FormTab label="Invoices">
 
                 <ReferenceArrayInput source="invoices" reference="invoices">
-                    <AutocompleteArrayInput optionText={(record) => record?.id?.toString() ?? ""} />
+                    <AutocompleteArrayInput fullWidth optionText={(record) => record?.id?.toString() ?? ""} />
                 </ReferenceArrayInput>
 
             </FormTab>

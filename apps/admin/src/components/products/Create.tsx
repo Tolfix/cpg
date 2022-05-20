@@ -10,7 +10,7 @@ import
     TextInput,
 } from "react-admin";
 //@ts-ignore
-import MarkdownInput from 'ra-input-markdown';
+import { RichTextInput } from 'ra-input-rich-text';
 import { currencyCodes } from "lib/Currencies";
 
 export const CreateProducts = (props: any) =>
@@ -26,12 +26,12 @@ export const CreateProducts = (props: any) =>
                         source="categories"
                         label="Categories"
                         isRequired={true}
-
+                        fullWidth
                         optionText="name"
                     />
                 </ReferenceArrayInput>
-                <TextInput isRequired={true} label="Name" source="name" />
-                <MarkdownInput isRequired={true} label="Description" source="description" />
+                <TextInput fullWidth isRequired={true} label="Name" source="name" />
+                <RichTextInput isRequired={true} label="Description" source="description" />
                 <BooleanInput label="Hidden" defaultValue={false} source="hidden" />
                 <BooleanInput label="Special" defaultValue={false} source="special" />
             </FormTab>

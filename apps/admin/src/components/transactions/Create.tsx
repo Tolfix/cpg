@@ -21,6 +21,7 @@ export const CreateTransactions = (props: any) =>
                                 <AutocompleteInput
                                     source="customers"
                                     label="Customers"
+                                    fullWidth
                                     isRequired={formData.statement === "income"}
                                     optionText={RenderFullName}
                                 />
@@ -31,6 +32,7 @@ export const CreateTransactions = (props: any) =>
                                 })} perPage={100} source="invoice_uid"
                                     reference="invoices" allowEmpty>
                                     <AutocompleteInput
+                                        fullWidth
                                         isRequired={formData.statement === "income"}
                                         optionText={(record) => record?.id?.toString() ?? ""} />
                                 </ReferenceArrayInput>
@@ -43,20 +45,24 @@ export const CreateTransactions = (props: any) =>
                         <>
                             <div>
                                 <TextInput
+                                    fullWidth
                                     required={formData.statement === "expense"}
                                     source="expense_information.invoice_id" label="Invoice id" />
                             </div>
                             <div>
                                 <TextInput
+                                    fullWidth
                                     required={formData.statement === "expense"}
                                     source="expense_information.company" label="Company" />
                             </div>
                             <div>
                                 <TextInput
+                                    fullWidth
                                     required={formData.statement === "expense"} source="expense_information.description" label="Description" />
                             </div>
                             <div>
                                 <TextInput
+                                    fullWidth
                                     required={formData.statement === "expense"} source="expense_information.notes" label="Notes" />
                             </div>
                         </>
@@ -76,7 +82,7 @@ export const CreateTransactions = (props: any) =>
                     { id: "paypal", name: "paypal" },
                     { id: "credit_card", name: "credit_card" },
                     { id: "swish", name: "swish" },
-                ]} />
+                ]} fullWidth />
             </FormTab>
         </TabbedForm>
     </Create>
