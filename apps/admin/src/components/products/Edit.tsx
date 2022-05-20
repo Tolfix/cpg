@@ -23,7 +23,7 @@ export const EditProducts = (props: any) =>
                 })} perPage={100} source="category_uid" reference="categories">
                     <AutocompleteInput
                         source="categories"
-                        label="Categorie"
+                        label="Category"
                         isRequired={true}
                         fullWidth
                         optionText={(r: any) => `${r.name} - (${r.id})`}

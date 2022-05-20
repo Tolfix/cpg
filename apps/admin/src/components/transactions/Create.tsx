@@ -1,5 +1,5 @@
 import { currencyCodes } from "lib/Currencies";
-import { Create, DateInput, FormDataConsumer, FormTab, NumberInput, ReferenceArrayInput, AutocompleteInput, TabbedForm, TextInput, SelectInput, ReferenceInput } from "react-admin";
+import { Create, DateInput, FormDataConsumer, FormTab, NumberInput, AutocompleteInput, TabbedForm, TextInput, SelectInput, ReferenceInput } from "react-admin";
 import { getDate } from "../../lib/dateFormat";
 import RenderFullName from "../../lib/RenderFullName";
 

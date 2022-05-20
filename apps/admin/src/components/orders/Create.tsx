@@ -4,7 +4,7 @@ import
     ArrayInput,
     Create, FormTab,
     NumberInput,
-    ReferenceArrayInput, AutocompleteInput,
+    AutocompleteInput,
     SimpleFormIterator,
     TabbedForm,
     TextInput,
