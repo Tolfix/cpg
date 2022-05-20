@@ -27,6 +27,8 @@ import "./Events/Node.events";
 // ! This for some reason doesn't work right now, removing it if not running in CLI
 CLI_MODE ? import("./Handlers/Commands.handler") : null;
 
-Logger.info(`Loading ./Admin/AdminHandler`);
-import AdminHandler from "./Admin/AdminHandler";
-new AdminHandler();
+if (CLI_MODE)
+{
+  Logger.info(`Loading ./Admin/AdminHandler`);
+  import("./Admin/AdminHandler").then(AdminHandler => new AdminHandler());
+}
