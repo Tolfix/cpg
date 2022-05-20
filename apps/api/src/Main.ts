@@ -24,7 +24,8 @@ import "./Events/Node.events";
 !CLI_MODE ? Logger.info(`Loading ./Handlers/CronHandler`) : null;
 !CLI_MODE ? import("./Handlers/Cron.handler") : null;
 
-import "./Handlers/Commands.handler";
+// ! This for some reason doesn't work right now, removing it if not running in CLI
+CLI_MODE ? import "./Handlers/Commands.handler" : null;
 
 Logger.info(`Loading ./Admin/AdminHandler`);
 import AdminHandler from "./Admin/AdminHandler";
