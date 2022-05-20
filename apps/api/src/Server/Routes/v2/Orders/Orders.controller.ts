@@ -25,8 +25,11 @@ async function insert(req: Request, res: Response)
 
     req.body.dates = {
         createdAt: new Date(),
-        last_recycle: b_recurring ? dateFormat.format(new Date(), "YYYY-MM-DD") : undefined,
-        next_recycle: b_recurring ? dateFormat.format(nextRycleDate(new Date(), billing_cycle), "YYYY-MM-DD") : undefined,
+        // last_recycle: b_recurring ? dateFormat.format(new Date(), "YYYY-MM-DD") : undefined,
+        // next_recycle: b_recurring ? dateFormat.format(nextRycleDate(new Date(), billing_cycle), "YYYY-MM-DD") : undefined,
+        last_recycle: b_recurring ? dateFormat.format(nextRycleDate(new Date(), billing_cycle), "YYYY-MM-DD") : undefined,
+        // Should be next date in two months
+        next_recycle: b_recurring ? dateFormat.format(dateFormat.addMonths(new Date, 2), "YYYY-MM-DD") : undefined,
     };
 
     const newInvoice = await createInvoiceFromOrder(req.body as IOrder);
