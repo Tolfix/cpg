@@ -23,5 +23,7 @@
     "node": ">=14.0.0"
   },
   "packageManager": "npm@8.3.0",
-  "dependencies": {}
+  "dependencies": {
+    "jsonexport": "^3.2.0"
+  }
 }
