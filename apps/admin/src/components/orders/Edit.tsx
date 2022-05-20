@@ -37,7 +37,7 @@ export const EditOrders = (props: any) =>
                                 label="Products"
                                 isRequired={true}
                                 fullWidth
-                                optionText="name"
+                                optionText={(r: any) => `${r.name} - (${r.id})`}
                             />
                         </ReferenceInput>
                         <NumberInput label="Quantity" defaultValue={1} source="quantity" />

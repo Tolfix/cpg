@@ -9,6 +9,7 @@ import
     TabbedForm,
     TextInput,
     FormDataConsumer,
+    ReferenceInput,
 } from "react-admin";
 import RenderFullName from "../../lib/RenderFullName";
 
@@ -31,15 +32,15 @@ export const CreateOrders = (props: any) =>
                 </ReferenceArrayInput>
                 <ArrayInput source="products">
                     <SimpleFormIterator>
-                        <ReferenceArrayInput source="product_id" reference="products">
+                        <ReferenceInput source="product_id" reference="products">
                             <AutocompleteInput
                                 source="products"
                                 label="Products"
                                 isRequired={false}
-                                optionText="name"
+                                optionText={(r: any) => `${r.name} - (${r.id})`}
                                 fullWidth
                             />
-                        </ReferenceArrayInput>
+                        </ReferenceInput>
                         <NumberInput label="Quantity" defaultValue={1} source="quantity" />
                     </SimpleFormIterator>
                 </ArrayInput>
