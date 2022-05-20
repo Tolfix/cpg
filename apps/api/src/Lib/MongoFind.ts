@@ -31,7 +31,7 @@ export default async function MongoFind<T>(model: Model<T>, query: Request["quer
     const b = model.find({
         ...data.filter,
         ...eQuery ?? {}
-    }).sort(data.sort ?? "1").skip(data.skip ?? 0).limit(data.limit ?? 10);
+    }).sort(data.sort ?? "1").skip(data.skip ?? 0).limit(data.limit ?? 100000);
 
     if (data.select)
         b.select(data.select);

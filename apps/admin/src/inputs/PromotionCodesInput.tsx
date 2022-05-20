@@ -18,7 +18,7 @@ export default function PromotionCodeInput({
                 <AutocompleteInput
                     source="promotion_codes"
                     label={label}
-                    required={required}
+                    isRequired={required}
                     optionText={
                         (record: IPromotionsCodes) =>
                             `${record.id}`}

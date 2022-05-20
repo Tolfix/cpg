@@ -29,7 +29,7 @@ const InvoiceSchema = new Schema
             },
 
             customer_uid: {
-                type: String,
+                type: Number,
                 required: true,
             },
 
@@ -87,7 +87,7 @@ const InvoiceSchema = new Schema
             },
 
             transactions: {
-                type: [String],
+                type: [Number],
                 default: [],
             },
 

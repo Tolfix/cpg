@@ -14,7 +14,7 @@ export default function CreatePromotionCode(props: any)
         <Create {...props}>
             <TabbedForm>
                 <FormTab label="General">
-                    <TextInput label="Name" source="name" />
+                    <TextInput fullWidth label="Name" source="name" />
                     <NumberInput label="Discount" source="discount" />
                     <TextInput label="Valid to" source="valid_to" defaultValue={'permanent'} />
                     <NumberInput label="Max uses" source="uses" defaultValue={'unlimited'} />
@@ -25,7 +25,7 @@ export default function CreatePromotionCode(props: any)
                         <AutocompleteArrayInput
                             source="products"
                             label="Products"
-                            allowEmpty={false}
+                            fullWidth
                             optionText="name"
                         />
                     </ReferenceArrayInput>

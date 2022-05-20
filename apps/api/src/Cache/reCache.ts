@@ -68,7 +68,7 @@ export async function reCache_Customers()
                 c.currency = companyCurrency.toLocaleUpperCase() as TPaymentCurrency;
                 await c.save();
             }
-            Logger.cache(`Caching customer ${c.uid}`);
+            // Logger.cache(`Caching customer ${c.uid}`);
             CacheCustomer.set(c.uid, c);
         }
         return resolve(true);
@@ -81,7 +81,7 @@ export async function reCache_Product()
     return new Promise(async (resolve) =>
     {
         const product = await ProductModel.find();
-        for (const c of product)
+        for await (const c of product)
         {
             // Check if product has currency
             if (!c.currency)
@@ -90,44 +90,55 @@ export async function reCache_Product()
                 c.currency = companyCurrency.toLocaleUpperCase() as TPaymentCurrency;
                 await c.save();
             }
-            Logger.cache(`Caching product ${c.uid}`);
-            CacheProduct.set(c.uid, c);
+            if (typeof c.category_uid === "string")
+            {
+                c.category_uid = parseInt(c.category_uid);
+                await c.save();
+            }
+            // CacheProduct.set(c.uid, c);
         }
         return resolve(true);
     });
 }
 
-/**
- * @deprecated
- */
 export async function reCache_Transactions()
 {
     Logger.info(`Starting caching on transactions..`);
     return new Promise(async (resolve) =>
     {
         const transactions = await TransactionsModel.find();
-        for (const t of transactions)
+        for await (const t of transactions)
         {
-            Logger.cache(`Caching transaction ${t.uid}`);
-            CacheTransactions.set(t.uid, t);
+            if (typeof t.customer_uid === "string")
+            {
+                t.customer_uid = parseInt(t.customer_uid);
+                t.save()
+            }
+            if (typeof t.invoice_uid === "string")
+            {
+                t.invoice_uid = parseInt(t.invoice_uid);
+                await t.save()
+            }
+            // CacheTransactions.set(t.uid, t);
         }
         return resolve(true);
     });
 }
 
-/**
- * @deprecated
- */
 export async function reCache_Orders()
 {
     Logger.info(`Starting caching on orders..`);
     return new Promise(async (resolve) =>
     {
         const order = await OrderModel.find();
-        for (const o of order)
+        for await (const o of order)
         {
-            Logger.cache(`Caching order ${o.uid}`);
-            CacheOrder.set(o.uid, o);
+            if (typeof o.customer_uid === "string")
+            {
+                o.customer_uid = parseInt(o.customer_uid);
+                await o.save()
+            }
+            // CacheOrder.set(o.uid, o);
         }
         return resolve(true);
     });
@@ -205,9 +216,6 @@ export async function reCache_Images()
 }
 
 
-/**
- * @deprecated
- */
 export async function reCache_Invoices()
 {
     Logger.info(`Starting caching on invoices..`);
@@ -221,6 +229,13 @@ export async function reCache_Invoices()
             {
                 const companyCurrency = await Company_Currency();
                 o.currency = companyCurrency.toLocaleUpperCase() as TPaymentCurrency;
+                await o.save();
+            }
+            if (typeof o.customer_uid === "string")
+            {
+                console.log(o.customer_uid, typeof o.customer_uid);
+                o.customer_uid = parseInt(o.customer_uid);
+                o.markModified("customer_uid");
                 await o.save();
             }
             Logger.cache(`Caching invoice ${o.uid}`);
@@ -237,8 +252,8 @@ export async function reCache()
     await reCache_Admin();
     await reCache_Customers();
     await reCache_Product();
-    // await reCache_Transactions();
-    // await reCache_Orders();
+    await reCache_Transactions();
+    await reCache_Orders();
     await reCache_Images();
     await reCache_Invoices();
 }

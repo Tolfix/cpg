@@ -9,7 +9,6 @@ export const OrderList = (props: any) => (
             <TextField label="Id" source="id" />
             <ReferenceField label="Customer" source="customer_uid" reference="customers">
                 <FunctionField
-                    // @ts-ignore
                     render={RenderFullName}
                     source="personal.first_name"
                 />

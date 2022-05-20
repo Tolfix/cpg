@@ -9,105 +9,101 @@ import
     SimpleFormIterator,
     TabbedForm,
 } from "react-admin";
-//@ts-ignore
-import MarkdownInput from 'ra-input-markdown';
+import { RichTextInput } from 'ra-input-rich-text';
 import { currencyCodes } from "lib/Currencies";
 import RenderFullName from "../../lib/RenderFullName";
+
 export const EditInvoices = (props: any) =>
-(
-    <Edit mutationMode="pessimistic" {...props}>
-        <TabbedForm>
+{
+    return (
+        <Edit mutationMode="pessimistic" {...props}>
+            <TabbedForm>
+                <FormTab label="General">
+                    <ReferenceInput filterToQuery={(searchText: any) => ({
+                        "personal.first_name": searchText,
+                    })} perPage={100} source="customer_uid" reference="customers">
+                        <AutocompleteInput
+                            isRequired={true}
+                            optionText={RenderFullName}
+                            fullWidth
+                        />
+                    </ReferenceInput>
+                    <AutocompleteInput isRequired={true} source="status" choices={[
+                        { id: "draft", name: "draft" },
+                        { id: "paid", name: "paid" },
+                        { id: "refunded", name: "refunded" },
+                        { id: "collections", name: "collections" },
+                        { id: "payment_pending", name: "payment_pending" },
+                        { id: "active", name: "active" },
+                        { id: "pending", name: "pending" },
+                        { id: "fraud", name: "fruad" },
+                        { id: "cancelled", name: "cancelled" },
+                    ]} fullWidth />
 
-            <FormTab label="General">
+                    <AutocompleteInput isRequired={true} source="payment_method" choices={[
+                        { id: "none", name: "none" },
+                        { id: "manual", name: "manual" },
+                        { id: "bank", name: "bank" },
+                        { id: "paypal", name: "paypal" },
+                        { id: "credit_card", name: "credit_card" },
+                        { id: "swish", name: "swish" },
+                    ]} fullWidth />
 
-                {/* @ts-ignore */}
-                <ReferenceInput filterToQuery={searchText => ({
-                    "personal.first_name": searchText,
-                })} perPage={100} source="customer_uid" reference="customers">
-                    <AutocompleteInput
-                        source="customers"
-                        label="Customer"
-                        required={true}
-                        allowEmpty={false}
-                        optionText={RenderFullName}
-                    />
-                </ReferenceInput>
+                    <NumberInput isRequired={true} label="Amount" source="amount" fullWidth />
+                    <AutocompleteInput isRequired={true} source="currency" choices={currencyCodes.map(e =>
+                    {
+                        return { id: e, name: e };
+                    })} fullWidth />
+                    <NumberInput fullWidth min={0} max={100} isRequired={true} label="Tax Rate" source="tax_rate" />
+                    <BooleanInput label="Paid" defaultValue={false} source="paid" />
+                    <BooleanInput label="Notified" defaultValue={false} source="notified" />
+                </FormTab>
 
-                <AutocompleteInput required={true} source="status" choices={[
-                    { id: "draft", name: "draft" },
-                    { id: "paid", name: "paid" },
-                    { id: "refunded", name: "refunded" },
-                    { id: "collections", name: "collections" },
-                    { id: "payment_pending", name: "payment_pending" },
-                    { id: "active", name: "active" },
-                    { id: "pending", name: "pending" },
-                    { id: "fraud", name: "fruad" },
-                    { id: "cancelled", name: "cancelled" },
-                ]} />
+                <FormTab label="Dates">
 
-                <AutocompleteInput required={true} source="payment_method" choices={[
-                    { id: "none", name: "none" },
-                    { id: "manual", name: "manual" },
-                    { id: "bank", name: "bank" },
-                    { id: "paypal", name: "paypal" },
-                    { id: "credit_card", name: "credit_card" },
-                    { id: "swish", name: "swish" },
-                ]} />
+                    <DateInput label="Invoiced date" source="dates.invoice_date" defaultValue={new Date().toLocaleDateString()} />
+                    <DateInput label="Due date" source="dates.due_date" defaultValue={new Date().toLocaleDateString()} />
 
-                <NumberInput required={true} label="Amount" source="amount" />
-                <AutocompleteInput required={true} source="currency" choices={currencyCodes.map(e =>
-                {
-                    return { id: e, name: e };
-                })} />
-                <NumberInput min={0} max={100} required={true} label="Tax Rate" source="tax_rate" />
-                <BooleanInput label="Paid" defaultValue={false} source="paid" />
-                <BooleanInput label="Notified" defaultValue={false} source="notified" />
-            </FormTab>
+                </FormTab>
 
-            <FormTab label="Dates">
+                <FormTab label="Miscellaneous">
+                    <RichTextInput source="notes" />
 
-                <DateInput label="Invoiced date" source="dates.invoice_date" defaultValue={new Date().toLocaleDateString()} />
-                <DateInput label="Due date" source="dates.due_date" defaultValue={new Date().toLocaleDateString()} />
+                    <ArrayInput isRequired={true} source="items">
+                        <SimpleFormIterator>
+                            <RichTextInput source="notes" />
+                            <NumberInput isRequired={true} label="Amount" source="amount" />
+                            <NumberInput label="Quantity" defaultValue={1} source="quantity" />
+                            <ReferenceInput filterToQuery={(searchText: any) => ({
+                                "name": searchText,
+                            })} perPage={100} source="product_id" reference="products">
+                                <AutocompleteInput
+                                    source="product"
+                                    label="Product"
+                                    isRequired={true}
+                                    optionText={(r: any) => `${r.name} - (${r.id})`}
+                                    fullWidth
+                                />
+                            </ReferenceInput>
+                        </SimpleFormIterator>
+                    </ArrayInput>
 
-            </FormTab>
+                    <ReferenceArrayInput filterToQuery={(searchText: any) => ({
+                        "id": searchText,
+                    })} perPage={100} source="transactions" reference="transactions">
+                        <AutocompleteArrayInput
+                            source="transactions"
+                            optionValue="id"
+                            label="Transactions"
+                            fullWidth
+                            optionText={(record: any) => record?.id?.toString() ?? ""}
+                        />
+                    </ReferenceArrayInput>
 
-            <FormTab label="Miscellaneous">
+                </FormTab>
 
-                <MarkdownInput source="notes" />
+            </TabbedForm>
 
-                <ArrayInput required={true} source="items">
-                    <SimpleFormIterator>
-                        <MarkdownInput source="notes" />
-                        <NumberInput required={true} label="Amount" source="amount" />
-                        <NumberInput label="Quantity" defaultValue={1} source="quantity" />
-                        <ReferenceInput filterToQuery={searchText => ({
-                            "name": searchText,
-                        })} perPage={100} source="product_id" reference="products">
-                            <AutocompleteInput
-                                source="product"
-                                label="Product"
-                                required={true}
-                                allowEmpty={false}
-                                optionText={"name"}
-                            />
-                        </ReferenceInput>
-                    </SimpleFormIterator>
-                </ArrayInput>
-
-                {/* @ts-ignore */}
-                <ReferenceArrayInput filterToQuery={searchText => ({
-                    "id": searchText,
-                })} perPage={100} source="transactions" reference="transactions">
-                    <AutocompleteArrayInput
-                        source="transactions"
-                        label="Transactions"
-                        optionText={(record) => record?.id?.toString() ?? ""}
-                    />
-                </ReferenceArrayInput>
-
-            </FormTab>
-
-        </TabbedForm>
-
-    </Edit>
-);
+        </Edit>
+    )
+};

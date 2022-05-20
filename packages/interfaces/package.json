@@ -14,7 +14,7 @@
     "Images.interface.d.ts",
     "ConfigurableOptions.interface.d.ts",
     "Categories.interface.d.ts",
-
+    "Stripe.interface.d.ts",
     
     "./Lang/Alllang.interface.d.ts",
     "./Lang/GetText.interface.d.ts",

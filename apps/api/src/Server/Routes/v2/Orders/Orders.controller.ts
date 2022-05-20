@@ -25,8 +25,11 @@ async function insert(req: Request, res: Response)
 
     req.body.dates = {
         createdAt: new Date(),
-        last_recycle: b_recurring ? dateFormat.format(new Date(), "YYYY-MM-DD") : undefined,
-        next_recycle: b_recurring ? dateFormat.format(nextRycleDate(new Date(), billing_cycle), "YYYY-MM-DD") : undefined,
+        // last_recycle: b_recurring ? dateFormat.format(new Date(), "YYYY-MM-DD") : undefined,
+        // next_recycle: b_recurring ? dateFormat.format(nextRycleDate(new Date(), billing_cycle), "YYYY-MM-DD") : undefined,
+        last_recycle: b_recurring ? dateFormat.format(nextRycleDate(new Date(), billing_cycle), "YYYY-MM-DD") : undefined,
+        // Should be next date in two months
+        next_recycle: b_recurring ? dateFormat.format(dateFormat.addMonths(new Date, 2), "YYYY-MM-DD") : undefined,
     };
 
     const newInvoice = await createInvoiceFromOrder(req.body as IOrder);
@@ -52,18 +55,17 @@ async function insert(req: Request, res: Response)
     //     });
 
     // Trying optimizations
-
     API.create(req.body).then(async result =>
     {
         mainEvent.emit("order_created", result);
         const customer = await CustomerModel.findOne({ id: result.customer_uid });
         // We should send a email to the customer
-        customer && b_recurring && billing_cycle === "monthly" && await sendInvoiceEmail(newInvoice, customer);
         // noinspection CommaExpressionJS
         customer && await SendEmail(customer.personal.email, `New order from ${"" !== await Company_Name() ? await Company_Name() : "CPG"} #${result.id}`, {
             isHTML: !0,
             body: await NewOrderCreated(result, customer)
         }), APISuccess({ uid: result.uid })(res)
+        customer && b_recurring && billing_cycle === "monthly" && await sendInvoiceEmail(newInvoice, customer);
     });
 }
 

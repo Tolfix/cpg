@@ -3,7 +3,7 @@ import { AutocompleteInput } from "react-admin";
 export default function PaymentMethodInput()
 {
     return (
-        <AutocompleteInput required={true} source="payment_method" choices={
+        <AutocompleteInput fullWidth isRequired={true} source="payment_method" choices={
             [
                 { id: "none", name: "none" },
                 { id: "manual", name: "manual" },

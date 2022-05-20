@@ -105,6 +105,33 @@ const CustomerSchema = new Schema
                 default: "active",
             },
 
+            credits: {
+                type: [
+                    {
+                        amount: {
+                            type: Number,
+                            required: true,
+                        },
+                        currency: {
+                            type: String,
+                            enum: currencyCodes,
+                            required: true,
+                        },
+                        notes: {
+                            type: String,
+                            default: "",
+                        },
+                        invoice_id: {
+                            type: Number,
+                            ref: "invoices",
+                            required: false,
+                        },
+                    }
+                ],
+                required: false,
+                default: [],
+            },
+
             currency: {
                 type: String,
                 enum: currencyCodes,
