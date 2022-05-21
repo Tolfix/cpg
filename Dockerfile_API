@@ -17,27 +17,18 @@ ENV YARN_CACHE_FOLDER=.yarn-cache
 
 ##########################
 
-# sourcer
-FROM base AS sourcer
-
-RUN yarn global add turbo
-COPY . .
-RUN turbo prune --scope=cpg-api --docker
 
 
 # deps
 FROM base AS deps
 
-COPY --from=sourcer /app/out/json/ .
-COPY --from=sourcer /app/out/yarn.lock ./yarn.lock
+COPY yarn.lock .
 
 RUN yarn install
 
 # prod deps
 FROM base AS prod-deps
 
-COPY --from=sourcer /app/out/json/ .
-COPY --from=sourcer /app/out/yarn.lock ./yarn.lock
 COPY --from=deps /app/ .
 
 RUN yarn install --production --ignore-scripts --prefer-offline
@@ -48,7 +39,6 @@ RUN yarn cache clean
 FROM base AS builder
 
 COPY --from=deps /app/ .
-COPY --from=sourcer /app/out/full/ .
 
 RUN yarn turbo run build --scope=api --include-dependencies --no-deps
 
@@ -73,39 +63,3 @@ EXPOSE 3001
 COPY --from=builder /app/apps/api/build ./build
 
 CMD ["yarn", "start"]
-
-# # BUILDER
-# FROM node:16-alpine as BUILDER
-
-# RUN npm i -g turbo
-# COPY --from=INSTALLER . .
-
-# WORKDIR /app
-
-# RUN tsc --project apps/api/tsconfig.json
-# ##########################
-
-# # APP
-# FROM node:16-alpine as APP
-
-# WORKDIR /app
-
-# RUN apk update && \
-#     apk upgrade && \
-#     apk add git
-
-# COPY --from=BUILDER /app/apps/api/build ./build
-# COPY --from=BUILDER /app/node_modules ./node_modules
-# COPY --from=BUILDER /app/packages ./packages
-# COPY --from=BUILDER /app/package.json ./package.json
-
-# ENV DEBIAN_FRONTEND=noninteractive
-
-# LABEL author="Tolfix" maintainer="support@tolfix.com"
-
-# ENV PLUGINS "[]"
-# ENV DISABLE_JSON_ERROR "true"
-
-# EXPOSE 3001
-
-# CMD [ "node", "./build/Main.js" ]
