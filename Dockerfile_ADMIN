@@ -51,4 +51,4 @@ LABEL author="Tolfix" maintainer="support@tolfix.com"
 
 EXPOSE 3000
 
-CMD ["react-scripts", "start"]
+CMD ["npm", "run", "dev"]

@@ -21,7 +21,7 @@
     "lib": "*",
     "prop-types": "^15.7.2",
     "query-string": "^7.0.1",
-    "ra-data-json-server": "^3.19.0",
+    "ra-data-json-server": "^4.1.0",
     "ra-input-rich-text": "^4.1.0",
     "react": "^17.0.2",
     "react-admin": "^4.1.0",
