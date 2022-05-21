@@ -8,6 +8,7 @@ import
     ReferenceArrayInput, AutocompleteInput,
     SimpleFormIterator,
     TabbedForm,
+    ReferenceInput,
 } from "react-admin";
 //@ts-ignore
 import { RichTextInput } from 'ra-input-rich-text';
@@ -19,8 +20,7 @@ export const CreateInvoices = (props: any) =>
     <Create {...props}>
         <TabbedForm>
             <FormTab label="General">
-                {/* @ts-ignore */}
-                <ReferenceArrayInput filterToQuery={searchText => ({
+                <ReferenceInput filterToQuery={(searchText: string) => ({
                     "personal.first_name": searchText,
                 })} perPage={100} source="customer_uid" reference="customers">
                     <AutocompleteInput
@@ -30,7 +30,7 @@ export const CreateInvoices = (props: any) =>
                         fullWidth
                         optionText={RenderFullName}
                     />
-                </ReferenceArrayInput>
+                </ReferenceInput>
                 <AutocompleteInput isRequired={true} source="status" choices={[
                     { id: "draft", name: "draft" },
                     { id: "refunded", name: "refunded" },
@@ -55,6 +55,7 @@ export const CreateInvoices = (props: any) =>
                 <NumberInput fullWidth min={0} max={100} isRequired={true} label="Tax Rate" source="tax_rate" />
                 <BooleanInput label="Paid" defaultValue={false} source="paid" />
                 <BooleanInput label="Notified" defaultValue={false} source="notified" />
+                <BooleanInput label="Send Email" defaultValue={false} source="send_email" />
             </FormTab>
             <FormTab label="Dates">
                 <DateInput label="Invoiced date" source="dates.invoice_date" defaultValue={new Date().toLocaleDateString()} />
@@ -70,7 +71,7 @@ export const CreateInvoices = (props: any) =>
                         <NumberInput isRequired={true} label="Amount" source="amount" />
                         <NumberInput label="Quantity" defaultValue={1} source="quantity" />
                         {/* @ts-ignore */}
-                        <ReferenceArrayInput filterToQuery={searchText => ({
+                        <ReferenceInput filterToQuery={searchText => ({
                             "name": searchText,
                         })} perPage={100} source="product_id" reference="products">
                             <AutocompleteInput
@@ -80,7 +81,7 @@ export const CreateInvoices = (props: any) =>
                                 fullWidth
                                 optionText={(r: any) => `${r.name} - (${r.id})`}
                             />
-                        </ReferenceArrayInput>
+                        </ReferenceInput>
                     </SimpleFormIterator>
                 </ArrayInput>
 
