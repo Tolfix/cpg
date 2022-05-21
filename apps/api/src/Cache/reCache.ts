@@ -241,6 +241,7 @@ export async function reCache_Invoices()
 
             if (!o.extra)
             {
+                // @ts-ignore
                 o.extra = {};
                 await o.save();
             }
