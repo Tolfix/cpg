@@ -58,7 +58,7 @@ const cacheSetupIntents = new Map<string, stripe.Response<stripe.SetupIntent>>()
 // }
 
 // Create a method that will create a payment intent from an order
-export const CreatePaymentIntent = async (invoice: IInvoice) =>
+export const CreatePaymentIntent = async (invoice: IInvoice<"credit_card">) =>
 {
     if (cacheIntents.has(invoice.uid))
         return cacheIntents.get(invoice.uid) as stripe.Response<stripe.PaymentIntent>;
@@ -110,6 +110,11 @@ export const CreatePaymentIntent = async (invoice: IInvoice) =>
             invoice_uid: invoice.uid,
         },
     }));
+
+    invoice.extra.stripe_payment_intent_id = intent.id;
+
+    // Save invoice
+    await InvoiceModel.updateOne({ id: invoice.id }, { $set: { extra: invoice.extra } }).exec();
 
     cacheIntents.set(invoice.uid, intent);
 
