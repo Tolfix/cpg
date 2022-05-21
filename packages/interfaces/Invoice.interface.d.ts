@@ -6,7 +6,13 @@ import { IPayments } from "./Payments.interface";
 import { IProduct } from "./Products.interface";
 import { ITransactions } from "./Transactions.interface";
 
-export interface IInvoice<PM extends keyof IPayments = "none">
+export interface IInvoice<
+    PM extends keyof IPayments = "none",
+    /**
+     * S for Status
+     */
+    S extends extendedOrderStatus = "active",
+    >
 {
     id: any;
     uid: `INV_${string}`;
@@ -24,7 +30,9 @@ export interface IInvoice<PM extends keyof IPayments = "none">
     currency: TPaymentCurrency;
     notified: boolean;
     extra: {
-        stripe_payment_intent_id?: PM extends "credit_card" ? string : undefined;
+        stripe_payment_intent_id: PM extends "credit_card" ? string : undefined;
+        // If S is `refunded` then we mark it here it is refunded
+        refunded?: S extends "refunded" ? true : undefined;
         [key: string]: any;
     }
 }
