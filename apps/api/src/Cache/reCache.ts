@@ -238,6 +238,14 @@ export async function reCache_Invoices()
                 o.markModified("customer_uid");
                 await o.save();
             }
+
+            if (!o.extra)
+            {
+                // @ts-ignore
+                o.extra = {};
+                await o.save();
+            }
+
             Logger.cache(`Caching invoice ${o.uid}`);
             CacheInvoice.set(o.uid, o);
         }

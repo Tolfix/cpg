@@ -8,6 +8,7 @@ import
     ReferenceArrayInput, ReferenceInput, AutocompleteInput,
     SimpleFormIterator,
     TabbedForm,
+    FormDataConsumer,
 } from "react-admin";
 import { RichTextInput } from 'ra-input-rich-text';
 import { currencyCodes } from "lib/Currencies";
@@ -57,6 +58,27 @@ export const EditInvoices = (props: any) =>
                     <NumberInput fullWidth min={0} max={100} isRequired={true} label="Tax Rate" source="tax_rate" />
                     <BooleanInput label="Paid" defaultValue={false} source="paid" />
                     <BooleanInput label="Notified" defaultValue={false} source="notified" />
+
+                    <FormDataConsumer>
+                        {({ formData }) => (
+                            formData.paid &&
+                            formData.status === "refunded" &&
+                            formData.payment_method === "credit_card" &&
+                            !formData.extra.refunded
+                        ) && (
+                                <BooleanInput disabled={formData.refund_email} label="Refund this invoice?" helperText="Warning: Only works for Credit card! This will refund automatically and send email, click on 'Refund Email' to send email if refunded" source="refund_invoice" />
+                            )}
+                    </FormDataConsumer>
+
+                    <FormDataConsumer>
+                        {({ formData }) => (
+                            formData.paid &&
+                            formData.status === "refunded"
+                        ) && (
+                                <BooleanInput disabled={formData.refund_invoice} label="Refund Email" source="refund_email" />
+                            )}
+                    </FormDataConsumer>
+
                 </FormTab>
 
                 <FormTab label="Dates">

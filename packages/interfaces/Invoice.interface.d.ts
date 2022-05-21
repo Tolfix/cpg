@@ -6,44 +6,13 @@ import { IPayments } from "./Payments.interface";
 import { IProduct } from "./Products.interface";
 import { ITransactions } from "./Transactions.interface";
 
-/**
- * @typedef InvoiceCreate
- * @property {Array.<Transactions>} transactions
- * @property {number} amount
- * @property {Array.<InvoiceItem>} items
- * @property {string} payment_method
- * @property {InvoiceDates.model} dates
- * @property {Status} status
- * @property {number} tax_rate
- * @property {string} notes
- * @property {boolean} paid
- */
-
-/**
- * @typedef InvoiceItem
- * @property {string} notes
- * @property {number} amount
- * @property {boolean} taxed
- */
-
-/**
- * @typedef InvoiceDates
- * @property {string} invoice_date
- * @property {string} due_date
- */
-
-/**
- * @typedef Status
- * @property {string} active
- * @property {string} pending
- * @property {string} draft
- * @property {string} fraud
- * @property {string} cancelled
- * @property {string} refunded
- * @property {string} collections
- * @property {string} payment_pending
- */
-export interface IInvoice
+export interface IInvoice<
+    PM extends keyof IPayments = "none",
+    /**
+     * S for Status
+     */
+    S extends extendedOrderStatus = "active",
+    >
 {
     id: any;
     uid: `INV_${string}`;
@@ -60,6 +29,12 @@ export interface IInvoice
     paid: boolean;
     currency: TPaymentCurrency;
     notified: boolean;
+    extra: {
+        stripe_payment_intent_id: PM extends "credit_card" ? string : undefined;
+        // If S is `refunded` then we mark it here it is refunded
+        refunded?: S extends "refunded" ? true : undefined;
+        [key: string]: any;
+    }
 }
 
 export interface IInvoiceMethods
