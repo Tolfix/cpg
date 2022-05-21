@@ -3,7 +3,7 @@ require("dotenv").config();
 // TODO: Find right amount of max listeners
 process.setMaxListeners(0);
 import Logger from "lib/Logger";
-import { DebugMode, GetVersion, CLI_MODE } from "./Config";
+import { GetVersion, CLI_MODE } from "./Config";
 
 Logger.info(!CLI_MODE ? `Starting CPG-API with version ${GetVersion()}` : `Starting CPG-API with version ${GetVersion()} in CLI mode only`);
 Logger.info("Adding .env variables");

@@ -7,7 +7,7 @@ import MongoFind from "../Lib/MongoFind";
 // So we create a method that takes data, and then deep search for _id and if we
 // find it we delete it from object
 // We then return the object
-function removeKeys(obj: any, keys: string[]): any
+export function removeKeys(obj: any, keys: string[]): any
 {
     if (Array.isArray(obj)) return obj.map(item => removeKeys(item, keys));
 
@@ -21,6 +21,7 @@ function removeKeys(obj: any, keys: string[]): any
 
     return obj;
 }
+
 export default class BaseModelAPI<IModel extends { uid: string }>
 {
     private idFunction;
