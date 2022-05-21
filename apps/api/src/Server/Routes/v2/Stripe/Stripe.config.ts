@@ -12,6 +12,7 @@ import Stripe from "stripe";
 import { CreatePaymentIntent, createSetupIntent, markInvoicePaid, RetrievePaymentIntent, RetrieveSetupIntent } from "../../../../Payments/Stripe";
 import CustomerModel from "../../../../Database/Models/Customers/Customer.model";
 import stripeWebhookEvent from "../../../../Events/Stripe.event";
+import { IInvoice } from "interfaces/Invoice.interface";
 const stripe = new Stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
     apiVersion: "2020-08-27",
 });
@@ -37,7 +38,7 @@ class StripeRouter
             if (invoice.paid)
                 return APIError("Invoice already paid")(res);
 
-            const intent = await CreatePaymentIntent(invoice);
+            const intent = await CreatePaymentIntent(invoice as unknown as IInvoice<"credit_card">);
 
             const customer = await CustomerModel.findOne({
                 $or: [
