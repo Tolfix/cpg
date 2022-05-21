@@ -48,6 +48,8 @@ COPY --from=prod-deps /app/ .
 
 WORKDIR /app/apps/api
 
+COPY --from=builder /app/apps/api/build ./build
+
 ENV DEBIAN_FRONTEND=noninteractive
 
 LABEL author="Tolfix" maintainer="support@tolfix.com"
@@ -56,7 +58,5 @@ ENV PLUGINS "[]"
 ENV DISABLE_JSON_ERROR "true"
 
 EXPOSE 3001
-
-COPY --from=builder /app/apps/api/build ./build
 
 CMD ["yarn", "start"]
