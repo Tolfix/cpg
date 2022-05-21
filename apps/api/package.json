@@ -1,6 +1,6 @@
 {
   "name": "cpg-api",
-  "version": "v3.4",
+  "version": "3.4.0",
   "private": true,
   "description": "Central Payment Gateway",
   "main": "./build/Main.js",
