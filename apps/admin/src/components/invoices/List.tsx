@@ -20,7 +20,7 @@ const TagFilter = (props: any) =>
 {
     return (
         <Filter {...props}>
-            <SearchInput name='Search id' source="id" alwaysOn={true} />
+            <SearchInput source="id" alwaysOn={true} />
             {/* Search for specific customer */}
             <ReferenceInput filterToQuery={(searchText: string) => ({
                 "text": searchText,
