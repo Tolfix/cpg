@@ -14,6 +14,7 @@ import
 import { RichTextInput } from 'ra-input-rich-text';
 import { currencyCodes } from "lib/Currencies";
 import RenderFullName from "../../lib/RenderFullName";
+import { getDate } from "../../lib/dateFormat";
 
 export const CreateInvoices = (props: any) =>
 (
@@ -58,8 +59,8 @@ export const CreateInvoices = (props: any) =>
                 <BooleanInput label="Send Email" defaultValue={false} source="send_email" />
             </FormTab>
             <FormTab label="Dates">
-                <DateInput label="Invoiced date" source="dates.invoice_date" defaultValue={new Date().toLocaleDateString()} />
-                <DateInput label="Due date" source="dates.due_date" defaultValue={new Date().toLocaleDateString()} />
+                <DateInput label="Invoiced date" source="dates.invoice_date" defaultValue={getDate()} />
+                <DateInput label="Due date" source="dates.due_date" defaultValue={getDate()} />
             </FormTab>
             <FormTab label="Miscellaneous">
 

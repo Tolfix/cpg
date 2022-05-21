@@ -13,6 +13,7 @@ import
 import { RichTextInput } from 'ra-input-rich-text';
 import { currencyCodes } from "lib/Currencies";
 import RenderFullName from "../../lib/RenderFullName";
+import { getDate } from "../../lib/dateFormat";
 
 export const EditInvoices = (props: any) =>
 {
@@ -83,8 +84,11 @@ export const EditInvoices = (props: any) =>
 
                 <FormTab label="Dates">
 
-                    <DateInput label="Invoiced date" source="dates.invoice_date" defaultValue={new Date().toLocaleDateString()} />
-                    <DateInput label="Due date" source="dates.due_date" defaultValue={new Date().toLocaleDateString()} />
+                    <DateInput label="Invoiced date" source="dates.invoice_date" defaultValue={getDate()} />
+                    <DateInput label="Due date" source="dates.due_date" defaultValue={getDate()} />
+                    <DateInput label="Paid date" source="dates.date_paid" defaultValue={null} />
+                    <DateInput label="Due cancelled" source="dates.date_cancelled" defaultValue={null} />
+                    <DateInput label="Refunded date" source="dates.date_refunded" defaultValue={null} />
 
                 </FormTab>
 
