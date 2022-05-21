@@ -38,7 +38,7 @@ COPY --from=BUILDER /app/ .
 
 WORKDIR /app/apps/api
 
-COPY --from=BUILDER /app/apps/api/build ./build
+COPY --from=BUILDER /app/apps/api/ .
 
 RUN apk update && \
     apk upgrade && \
