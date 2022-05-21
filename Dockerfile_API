@@ -13,8 +13,6 @@ RUN apk update && \
 RUN npm install -g @types/node \
     && npm install -g typescript@4.3.5 
 
-ENV YARN_CACHE_FOLDER=.yarn-cache
-
 ##########################
 
 # deps
