@@ -8,7 +8,7 @@ export default async (invoice: IInvoice & IInvoiceMethods, customer: ICustomer) 
 <div>
     <h1>Hello ${getFullName(customer)}.</h1>
     <p>
-        This is a notice that an invoice has been refunded.
+        This is a notice that your invoice <strong>(#${invoice.id})</strong> has been refunded.
     </p>
     <p>
         <strong>Invoice number:</strong> ${invoice.id}
