@@ -17,12 +17,11 @@ ENV YARN_CACHE_FOLDER=.yarn-cache
 
 ##########################
 
-
-
 # deps
 FROM base AS deps
 
-COPY yarn.lock .
+COPY . .
+# COPY yarn.lock .
 
 RUN yarn install
 
