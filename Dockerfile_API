@@ -1,8 +1,8 @@
 # Installer
-FROM node:16-alpine as base
+FROM node:16-alpine as INSTALLER
 
 # Caching
-RUN apk add --no-cache libc6-compat openssh-client git
+RUN apk add --no-cache libc6-compat
 
 WORKDIR /app
 
@@ -13,42 +13,41 @@ RUN apk update && \
 RUN npm install -g @types/node \
     && npm install -g typescript@4.3.5 
 
+COPY . .
+
+RUN npm install --force
 ##########################
 
-# deps
-FROM base AS deps
+# BUILDER
+FROM node:16-alpine as BUILDER
 
-COPY . .
-# COPY yarn.lock .
+RUN npm i -g turbo
+COPY --from=INSTALLER . .
 
-RUN yarn install
+WORKDIR /app
 
-# prod deps
-FROM base AS prod-deps
+RUN tsc --project apps/api/tsconfig.json
+##########################
 
-COPY --from=deps /app/ .
-
-RUN yarn install --production --ignore-scripts --prefer-offline
-
-RUN yarn cache clean
-
-# builder
-FROM base AS builder
-
-COPY --from=deps /app/ .
-
-RUN yarn turbo run build --scope=api --include-dependencies --no-deps
-
-# runtime
-FROM base
+# APP
+FROM node:16-alpine as APP
 
 ENV NODE_ENV=production
 
-COPY --from=prod-deps /app/ .
+COPY --from=BUILDER /app/ .
 
 WORKDIR /app/apps/api
 
-COPY --from=builder /app/apps/api/build ./build
+COPY --from=BUILDER /app/apps/api/build ./build
+
+RUN apk update && \
+    apk upgrade && \
+    apk add git
+
+# COPY --from=BUILDER /app/apps/api/build ./build
+# COPY --from=BUILDER /app/node_modules ./node_modules
+# COPY --from=BUILDER /app/packages ./packages
+# COPY --from=BUILDER /app/package.json ./package.json
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -59,4 +58,4 @@ ENV DISABLE_JSON_ERROR "true"
 
 EXPOSE 3001
 
-CMD ["yarn", "start"]
+CMD [ "node", "./build/Main.js" ]
