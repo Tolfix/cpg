@@ -16,7 +16,7 @@ export const CreateTransactions = (props: any) =>
                     {({ formData }) => formData.statement === "income" &&
                         <>
                             <ReferenceInput filterToQuery={(searchText: string) => ({
-                                "personal.first_name": searchText,
+                                "text": searchText,
                             })} perPage={100} source="customer_uid" reference="customers" allowEmpty>
                                 <AutocompleteInput
                                     source="customers"

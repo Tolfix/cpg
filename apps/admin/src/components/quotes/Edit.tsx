@@ -33,7 +33,7 @@ export default function EditQuote(props: any)
             <TabbedForm>
                 <FormTab label="General">
                     <ReferenceInput filterToQuery={(searchText: string) => ({
-                        "personal.first_name": searchText,
+                        "text": searchText,
                     })} perPage={100} source="customer_uid" reference="customers">
                         <AutocompleteInput
                             source="customers"

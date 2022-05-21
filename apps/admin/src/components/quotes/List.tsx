@@ -15,6 +15,7 @@
     declined: boolean;
 */
 import { BooleanField, Datagrid, EditButton, FunctionField, List, Pagination, ReferenceField, TextField } from "react-admin";
+import RenderFullName from "../../lib/RenderFullName";
 
 const PostPagination = (props: JSX.IntrinsicAttributes) => <Pagination rowsPerPageOptions={[10, 25, 50, 100]} {...props} />;
 
@@ -28,8 +29,7 @@ export default function ListQuotes(props: any)
                 <ReferenceField label="Customer" source="customer_uid" reference="customers">
                     <FunctionField
                         // @ts-ignore
-                        render={(record) =>
-                            `${record.personal.first_name} ${record.personal.last_name}`}
+                        render={RenderFullName}
                         source="personal.first_name"
                     />
                 </ReferenceField>

@@ -36,8 +36,7 @@ export const ListTransactions = (props: any) =>
                 <ReferenceField label="Customer" source="customer_uid" reference="customers">
                     <FunctionField
                         // @ts-ignore
-                        render={(record) =>
-                            `${record.personal.first_name} ${record.personal.last_name}`}
+                        render={RenderFullName}
                         source="personal.first_name"
                     />
                 </ReferenceField>
