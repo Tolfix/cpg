@@ -18,7 +18,6 @@ export const CreateOrders = (props: any) =>
 {
 
     const [product, setProduct] = React.useState<any[]>([]);
-    console.log(product)
 
     return (
         <Create {...props}>
