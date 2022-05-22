@@ -19,7 +19,7 @@ export const EditOrders = (props: any) =>
         <TabbedForm>
             <FormTab label="General">
                 <ReferenceInput filterToQuery={(searchText: any) => ({
-                    "personal.first_name": searchText,
+                    "text": searchText,
                 })} perPage={100} source="customer_uid" reference="customers">
                     <AutocompleteInput
                         source="customers"

@@ -10,7 +10,6 @@ export default function EnsureAdmin(eR = false)
 {
     return async (req: Request, res: Response, next?: NextFunction) =>
     {
-
         const authHeader = req.headers['authorization'];
         const tokenQuery = req.query.access_token;
         if (!authHeader && !tokenQuery)
@@ -45,7 +44,6 @@ export default function EnsureAdmin(eR = false)
                 // Convert it to normal string
                 Logger.error(`Admin authorizing with base64 string`);
                 Logger.info(`Encoding admin credentials to normal string`);
-                //login = atob(login);
                 login = Buffer.from(login, 'base64').toString();
                 password = login.split(":")[1];
                 login = login.split(":")[0];
@@ -70,8 +68,6 @@ export default function EnsureAdmin(eR = false)
             // @ts-ignore
             const token = (Buffer.isBuffer(b64auth[1]) ? Buffer.from(b64auth[1], 'base64') : b64auth[1]).toString();
 
-            !eR ? Logger.warning(`Authoring admin with token: ${token}`) : null;
-
             try
             {
                 const payload = jwt.verify(token, JWT_Access_Token);
@@ -81,8 +77,6 @@ export default function EnsureAdmin(eR = false)
                     !eR ? Logger.warning(`Authorization failed for admin with token: ${token}`) : null;
                     return eR ? Promise.resolve(false) : APIError("Unauthorized admin", 403)(res);
                 }
-
-                eR ? Logger.warning(`Authorized admin with token: ${token}`) : null;
 
                 return eR ? Promise.resolve(true) : next?.();
             }

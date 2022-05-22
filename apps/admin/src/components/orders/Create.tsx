@@ -26,7 +26,7 @@ export const CreateOrders = (props: any) =>
                 <FormTab label="General">
                     {/* @ts-ignore */}
                     <ReferenceInput filterToQuery={searchText => ({
-                        "personal.first_name": searchText,
+                        "text": searchText,
                     })} perPage={100} source="customer_uid" reference="customers">
                         <AutocompleteInput
                             source="customers"

@@ -23,7 +23,6 @@ FROM node:16-alpine as BUILDER
 
 RUN npm i -g turbo
 COPY --from=INSTALLER . .
-
 WORKDIR /app
 
 ##########################
@@ -31,17 +30,17 @@ WORKDIR /app
 # APP
 FROM node:16-alpine as APP
 
-WORKDIR /app
+ENV NODE_ENV=production
+
+COPY --from=BUILDER /app/ .
+
+WORKDIR /app/apps/admin
+
+COPY --from=BUILDER /app/apps/admin/ .
 
 RUN apk update && \
     apk upgrade && \
     apk add git
-
-COPY --from=BUILDER /app/apps/admin/src ./src
-COPY --from=BUILDER /app/apps/admin/public ./public
-COPY --from=BUILDER /app/node_modules ./node_modules
-COPY --from=BUILDER /app/packages ./packages
-COPY --from=BUILDER /app/package.json ./package.json
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV DISABLE_ESLINT_PLUGIN=true
@@ -52,4 +51,4 @@ LABEL author="Tolfix" maintainer="support@tolfix.com"
 
 EXPOSE 3000
 
-CMD ["react-scripts", "start"]
+CMD ["npm", "run", "dev"]

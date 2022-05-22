@@ -20,7 +20,7 @@
     }
 */
 
-import { ArrayInput, AutocompleteArrayInput, BooleanInput, Create, DateInput, FormTab, NumberInput, ReferenceArrayInput, SimpleFormIterator, TabbedForm, TextInput } from "react-admin";
+import { ArrayInput, AutocompleteArrayInput, BooleanInput, Create, DateInput, FormTab, NumberInput, ReferenceInput, SimpleFormIterator, TabbedForm, TextInput } from "react-admin";
 import CurrencyInput from "../../inputs/CurrencyInput";
 import CustomerInput from "../../inputs/CustomerInput";
 import PaymentMethodInput from "../../inputs/PaymentMethodInput";
@@ -33,8 +33,8 @@ export default function CreateQuote(props: any)
         <Create {...props}>
             <TabbedForm>
                 <FormTab label="General">
-                    <CustomerInput />
-                    <ReferenceArrayInput filterToQuery={(searchText: string) => ({
+                    <CustomerInput isEdit />
+                    <ReferenceInput filterToQuery={(searchText: string) => ({
                         "name": searchText,
                     })} perPage={100} source="promotion_codes" reference="promotion_codes">
                         <AutocompleteArrayInput
@@ -43,7 +43,7 @@ export default function CreateQuote(props: any)
                             fullWidth
                             optionText="name"
                         />
-                    </ReferenceArrayInput>
+                    </ReferenceInput>
                     <CurrencyInput />
                     <PaymentMethodInput />
                     <DateInput label="Due date" source="due_date" defaultValue={getDate()} />

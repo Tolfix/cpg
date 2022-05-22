@@ -149,8 +149,6 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
             `,
         };
 
-        console.log(data);
-
         if (
             Customer.billing.country.toLowerCase() === "sweden" ||
             Customer.billing.country.toLowerCase() === "sverige"
@@ -165,21 +163,12 @@ export default function createPDFInvoice(invoice: IInvoice): Promise<string>
             // @ts-ignore
             data["images"]["background"] = PDF_Template_Url;
 
-        console.log(`hello, we are here!`)
 
-        try
+        //@ts-ignore
+        await easyinvoice.createInvoice(data, (result: { pdf: any; }) =>
         {
-            //@ts-ignore
-            await easyinvoice.createInvoice(data, (result: { pdf: any; }) =>
-            {
-                console.log(result);
-                return resolve(result.pdf);
-            });
-        }
-        catch (error)
-        {
-            console.log(error)
-            reject(`Uh oh,`)
-        }
+            return resolve(result.pdf);
+        });
+
     })
 }

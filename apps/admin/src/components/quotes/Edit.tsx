@@ -20,7 +20,7 @@
     }
 */
 
-import { ArrayInput, AutocompleteArrayInput, DateInput, Edit, FormTab, NumberInput, ReferenceArrayInput, ReferenceInput, AutocompleteInput, SimpleFormIterator, TabbedForm, TextInput } from "react-admin";
+import { ArrayInput, AutocompleteArrayInput, DateInput, Edit, FormTab, NumberInput, ReferenceArrayInput, ReferenceInput, AutocompleteInput, SimpleFormIterator, TabbedForm, TextInput, BooleanInput } from "react-admin";
 import CurrencyInput from "../../inputs/CurrencyInput";
 import PaymentMethodInput from "../../inputs/PaymentMethodInput";
 //@ts-ignore
@@ -33,7 +33,7 @@ export default function EditQuote(props: any)
             <TabbedForm>
                 <FormTab label="General">
                     <ReferenceInput filterToQuery={(searchText: string) => ({
-                        "personal.first_name": searchText,
+                        "text": searchText,
                     })} perPage={100} source="customer_uid" reference="customers">
                         <AutocompleteInput
                             source="customers"
@@ -64,6 +64,8 @@ export default function EditQuote(props: any)
                         </SimpleFormIterator>
                     </ArrayInput>
                     <RichTextInput source="memo" />
+                    <BooleanInput source="send_email" defaultValue={false} />
+                    <BooleanInput source="accepted" />
                 </FormTab>
             </TabbedForm>
         </Edit >

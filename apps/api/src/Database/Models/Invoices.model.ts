@@ -128,6 +128,11 @@ const InvoiceSchema = new Schema
                 default: 'USD',
             },
 
+            extra: {
+                type: Object,
+                default: {},
+            },
+
         },
         {
             timestamps: true,

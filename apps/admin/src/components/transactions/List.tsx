@@ -7,10 +7,10 @@ const TagFilter = (props: any) =>
 {
     return (
         <Filter {...props}>
-            <SearchInput name='Search id' source="id" alwaysOn={true} />
+            <SearchInput source="id" alwaysOn={true} />
             {/* Search for specific customer */}
             <ReferenceInput filterToQuery={(searchText: string) => ({
-                "personal.first_name": searchText,
+                "text": searchText,
             })} perPage={100} label="Customer" source="customer_uid" reference="customers" alwaysOn={true} allowEmpty>
                 <AutocompleteInput optionText={RenderFullName} />
             </ReferenceInput>
@@ -36,8 +36,7 @@ export const ListTransactions = (props: any) =>
                 <ReferenceField label="Customer" source="customer_uid" reference="customers">
                     <FunctionField
                         // @ts-ignore
-                        render={(record) =>
-                            `${record.personal.first_name} ${record.personal.last_name}`}
+                        render={RenderFullName}
                         source="personal.first_name"
                     />
                 </ReferenceField>

@@ -2,7 +2,6 @@ import stripe from "stripe";
 import { Company_Currency, DebugMode, Full_Domain, Stripe_SK_Live, Stripe_SK_Test } from "../Config";
 import CustomerModel from "../Database/Models/Customers/Customer.model";
 import InvoiceModel from "../Database/Models/Invoices.model";
-import { ICreateCreditIntentOptions } from "interfaces/Stripe.interface";
 import TransactionsModel from "../Database/Models/Transactions.model";
 import { sendEmail } from "../Email/Send";
 import NewTransactionTemplate from "../Email/Templates/Transaction/NewTransaction.template";
@@ -58,7 +57,7 @@ const cacheSetupIntents = new Map<string, stripe.Response<stripe.SetupIntent>>()
 // }
 
 // Create a method that will create a payment intent from an order
-export const CreatePaymentIntent = async (invoice: IInvoice) =>
+export const CreatePaymentIntent = async (invoice: IInvoice<"credit_card">) =>
 {
     if (cacheIntents.has(invoice.uid))
         return cacheIntents.get(invoice.uid) as stripe.Response<stripe.PaymentIntent>;
@@ -111,12 +110,27 @@ export const CreatePaymentIntent = async (invoice: IInvoice) =>
         },
     }));
 
+    invoice.extra.stripe_payment_intent_id = intent.id;
+
+    // Save invoice
+    await InvoiceModel.updateOne({ id: invoice.id }, { $set: { extra: invoice.extra } }).exec();
+
     cacheIntents.set(invoice.uid, intent);
 
     return intent;
 };
 
 export const RetrievePaymentIntent = async (payment_intent: string) => (await Stripe.paymentIntents.retrieve(payment_intent));
+
+export const refundPaymentIntent = async (payment_intent_id: stripe.PaymentIntent["id"]) =>
+{
+    const intent = await Stripe.paymentIntents.retrieve(payment_intent_id);
+    if (intent.status !== "succeeded")
+        throw new Error("Payment intent is not succeeded");
+    return await Stripe.refunds.create({
+        payment_intent: payment_intent_id,
+    });
+}
 
 export const createSetupIntent = async (id: ICustomer["id"]) =>
 {
