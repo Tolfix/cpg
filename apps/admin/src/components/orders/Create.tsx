@@ -53,6 +53,7 @@ export const CreateOrders = (props: any) =>
                             <NumberInput label="Quantity" defaultValue={1} source="quantity" />
                             {/* We need to find a way to get the product it for this array of product */}
                             {/* Then on other product items query them.. */}
+                            {/* So we need a setter for each product... */}
                             <ArrayInput source="configurable_options" label="Configurable options">
                                 <SimpleFormIterator>
                                     <ReferenceInput source="option_id" reference="configurable_options">
