@@ -52,12 +52,6 @@ export const CreateOrders = (props: any) =>
                                 />
                             </ReferenceInput>
                             <NumberInput label="Quantity" defaultValue={1} source="quantity" />
-                            {/*   
-                        configurable_options?: Array<{
-                            id: IConfigurableOptions["id"],
-                            option_index: number;
-                        }>, 
-                        */}
                             <ArrayInput source="configurable_options" label="Configurable options">
                                 <SimpleFormIterator>
                                     <ReferenceInput source="option_id" reference="configurable_options">
