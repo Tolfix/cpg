@@ -11,7 +11,7 @@ CPG is being used to generate items, create invoices, handle orders, view transa
 # 📢 | Contribute
 Want to contribute? Great!
 You can contribute to the repository by `forking`, then make a pull request when you're done!
-
+Remember to read our [CONTRIBUTING](https://github.com/Tolfix/cpg/blob/master/CONTRIBUTING.md) guidelines to ensure your `PR` gets accepted.
 Or you can ask on our [`discord server`](https://discord.tolfix.com).
 
 # 🔮 | Discord
