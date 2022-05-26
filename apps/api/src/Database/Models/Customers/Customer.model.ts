@@ -144,6 +144,12 @@ const CustomerSchema = new Schema
         }
     );
 
+CustomerSchema.index({
+    "personal.email": "text",
+    "personal.first_name": "text",
+    "personal.last_name": "text",
+});
+
 CustomerSchema.methods.fullName = function (sC = false)
 {
     return `${this.personal.first_name} ${this.personal.last_name} ${sC ? (this.billing.company ? ` (${this.billing.company})` : "") : ""}`;

@@ -1,5 +1,6 @@
 import { currencyCodes } from "lib/Currencies";
 import { DateInput, Edit, FormDataConsumer, FormTab, NumberInput, ReferenceInput, AutocompleteInput, TabbedForm, TextInput } from "react-admin";
+import RenderFullName from "../../lib/RenderFullName";
 
 export const EditTrans = (props: any) =>
 (
@@ -14,16 +15,14 @@ export const EditTrans = (props: any) =>
                     {({ formData }) => formData.statement === "income" &&
                         <>
                             <ReferenceInput filterToQuery={(searchText: string) => ({
-                                "personal.first_name": searchText,
+                                "text": searchText,
                             })} perPage={100} source="customer_uid" reference="customers">
                                 <AutocompleteInput
                                     source="customers"
                                     label="Customers"
                                     fullWidth
                                     isRequired={formData.statement === "income"}
-                                    optionText={
-                                        (record: { personal: { first_name: any; last_name: any; } }) =>
-                                            `${record.personal.first_name} ${record.personal.last_name}`}
+                                    optionText={RenderFullName}
                                 />
                             </ReferenceInput>
                             <div>

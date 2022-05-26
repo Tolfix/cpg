@@ -20,12 +20,12 @@ const TagFilter = (props: any) =>
 {
     return (
         <Filter {...props}>
-            <SearchInput name='Search id' source="id" alwaysOn={true} />
+            <SearchInput source="id" alwaysOn={true} />
             {/* Search for specific customer */}
             <ReferenceInput filterToQuery={(searchText: string) => ({
-                "personal.first_name": searchText,
+                "text": searchText,
             })} perPage={100} label="Customer" source="customer_uid" reference="customers" alwaysOn={true}>
-                <AutocompleteInput optionText={RenderFullName} />
+                <AutocompleteInput fullWidth optionText={RenderFullName} />
             </ReferenceInput>
         </Filter>
     )

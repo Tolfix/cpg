@@ -9,9 +9,6 @@ import Logger from "lib/Logger";
 import { CacheAdmin } from "./Admin.cache";
 import { CacheCategories } from "./Categories.cache";
 import { CacheCustomer } from "./Customer.cache";
-import { CacheOrder } from "./Order.cache";
-import { CacheProduct } from "./Product.cache";
-import { CacheTransactions } from "./Transactions.cache";
 import { CacheImages } from "./Image.cache";
 import ConfigModel from "../Database/Models/Configs.model";
 import { CacheConfig } from "./Configs.cache";
@@ -238,6 +235,14 @@ export async function reCache_Invoices()
                 o.markModified("customer_uid");
                 await o.save();
             }
+
+            if (!o.extra)
+            {
+                // @ts-ignore
+                o.extra = {};
+                await o.save();
+            }
+
             Logger.cache(`Caching invoice ${o.uid}`);
             CacheInvoice.set(o.uid, o);
         }

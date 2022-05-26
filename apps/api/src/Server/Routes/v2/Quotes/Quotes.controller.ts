@@ -6,9 +6,12 @@ import { SendEmail } from "../../../../Email/Send";
 import mainEvent from "../../../../Events/Main.event";
 import { IQuotes } from "interfaces/Quotes.interface";
 import { idQuotes } from "../../../../Lib/Generator";
-import { APISuccess } from "../../../../Lib/Response";
+import { APIError, APISuccess } from "../../../../Lib/Response";
 import BaseModelAPI from "../../../../Models/BaseModelAPI";
 import QuoteCreateTemplate from "../../../../Email/Templates/Quotes/Quote.create.template";
+import QuoteToInvoice from "../../../../Lib/Quotes/QuoteToInvoice";
+import { sendInvoiceEmail } from "../../../../Lib/Invoices/SendEmail";
+import createQuotePdf from "../../../../Lib/Quotes/CreateQuotePdf";
 
 const API = new BaseModelAPI<IQuotes>(idQuotes, QuotesModel);
 
@@ -32,6 +35,13 @@ function insert(req: Request, res: Response)
                     // Send email to customer.
                     await SendEmail(Customer.personal.email, `Quote from ${await Company_Name() === "" ? "CPG" : await Company_Name()}`, {
                         isHTML: true,
+                        attachments: [
+                            {
+                                filename: `${result.id}_quote.pdf`,
+                                content: Buffer.from(await createQuotePdf(result) ?? "==", 'base64'),
+                                contentType: 'application/pdf'
+                            }
+                        ],
                         body: await QuoteCreateTemplate(result, Customer)
                     });
                 }
@@ -61,10 +71,53 @@ function list(req: Request, res: Response)
     });
 }
 
-function patch(req: Request, res: Response)
+async function patch(req: Request, res: Response)
 {
-    API.findAndPatch((req.params.uid as IQuotes["uid"]), req.body).then((result) =>
+    // Lets get if accepted or declined.
+    const accepted = req.body.accepted;
+    const currentQuote = await QuotesModel.findOne({
+        $or: [
+            { uid: req.params.uid },
+            { id: req.params.uid }
+        ]
+    });
+    API.findAndPatch((req.params.uid as IQuotes["uid"]), req.body).then(async (result) =>
     {
+        // Get customer.
+        const Customer = await CustomerModel.findOne({
+            $or: [
+                { id: result.customer_uid },
+                { uid: result.customer_uid as any }
+            ]
+        });
+        // Lets check if our current quote isn't accepted.
+        // If it isn't and `accepted` is true, then assuming we want to create a invoice
+        if (!currentQuote?.accepted && accepted)
+        {
+            // Convert quote to invoice
+            const invoice = await QuoteToInvoice(result);
+            if (!invoice)
+                return APIError("Failed to convert quote to invoice")(res);
+
+            if (Customer)
+                await sendInvoiceEmail(invoice, Customer)
+        }
+
+        if (req.body.send_email !== undefined && req.body.send_email)
+            if (Customer)
+                // Send email to customer.
+                await SendEmail(Customer.personal.email, `Quote from ${await Company_Name() === "" ? "CPG" : await Company_Name()}`, {
+                    isHTML: true,
+                    attachments: [
+                        {
+                            filename: `${result.id}_quote.pdf`,
+                            content: Buffer.from(await createQuotePdf(result) ?? "==", 'base64'),
+                            contentType: 'application/pdf'
+                        }
+                    ],
+                    body: await QuoteCreateTemplate(result, Customer)
+                });
+
         // @ts-ignore
         mainEvent.emit("quotes_updated", result);
         APISuccess(result)(res);

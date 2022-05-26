@@ -6,6 +6,9 @@ const p = new MongooseQueryParser();
 // @ts-ignore
 export default async function MongoFind<T>(model: Model<T>, query: Request["query"], eQuery?: any)
 {
+    const searchText = query.text ?? query.q ?? null;
+    if (searchText)
+        delete query.text;
     // Find _end and _sort and replace _end and _sort with end and sort
     Object.keys(query).forEach(key =>
     {
@@ -28,8 +31,11 @@ export default async function MongoFind<T>(model: Model<T>, query: Request["quer
 
     const data = p.parse(query);
 
+    const search = searchText ? { $text: { $search: searchText } } : {};
+
     const b = model.find({
         ...data.filter,
+        ...search,
         ...eQuery ?? {}
     }).sort(data.sort ?? "1").skip(data.skip ?? 0).limit(data.limit ?? 100000);
 
