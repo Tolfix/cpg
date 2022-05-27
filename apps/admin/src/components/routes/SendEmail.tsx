@@ -2,6 +2,7 @@ import * as React from "react";
 import { Box, Card, CardContent, CardHeader, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import LoadingButton from '@mui/lab/LoadingButton';
 import SendIcon from '@mui/icons-material/Send';
+import JoditEditor from "jodit-react";
 
 export default function SendEmailRoute()
 {
@@ -13,6 +14,17 @@ export default function SendEmailRoute()
     const [isSending, setIsSending] = React.useState(false);
     const [errors, setErrors] = React.useState([]);
     const [msg, setMsg] = React.useState("");
+
+    const config = {
+        // @ts-ignore
+        readonly: false,
+        "uploader": {
+            "insertImageAsBase64URI": true
+        },
+        "defaultMode": "1",
+        "buttons": "bold,italic,underline,strikethrough,eraser,ul,ol,font,fontsize,paragraph,classSpan,lineHeight,image,video,file,copyformat,cut,copy,paste",
+        placeholder: 'Start typings...'
+    };
 
     const onClickSend = () =>
     {
@@ -126,12 +138,15 @@ export default function SendEmailRoute()
                             value={subject}
                             onChange={(e) => setSubject(e.target.value)}
                         />
-                        <TextField
-                            label="Body"
-                            multiline
-                            rows={10}
+                        <InputLabel>Body</InputLabel>
+                        <JoditEditor
                             value={body}
-                            onChange={(e) => setBody(e.target.value)}
+                            config={config}
+                            onBlur={newContent =>
+                            {
+                                console.log(newContent)
+                                setBody(newContent)
+                            }}
                         />
                     </Box>
                     <LoadingButton
