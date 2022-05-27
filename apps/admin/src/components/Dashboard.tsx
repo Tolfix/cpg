@@ -2,6 +2,8 @@
 import * as React from "react";
 // import { Card, CardContent, CardHeader } from '@material-ui/core';
 import { ITransactions } from "interfaces/Transactions.interface";
+import { Card, CardContent, CardHeader } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export default () =>
 {
@@ -29,10 +31,12 @@ export default () =>
     }, []);
 
     return (
-        <></>
-        // <Card>
-        //     <CardHeader title="Welcome to the administration" />
-        //     <CardContent>Lorem ipsum sic dolor amet...</CardContent>
-        // </Card>
+        <Card style={{ marginTop: "1rem" }}>
+            <CardHeader title="Dashboard" />
+            <CardContent>
+                {/* have a box of links to routes */}
+                <Link to="emails">Emails</Link>
+            </CardContent>
+        </Card>
     )
 }
