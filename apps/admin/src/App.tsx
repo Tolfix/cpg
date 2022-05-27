@@ -1,4 +1,4 @@
-import { Admin, Resource } from 'react-admin';
+import { Admin, CustomRoutes, Resource } from 'react-admin';
 import Dashboard from "./components/Dashboard";
 import authProvider from "./components/authProvider";
 import dataProvider from './components/dataProvider';
@@ -32,6 +32,8 @@ import ListQuotes from './components/quotes/List';
 import CreateQuote from './components/quotes/Create';
 import EditQuote from './components/quotes/Edit';
 import { ShowCustomer } from './components/customers/Show';
+import { Route } from 'react-router-dom';
+import SendEmailRoute from './components/routes/SendEmail';
 
 function App()
 {
@@ -48,6 +50,11 @@ function App()
         <Resource name="promotion_codes" list={ListPromotionCodes} create={CreatePromotionCode} edit={EditPromotionCode} />
         <Resource name="transactions" list={ListTransactions} create={CreateTransactions} edit={EditTrans} />
         <Resource name="configurable_options" list={configurable_options_List} create={Create_configurable_options} edit={Edit_configurable_options} />
+
+        <CustomRoutes>
+          <Route path='/emails' element={<SendEmailRoute />} />
+        </CustomRoutes>
+
       </Admin>
     </>
   );
