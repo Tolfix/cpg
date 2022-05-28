@@ -8,7 +8,11 @@ export default async function MongoFind<T>(model: Model<T>, query: Request["quer
 {
     const searchText = query.text ?? query.q ?? null;
     if (searchText)
+    {
         delete query.text;
+        delete query.q;
+    }
+
     // Find _end and _sort and replace _end and _sort with end and sort
     Object.keys(query).forEach(key =>
     {
@@ -51,6 +55,7 @@ export default async function MongoFind<T>(model: Model<T>, query: Request["quer
     // @ts-ignore
     const count = await model.countDocuments({
         ...data.filter,
+        ...search,
         ...eQuery ?? {},
     });
 
