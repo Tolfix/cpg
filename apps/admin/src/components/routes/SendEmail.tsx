@@ -1,13 +1,17 @@
 import * as React from "react";
-import { Box, Card, CardContent, CardHeader, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Box, Card, CardContent, CardHeader, FormControlLabel, InputLabel, MenuItem, Select, Switch, TextField } from "@mui/material";
 import LoadingButton from '@mui/lab/LoadingButton';
 import SendIcon from '@mui/icons-material/Send';
 import JoditEditor from "jodit-react";
+import { ICustomerStringConvert } from "interfaces/Customer.interface";
+import { AutocompleteInput, ReferenceInput, SimpleForm } from "react-admin";
+import RenderFullName from "../../lib/RenderFullName";
 
 export default function SendEmailRoute()
 {
 
     const [to, setTo] = React.useState("");
+    const [sendToCustomer, setSendToCustomer] = React.useState(false);
     const [status, setStatus] = React.useState("all");
     const [subject, setSubject] = React.useState("");
     const [body, setBody] = React.useState("");
@@ -22,8 +26,38 @@ export default function SendEmailRoute()
             "insertImageAsBase64URI": true
         },
         "defaultMode": "1",
-        "buttons": "bold,italic,underline,strikethrough,eraser,ul,ol,font,fontsize,paragraph,classSpan,lineHeight,image,video,file,copyformat,cut,copy,paste",
-        placeholder: 'Start typings...'
+        "buttons": "bold,italic,underline,strikethrough,eraser,ul,ol,font,fontsize,paragraph,classSpan,lineHeight,image,video,file,copyformat,cut,copy,paste,customer",
+        placeholder: 'Start typings...',
+        controls: {
+            "customer": {
+                tooltip: "Customer",
+                list: [
+                    "customer_name",
+                    "customer_email",
+                    "customer_phone",
+                    "customer_company",
+                    "customer_company_vat",
+                    "customer_street01",
+                    "customer_street02",
+                    "customer_city",
+                    "customer_state",
+                    "customer_postcode",
+                    "customer_country",
+                ] as unknown as keyof ICustomerStringConvert,
+                // @ts-ignore
+                childTemplate: (editor, key, value) =>
+                    `<span class="${key}">${value}</span>`,
+                // @ts-ignore
+                exec: function (editor, _, { control })
+                {
+                    const value = control.args && control.args[0];
+
+                    editor.s.insertHTML(`{${value}}`);
+
+                    return false;
+                }
+            }
+        },
     };
 
     const onClickSend = () =>
@@ -43,6 +77,7 @@ export default function SendEmailRoute()
             },
             body: JSON.stringify({
                 to,
+                cId: sendToCustomer,
                 cStatus: status,
                 subject,
                 body
@@ -103,8 +138,8 @@ export default function SendEmailRoute()
                         - body
                     */}
 
-                    <Box
-                        component="form"
+                    <SimpleForm
+                        // component="form"
                         sx={{
                             '& .MuiTextField-root': { m: 1, width: '75ch' },
                             // Get mui select to be full width
@@ -112,10 +147,32 @@ export default function SendEmailRoute()
                             display: "flex",
                             flexDirection: "column",
                         }}
+                        noValidate toolbar={false}
                     >
+                        <FormControlLabel sx={{ m: 1 }} control={<Switch
+                            checked={sendToCustomer}
+                            onChange={e => setSendToCustomer(e.target.checked)}
+                        />} label="Send to customer" />
+                        {sendToCustomer && (
+                            <ReferenceInput filterToQuery={(searchText: string) => ({
+                                "text": searchText,
+                            })} perPage={100} source="customer_uid" reference="customers" allowEmpty>
+                                <AutocompleteInput
+                                    source="customers"
+                                    label="Customers"
+                                    fullWidth
+                                    onChange={(e) =>
+                                    {
+                                        setTo(e);
+                                    }}
+                                    optionText={RenderFullName}
+                                />
+                            </ReferenceInput>
+                        )}
                         <TextField
                             label="To"
                             value={to}
+                            disabled={sendToCustomer}
                             onChange={(e) => setTo(e.target.value)}
                             helperText={`Using \`all\` will send to all customers, otherwise you can input any valid email`}
                         />
@@ -148,7 +205,7 @@ export default function SendEmailRoute()
                                 setBody(newContent)
                             }}
                         />
-                    </Box>
+                    </SimpleForm>
                     <LoadingButton
                         size="medium"
                         onClick={onClickSend}

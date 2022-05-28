@@ -2,6 +2,7 @@ import { Application, Router } from "express";
 import CustomerModel from "../../../../Database/Models/Customers/Customer.model";
 import { sendEmail } from "../../../../Email/Send";
 import UseStyles from "../../../../Email/Templates/General/UseStyles";
+import convertStringsCustomer from "../../../../Lib/Customers/customerStringHtmlC";
 import { APIError, APISuccess } from "../../../../Lib/Response";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 
@@ -19,7 +20,7 @@ class EmailRouter
         this.router.post(`/send`, EnsureAdmin(), async (req, res) =>
         {
             // Filters
-            const { to, cStatus, subject, body } = req.body;
+            const { to, cId, cStatus, subject, body } = req.body;
 
             // Validate
             if (!to)
@@ -33,7 +34,6 @@ class EmailRouter
 
             if (!body)
                 return APIError("Missing body")(res);
-
 
             // Check if `to` is a email or `all`
             // If it is too all, then we check for all active customers
@@ -53,12 +53,30 @@ class EmailRouter
                         receiver: customer.personal.email,
                         subject,
                         body: {
-                            body: await UseStyles(body),
+                            body: await UseStyles(convertStringsCustomer(body, customer)),
                         },
                     });
                 });
 
                 return APISuccess(`Email sent to ${customers.length} customers`)(res);
+            }
+
+            if (cId)
+            {
+                // Assume it is a customer id
+                const customer = await CustomerModel.findOne({ id: to });
+                if (!customer)
+                    return APIError("Customer not found")(res);
+
+                await sendEmail({
+                    receiver: customer.personal.email,
+                    subject,
+                    body: {
+                        body: await UseStyles(convertStringsCustomer(body, customer)),
+                    },
+                });
+
+                return APISuccess(`Email sent to ${to}`)(res);
             }
 
             await sendEmail({
