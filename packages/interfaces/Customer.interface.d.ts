@@ -95,3 +95,18 @@ export interface Billing
     postcode: string;
     country: string;
 }
+
+export interface ICustomerStringConvert
+{
+    customer_name: `${ICustomer["personal"]["first_name"]} ${ICustomer["personal"]["last_name"]}`;
+    customer_email: ICustomer["personal"]["email"];
+    customer_phone: ICustomer["personal"]["phone"];
+    customer_company: ICustomer["billing"]["company"];
+    customer_company_vat: ICustomer["billing"]["company_vat"];
+    customer_street01: ICustomer["billing"]["street01"];
+    customer_street02: ICustomer["billing"]["street02"];
+    customer_city: ICustomer["billing"]["city"];
+    customer_state: ICustomer["billing"]["state"];
+    customer_postcode: ICustomer["billing"]["postcode"];
+    customer_country: ICustomer["billing"]["country"];
+}
