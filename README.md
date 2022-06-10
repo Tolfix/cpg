@@ -6,7 +6,7 @@
 
 
 # ⭐ | CPG
-CPG is being used to generate items, create invoices, handle orders, view transactions, and ensure payments make it to the client to develop your business. It offers many approaches for developers to personalize CPG
+CPG is being used to create items, generate invoices, handle orders, view transactions, and ensure payments make it to the client to develop your business. It offers many approaches for developers to personalize CPG
 
 # 📢 | Contribute
 Want to contribute? Great!
