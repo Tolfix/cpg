@@ -75,11 +75,10 @@ function App()
 
         <Resource options={{
           label: 'Email templates',
-        }} name="v3/email/templates" list={ListEmailTemplates} />
+        }} name="v3/emails/templates" list={ListEmailTemplates} />
 
         <CustomRoutes>
           <Route path='/emails' element={<SendEmailRoute />} />
-          {/* <Route path='/emails/templates' element={<EmailTemplateRoute />} /> */}
         </CustomRoutes>
 
       </Admin>
