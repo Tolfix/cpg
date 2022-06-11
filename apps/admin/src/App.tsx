@@ -36,6 +36,7 @@ import { Route } from 'react-router-dom';
 import SendEmailRoute from './components/routes/SendEmail';
 // import EmailTemplateRoute from './components/routes/EmailTemplates';
 import { ListEmailTemplates } from './components/email_templates/List';
+import { CreateEmailTemplate } from './components/email_templates/Create';
 
 function App()
 {
@@ -75,7 +76,7 @@ function App()
 
         <Resource options={{
           label: 'Email templates',
-        }} name="v3/emails/templates" list={ListEmailTemplates} />
+        }} name="v3/emails/templates" list={ListEmailTemplates} create={CreateEmailTemplate} />
 
         <CustomRoutes>
           <Route path='/emails' element={<SendEmailRoute />} />
