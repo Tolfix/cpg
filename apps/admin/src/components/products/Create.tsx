@@ -21,7 +21,7 @@ export const CreateProducts = (props: any) =>
                 {/* @ts-ignore */}
                 <ReferenceArrayInput filterToQuery={searchText => ({
                     "name": searchText,
-                })} perPage={100} source="category_uid" reference="categories">
+                })} perPage={100} source="category_uid" reference="v2/categories">
                     <AutocompleteInput
                         source="categories"
                         label="Categories"

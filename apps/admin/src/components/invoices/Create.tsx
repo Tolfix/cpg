@@ -23,7 +23,7 @@ export const CreateInvoices = (props: any) =>
             <FormTab label="General">
                 <ReferenceInput filterToQuery={(searchText: string) => ({
                     "personal.first_name": searchText,
-                })} perPage={100} source="customer_uid" reference="customers">
+                })} perPage={100} source="customer_uid" reference="v2/customers">
                     <AutocompleteInput
                         source="customers"
                         label="Customer"
@@ -74,7 +74,7 @@ export const CreateInvoices = (props: any) =>
                         {/* @ts-ignore */}
                         <ReferenceInput filterToQuery={searchText => ({
                             "name": searchText,
-                        })} perPage={100} source="product_id" reference="products">
+                        })} perPage={100} source="product_id" reference="v2/products">
                             <AutocompleteInput
                                 source="product"
                                 label="Product"
@@ -88,7 +88,7 @@ export const CreateInvoices = (props: any) =>
 
                 <ReferenceArrayInput filterToQuery={(searchText: string) => ({
                     "id": searchText,
-                })} perPage={100} source="transactions" reference="transactions">
+                })} perPage={100} source="transactions" reference="v2/transactions">
                     <AutocompleteArrayInput fullWidth optionText={(record) => record?.id?.toString() ?? ""} />
                 </ReferenceArrayInput>
 

@@ -21,7 +21,7 @@ export const CreateOrders = (props: any) =>
                 {/* @ts-ignore */}
                 <ReferenceInput filterToQuery={searchText => ({
                     "text": searchText,
-                })} perPage={100} source="customer_uid" reference="customers">
+                })} perPage={100} source="customer_uid" reference="v2/customers">
                     <AutocompleteInput
                         source="customers"
                         label="Customers"
@@ -32,7 +32,7 @@ export const CreateOrders = (props: any) =>
                 </ReferenceInput>
                 <ArrayInput source="products">
                     <SimpleFormIterator>
-                        <ReferenceInput source="product_id" reference="products">
+                        <ReferenceInput source="product_id" reference="v2/products">
                             <AutocompleteInput
                                 source="products"
                                 label="Products"

@@ -32,7 +32,7 @@ export default function ListPromotionCodes(props: any)
                 <BooleanField label="Percentage" source="percentage" />
                 <ReferenceArrayField
                     label="Products"
-                    reference="products"
+                    reference="v2/products"
                     source="products_ids"
                 >
                     <SingleFieldList>

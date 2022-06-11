@@ -23,7 +23,7 @@ export const EditInvoices = (props: any) =>
                 <FormTab label="General">
                     <ReferenceInput filterToQuery={(searchText: any) => ({
                         "personal.first_name": searchText,
-                    })} perPage={100} source="customer_uid" reference="customers">
+                    })} perPage={100} source="customer_uid" reference="v2/customers">
                         <AutocompleteInput
                             isRequired={true}
                             optionText={RenderFullName}
@@ -102,7 +102,7 @@ export const EditInvoices = (props: any) =>
                             <NumberInput label="Quantity" defaultValue={1} source="quantity" />
                             <ReferenceInput filterToQuery={(searchText: any) => ({
                                 "name": searchText,
-                            })} perPage={100} source="product_id" reference="products">
+                            })} perPage={100} source="product_id" reference="v2/products">
                                 <AutocompleteInput
                                     source="product"
                                     label="Product"
@@ -116,7 +116,7 @@ export const EditInvoices = (props: any) =>
 
                     <ReferenceArrayInput filterToQuery={(searchText: any) => ({
                         "id": searchText,
-                    })} perPage={100} source="transactions" reference="transactions">
+                    })} perPage={100} source="transactions" reference="v2/transactions">
                         <AutocompleteArrayInput
                             source="transactions"
                             optionValue="id"

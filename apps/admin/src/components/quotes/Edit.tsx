@@ -34,7 +34,7 @@ export default function EditQuote(props: any)
                 <FormTab label="General">
                     <ReferenceInput filterToQuery={(searchText: string) => ({
                         "text": searchText,
-                    })} perPage={100} source="customer_uid" reference="customers">
+                    })} perPage={100} source="customer_uid" reference="v2/customers">
                         <AutocompleteInput
                             source="customers"
                             label="Customer"
@@ -45,7 +45,7 @@ export default function EditQuote(props: any)
                     </ReferenceInput>
                     <ReferenceArrayInput filterToQuery={(searchText: string) => ({
                         "name": searchText,
-                    })} perPage={100} source="promotion_codes" reference="promotion_codes">
+                    })} perPage={100} source="promotion_codes" reference="v2/promotion_codes">
                         <AutocompleteArrayInput
                             source="promotion_codes"
                             label="Promotion codes"

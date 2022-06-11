@@ -12,7 +12,7 @@ export const configurable_options_List = (props: any) =>
                 <TextField label="name" source="name" />
                 <ReferenceArrayField
                     label="Product"
-                    reference="products"
+                    reference="v2/products"
                     source="products_ids"
                 >
                     <SingleFieldList>

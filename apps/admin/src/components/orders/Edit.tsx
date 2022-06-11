@@ -20,7 +20,7 @@ export const EditOrders = (props: any) =>
             <FormTab label="General">
                 <ReferenceInput filterToQuery={(searchText: any) => ({
                     "text": searchText,
-                })} perPage={100} source="customer_uid" reference="customers">
+                })} perPage={100} source="customer_uid" reference="v2/customers">
                     <AutocompleteInput
                         source="customers"
                         label="Customers"
@@ -31,7 +31,7 @@ export const EditOrders = (props: any) =>
                 </ReferenceInput>
                 <ArrayInput source="products">
                     <SimpleFormIterator>
-                        <ReferenceInput source="product_id" reference="products">
+                        <ReferenceInput source="product_id" reference="v2/products">
                             <AutocompleteInput
                                 source="products"
                                 label="Products"
@@ -98,7 +98,7 @@ export const EditOrders = (props: any) =>
             </FormTab>
             <FormTab label="Invoices">
 
-                <ReferenceArrayInput source="invoices" reference="invoices">
+                <ReferenceArrayInput source="invoices" reference="v2/invoices">
                     <AutocompleteArrayInput fullWidth optionText={(record) => record?.id?.toString() ?? ""} />
                 </ReferenceArrayInput>
 

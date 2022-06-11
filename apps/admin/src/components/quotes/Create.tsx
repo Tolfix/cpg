@@ -36,7 +36,7 @@ export default function CreateQuote(props: any)
                     <CustomerInput isEdit />
                     <ReferenceInput filterToQuery={(searchText: string) => ({
                         "name": searchText,
-                    })} perPage={100} source="promotion_codes" reference="promotion_codes">
+                    })} perPage={100} source="promotion_codes" reference="v2/promotion_codes">
                         <AutocompleteArrayInput
                             source="promotion_codes"
                             label="Promotion codes"

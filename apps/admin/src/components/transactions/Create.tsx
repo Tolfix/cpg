@@ -17,7 +17,7 @@ export const CreateTransactions = (props: any) =>
                         <>
                             <ReferenceInput filterToQuery={(searchText: string) => ({
                                 "text": searchText,
-                            })} perPage={100} source="customer_uid" reference="customers" allowEmpty>
+                            })} perPage={100} source="customer_uid" reference="v2/customers" allowEmpty>
                                 <AutocompleteInput
                                     source="customers"
                                     label="Customers"
@@ -30,7 +30,7 @@ export const CreateTransactions = (props: any) =>
                                 <ReferenceInput filterToQuery={(searchText: string) => ({
                                     "id": searchText,
                                 })} perPage={100} source="invoice_uid"
-                                    reference="invoices" allowEmpty>
+                                    reference="v2/invoices" allowEmpty>
                                     <AutocompleteInput
                                         fullWidth
                                         isRequired={formData.statement === "income"}

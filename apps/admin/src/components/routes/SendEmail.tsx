@@ -156,7 +156,7 @@ export default function SendEmailRoute()
                         {sendToCustomer && (
                             <ReferenceInput filterToQuery={(searchText: string) => ({
                                 "text": searchText,
-                            })} perPage={100} source="customer_uid" reference="customers" allowEmpty>
+                            })} perPage={100} source="customer_uid" reference="v2/customers" allowEmpty>
                                 <AutocompleteInput
                                     source="customers"
                                     label="Customers"

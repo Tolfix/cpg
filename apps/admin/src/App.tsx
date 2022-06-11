@@ -34,25 +34,52 @@ import EditQuote from './components/quotes/Edit';
 import { ShowCustomer } from './components/customers/Show';
 import { Route } from 'react-router-dom';
 import SendEmailRoute from './components/routes/SendEmail';
+// import EmailTemplateRoute from './components/routes/EmailTemplates';
+import { ListEmailTemplates } from './components/email_templates/List';
 
 function App()
 {
   return (
     <>
       <Admin dashboard={Dashboard} authProvider={authProvider} dataProvider={dataProvider}>
-        <Resource name="categories" list={ListCategory} create={CreateCategory} edit={EditCategory} />
-        <Resource name="customers" list={CustomerList} create={CreateCustomer} edit={EditCustomer} show={ShowCustomer} />
-        <Resource name="invoices" list={InvoicesList} create={CreateInvoices} edit={EditInvoices} />
-        <Resource name="products" list={ListProducts} create={CreateProducts} edit={EditProducts} />
-        <Resource name="orders" list={OrderList} create={CreateOrders} edit={EditOrders} />
-        <Resource name="images" list={ListImage} create={CreateImage} />
-        <Resource name="quotes" list={ListQuotes} create={CreateQuote} edit={EditQuote} />
-        <Resource name="promotion_codes" list={ListPromotionCodes} create={CreatePromotionCode} edit={EditPromotionCode} />
-        <Resource name="transactions" list={ListTransactions} create={CreateTransactions} edit={EditTrans} />
-        <Resource name="configurable_options" list={configurable_options_List} create={Create_configurable_options} edit={Edit_configurable_options} />
+        <Resource options={{
+          label: 'Categories',
+        }} name="v2/categories" list={ListCategory} create={CreateCategory} edit={EditCategory} />
+        <Resource options={{
+          label: 'Customers'
+        }} name="v2/customers" list={CustomerList} create={CreateCustomer} edit={EditCustomer} show={ShowCustomer} />
+        <Resource options={{
+          label: "Invoices",
+        }} name="v2/invoices" list={InvoicesList} create={CreateInvoices} edit={EditInvoices} />
+        <Resource options={{
+          label: "Products",
+        }} name="v2/products" list={ListProducts} create={CreateProducts} edit={EditProducts} />
+        <Resource options={{
+          label: 'Orders',
+        }} name="v2/orders" list={OrderList} create={CreateOrders} edit={EditOrders} />
+        <Resource options={{
+          label: 'Images',
+        }} name="v2/images" list={ListImage} create={CreateImage} />
+        <Resource options={{
+          label: 'Quotes',
+        }} name="v2/quotes" list={ListQuotes} create={CreateQuote} edit={EditQuote} />
+        <Resource options={{
+          label: 'Promotion codes',
+        }} name="v2/promotion_codes" list={ListPromotionCodes} create={CreatePromotionCode} edit={EditPromotionCode} />
+        <Resource options={{
+          label: 'Transactions',
+        }} name="v2/transactions" list={ListTransactions} create={CreateTransactions} edit={EditTrans} />
+        <Resource options={{
+          label: 'Configurable Options',
+        }} name="v2/configurable_options" list={configurable_options_List} create={Create_configurable_options} edit={Edit_configurable_options} />
+
+        <Resource options={{
+          label: 'Email templates',
+        }} name="v3/email/templates" list={ListEmailTemplates} />
 
         <CustomRoutes>
           <Route path='/emails' element={<SendEmailRoute />} />
+          {/* <Route path='/emails/templates' element={<EmailTemplateRoute />} /> */}
         </CustomRoutes>
 
       </Admin>

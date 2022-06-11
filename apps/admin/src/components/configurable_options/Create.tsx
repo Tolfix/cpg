@@ -19,7 +19,7 @@ export const Create_configurable_options = (props: any) =>
                 {/* @ts-ignore */}
                 <ReferenceArrayInput filterToQuery={searchText => ({
                     "name": searchText,
-                })} perPage={100} source="products_ids" reference="products">
+                })} perPage={100} source="products_ids" reference="v2/products">
                     <AutocompleteArrayInput
                         source="products"
                         label="Products"

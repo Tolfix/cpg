@@ -21,7 +21,7 @@ export default function CreatePromotionCode(props: any)
                     <BooleanInput label="Percentage" source="percentage" />
                     <ReferenceArrayInput filterToQuery={(searchText: string) => ({
                         "name": searchText,
-                    })} perPage={100} source="products_ids" reference="products">
+                    })} perPage={100} source="products_ids" reference="v2/products">
                         <AutocompleteArrayInput
                             source="products"
                             label="Products"

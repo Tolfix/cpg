@@ -20,7 +20,7 @@ export const EditProducts = (props: any) =>
             <FormTab label="General">
                 <ReferenceInput filterToQuery={(searchText: string) => ({
                     "name": searchText,
-                })} perPage={100} source="category_uid" reference="categories">
+                })} perPage={100} source="category_uid" reference="v2/categories">
                     <AutocompleteInput
                         source="categories"
                         label="Category"

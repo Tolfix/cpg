@@ -7,7 +7,7 @@ export const OrderList = (props: any) => (
     <List {...props} pagination={<PostPagination />}>
         <Datagrid>
             <TextField label="Id" source="id" />
-            <ReferenceField label="Customer" source="customer_uid" reference="customers">
+            <ReferenceField label="Customer" source="customer_uid" reference="v2/customers">
                 <FunctionField
                     render={RenderFullName}
                     source="personal.first_name"
@@ -20,7 +20,7 @@ export const OrderList = (props: any) => (
                 <Datagrid>
                     <ReferenceField
                         source="product_id"
-                        reference="products"
+                        reference="v2/products"
                     >
                         <ChipField source="name" />
                     </ReferenceField>
@@ -34,7 +34,7 @@ export const OrderList = (props: any) => (
             <TextField label="Next" source="dates.next_recycle" />
             <ReferenceArrayField
                 label="Invoices"
-                reference="invoices"
+                reference="v2/invoices"
                 source="invoices"
             >
                 <SingleFieldList>

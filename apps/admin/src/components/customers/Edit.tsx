@@ -49,7 +49,7 @@ export const EditCustomer = (props: any) =>
                             <ReferenceInput filterToQuery={(searchText: any) => ({
                                 "id": searchText,
                                 customer_uid: id,
-                            })} perPage={100} allowEmpty label="Invoice id" source="invoice_id" reference="invoices">
+                            })} perPage={100} allowEmpty label="Invoice id" source="invoice_id" reference="v2/invoices">
                                 <AutocompleteInput
                                     isRequired={false}
                                     optionText="id"

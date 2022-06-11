@@ -24,7 +24,7 @@ const TagFilter = (props: any) =>
             {/* Search for specific customer */}
             <ReferenceInput filterToQuery={(searchText: string) => ({
                 "text": searchText,
-            })} perPage={100} label="Customer" source="customer_uid" reference="customers" alwaysOn={true}>
+            })} perPage={100} label="Customer" source="customer_uid" reference="v2/customers" alwaysOn={true}>
                 <AutocompleteInput fullWidth optionText={RenderFullName} />
             </ReferenceInput>
         </Filter>
@@ -36,7 +36,7 @@ export const InvoicesList = (props: any) => (
     <List {...props} pagination={<PostPagination />} filters={<TagFilter />}>
         <Datagrid>
             <TextField label="Id" source="id" />
-            <ReferenceField label="Customer" source="customer_uid" reference="customers">
+            <ReferenceField label="Customer" source="customer_uid" reference="v2/customers">
                 <FunctionField
                     // @ts-ignore
                     render={RenderFullName}
@@ -59,7 +59,7 @@ export const InvoicesList = (props: any) => (
             <BooleanField label="Notified" source="notified" />
             <ReferenceArrayField
                 label="Transactions"
-                reference="transactions"
+                reference="v2/transactions"
                 source="transactions"
             >
                 <SingleFieldList>

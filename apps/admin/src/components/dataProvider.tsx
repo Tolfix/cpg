@@ -11,5 +11,5 @@ const fetchJson = (url: string, options: any = {}) =>
     return fetchUtils.fetchJson(url, options);
 }
 
-const dataProvider = jsonServerProvider(`${process.env.REACT_APP_CPG_DOMAIN}/v2`, fetchJson);
+const dataProvider = jsonServerProvider(`${process.env.REACT_APP_CPG_DOMAIN}`, fetchJson);
 export default dataProvider;

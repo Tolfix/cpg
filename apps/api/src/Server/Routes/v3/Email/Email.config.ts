@@ -1,5 +1,6 @@
 import { Application, Router } from "express";
 import CustomerModel from "../../../../Database/Models/Customers/Customer.model";
+import EmailTemplateModel from "../../../../Database/Models/Email.model";
 import { sendEmail } from "../../../../Email/Send";
 import UseStyles from "../../../../Email/Templates/General/UseStyles";
 import convertStringsCustomer from "../../../../Lib/Customers/customerStringHtmlC";
@@ -16,6 +17,43 @@ class EmailRouter
     {
         this.server = server;
         this.server.use(`/${version}/emails`, this.router);
+
+        this.router.get("/templates", EnsureAdmin(), async (req, res) =>
+        {
+            const templates = await EmailTemplateModel.find({});
+            return APISuccess(templates)(res);
+        });
+
+        this.router.get("/templates/:id", EnsureAdmin(), async (req, res) =>
+        {
+            const template = await EmailTemplateModel.findOne({ id: req.params.id });
+            if (!template)
+                return APIError("Invalid id for template")(res);
+            return APISuccess(template)(res);
+        });
+
+        this.router.put("/templates/:id", EnsureAdmin(), async (req, res) =>
+        {
+            const template = await EmailTemplateModel.findOne({ id: req.params.id });
+            if (!template)
+                return APIError("Invalid id for template")(res);
+            template.name = req.body.name || template.name;
+            template.body = req.body.body || template.body;
+            await template.save();
+            return APISuccess(template)(res);
+        });
+
+        this.router.post("/templates", EnsureAdmin(), async (req, res) =>
+        {
+            const { name, body } = req.body;
+
+            if (!name || !body)
+                return APIError("Missing name or body")(res);
+
+            const template = await (new EmailTemplateModel({ name, body })).save();
+
+            return APISuccess(template)(res);
+        });
 
         this.router.post(`/send`, EnsureAdmin(), async (req, res) =>
         {

@@ -16,7 +16,7 @@ export const EditTrans = (props: any) =>
                         <>
                             <ReferenceInput filterToQuery={(searchText: string) => ({
                                 "text": searchText,
-                            })} perPage={100} source="customer_uid" reference="customers">
+                            })} perPage={100} source="customer_uid" reference="v2/customers">
                                 <AutocompleteInput
                                     source="customers"
                                     label="Customers"
@@ -28,7 +28,7 @@ export const EditTrans = (props: any) =>
                             <div>
                                 <ReferenceInput filterToQuery={(searchText: string) => ({
                                     "id": searchText,
-                                })} perPage={100} source="invoice_uid" reference="invoices">
+                                })} perPage={100} source="invoice_uid" reference="v2/invoices">
                                     <AutocompleteInput
                                         isRequired={formData.statement === "income"}
                                         fullWidth

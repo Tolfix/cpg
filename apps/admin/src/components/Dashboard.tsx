@@ -36,6 +36,8 @@ export default () =>
             <CardContent>
                 {/* have a box of links to routes */}
                 <Link to="emails">Emails</Link>
+                <br />
+                <Link to="emails/templates">Emails templates</Link>
             </CardContent>
         </Card>
     )

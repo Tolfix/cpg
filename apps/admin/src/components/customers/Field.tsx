@@ -11,7 +11,7 @@ const TagFilter = (props: any) =>
             {/* Search for specific customer */}
             <ReferenceInput filterToQuery={(searchText: string) => ({
                 "text": searchText,
-            })} perPage={100} label="Customer" source="customer_uid" reference="customers" alwaysOn={true}>
+            })} perPage={100} label="Customer" source="customer_uid" reference="v2/customers" alwaysOn={true}>
                 <AutocompleteInput fullWidth optionText={RenderFullName} />
             </ReferenceInput>
         </Filter>

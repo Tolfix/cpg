@@ -8,7 +8,7 @@ export const ListProducts = (props: any) => (
             <TextField label="Id" source="id" />
             <TextField label="Name" source="name" />
             <TextField label="Description" source="description" />
-            <ReferenceField label="Category" source="category_uid" reference="categories">
+            <ReferenceField label="Category" source="category_uid" reference="v2/categories">
                 <TextField source="name" />
             </ReferenceField>
             <BooleanField label="Enable stock" source="BStock" />
