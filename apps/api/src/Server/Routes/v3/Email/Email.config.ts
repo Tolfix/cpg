@@ -6,6 +6,7 @@ import UseStyles from "../../../../Email/Templates/General/UseStyles";
 import convertStringsCustomer from "../../../../Lib/Customers/customerStringHtmlC";
 import { APIError, APISuccess } from "../../../../Lib/Response";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
+import EmailTemplatesController from "./Email.controller";
 
 export = EmailRouter;
 class EmailRouter
@@ -18,42 +19,25 @@ class EmailRouter
         this.server = server;
         this.server.use(`/${version}/emails`, this.router);
 
-        this.router.get("/templates", EnsureAdmin(), async (req, res) =>
-        {
-            const templates = await EmailTemplateModel.find({});
-            return APISuccess(templates)(res);
-        });
+        this.router.get("/templates", [
+            EnsureAdmin(),
+            EmailTemplatesController.list
+        ]);
 
-        this.router.get("/templates/:id", EnsureAdmin(), async (req, res) =>
-        {
-            const template = await EmailTemplateModel.findOne({ id: req.params.id });
-            if (!template)
-                return APIError("Invalid id for template")(res);
-            return APISuccess(template)(res);
-        });
+        this.router.get("/templates/:uid", [
+            EnsureAdmin(),
+            EmailTemplatesController.getByUid
+        ]);
 
-        this.router.put("/templates/:id", EnsureAdmin(), async (req, res) =>
-        {
-            const template = await EmailTemplateModel.findOne({ id: req.params.id });
-            if (!template)
-                return APIError("Invalid id for template")(res);
-            template.name = req.body.name || template.name;
-            template.body = req.body.body || template.body;
-            await template.save();
-            return APISuccess(template)(res);
-        });
+        this.router.patch("/templates/:id", [
+            EnsureAdmin(),
+            EmailTemplatesController.patch
+        ]);
 
-        this.router.post("/templates", EnsureAdmin(), async (req, res) =>
-        {
-            const { name, body } = req.body;
-
-            if (!name || !body)
-                return APIError("Missing name or body")(res);
-
-            const template = await (new EmailTemplateModel({ name, body })).save();
-
-            return APISuccess(template)(res);
-        });
+        this.router.post("/templates", [
+            EnsureAdmin(),
+            EmailTemplatesController.insert
+        ]);
 
         this.router.post(`/send`, EnsureAdmin(), async (req, res) =>
         {
