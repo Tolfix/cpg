@@ -32,13 +32,10 @@ RUN turbo run build --scope=cpg-customer
 # APP
 FROM node:16-alpine as APP
 
-WORKDIR /app
-
 ENV NODE_ENV=production
-
 COPY --from=BUILDER /app/ .
 
-
+WORKDIR /app/apps/customer
 
 COPY --from=BUILDER /app/apps/customer/ .
 
