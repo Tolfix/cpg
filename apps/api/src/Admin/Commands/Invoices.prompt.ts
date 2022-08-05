@@ -2,11 +2,7 @@
 import InvoiceModel from "../../Database/Models/Invoices.model";
 import Logger from "lib/Logger";
 import inquirer from 'inquirer';
-import TransactionsModel from "../../Database/Models/Transactions.model";
-import { Company_Currency } from "../../Config";
-import { getDate } from "lib/Time";
-import { idInvoice, idTransactions } from "../../Lib/Generator";
-import sendEmailOnTransactionCreation from "../../Lib/Transaction/SendEmailOnCreation";
+import { idInvoice } from "../../Lib/Generator";
 import { getDates30DaysAgo } from "../../Cron/Methods/Invoices.cron.methods";
 import { A_CC_Payments } from "interfaces/types/PaymentMethod";
 import { currencyCodes } from "lib/Currencies";
@@ -14,6 +10,7 @@ import CustomerModel from "../../Database/Models/Customers/Customer.model";
 import mainEvent from "../../Events/Main.event";
 import { sendInvoiceEmail } from "../../Lib/Invoices/SendEmail";
 import { IInvoice } from "interfaces/Invoice.interface";
+import { getInvoiceByIdAndMarkAsPaid } from "../../Lib/Invoices/MarkAsPaid";
 
 export default
     {
@@ -86,7 +83,6 @@ export default
                             name: 'isOCR',
                             type: 'confirm',
                             message: 'Is this an ocr number?',
-
                         }
                     ]
                     const { invoiceId, isOCR } = await inquirer.prompt(action);
@@ -154,15 +150,8 @@ export default
                             },
                             {
                                 name: 'cTransaction',
-                                type: 'input',
-                                message: 'Create transaction? (yes/no)',
-                                default: 'yes',
-                                validate: (value: string) =>
-                                {
-                                    if (value.toLowerCase() !== 'yes' && value.toLowerCase() !== 'no')
-                                        return 'Please enter yes or no';
-                                    return true;
-                                },
+                                type: 'confirm',
+                                message: 'Create transaction?'
                             }
                         ]
                         const { invoiceId, cTransaction } = await inquirer.prompt(action);
@@ -175,30 +164,8 @@ export default
                         if (invoice.paid)
                             return Logger.error(`Invoice with id ${invoiceId} is already paid`);
 
-                        if (cTransaction.toLowerCase() === 'yes')
-                        {
-                            const t = await (new TransactionsModel({
-                                amount: invoice.amount + invoice.amount * invoice.tax_rate / 100,
-                                payment_method: invoice.payment_method,
-                                fees: invoice.fees,
-                                invoice_uid: invoice.id,
-                                customer_uid: invoice.customer_uid,
-                                currency: invoice.currency ?? await Company_Currency(),
-                                date: getDate(),
-                                uid: idTransactions(),
-                            }).save());
+                        await getInvoiceByIdAndMarkAsPaid(invoiceId, cTransaction)
 
-                            await sendEmailOnTransactionCreation(t);
-                            invoice.transactions.push(t.id);
-
-                        }
-
-                        invoice.paid = true;
-                        invoice.status = 'paid';
-                        invoice.dates.date_paid = getDate();
-                        invoice.markModified('dates');
-                        await invoice.save();
-                        mainEvent.emit("invoice_paid", invoice);
                         Logger.info(`Invoice with id ${invoiceId} marked as paid`);
                         break;
                     }
