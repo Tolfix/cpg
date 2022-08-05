@@ -4,9 +4,13 @@ import { Document } from "mongoose";
 import mainEvent from "../../Events/Main.event";
 import { getDate } from "lib/Time";
 import TransactionsModel from "../../Database/Models/Transactions.model";
-import { Company_Currency } from "../../Config";
+import { Company_Currency, Company_Name } from "../../Config";
 import { idTransactions } from "../Generator";
 import { ITransactions } from "interfaces/Transactions.interface";
+import { sendEmail } from "../../Email/Send";
+import CustomerModel from "../../Database/Models/Customers/Customer.model";
+import PaidInvoiceTemplate from "../../Email/Templates/Invoices/PaidInvoice.template";
+import sendEmailOnTransactionCreation from "../Transaction/SendEmailOnCreation";
 
 /**
  * This type checks if we want to create a transaction for an invoice
@@ -49,6 +53,24 @@ export async function getInvoiceByIdAndMarkAsPaid<
         await invoice.save();
         // emit event as invoice is paid
         mainEvent.emit("invoice_paid", invoice);
+        const customer = await CustomerModel.findOne({
+            $or: [
+                {
+                    id: invoice.customer_uid,
+                },
+                {
+                    uid: invoice.customer_uid,
+                },
+            ]
+        });
+        if (customer)
+            await sendEmail({
+                receiver: customer.personal.email,
+                subject: `Invoice paid from ${await Company_Name()}`,
+                body: {
+                    body: await PaidInvoiceTemplate(invoice, customer),
+                }
+            });
         let t;
         if (createT)
         {
@@ -62,6 +84,7 @@ export async function getInvoiceByIdAndMarkAsPaid<
                 date: getDate(),
                 uid: idTransactions(),
             }).save());
+            sendEmailOnTransactionCreation(t);
         }
 
         // @ts-ignore

@@ -1,5 +1,5 @@
 import { currencyCodes } from "lib/Currencies";
-import { Create, DateInput, FormDataConsumer, FormTab, NumberInput, AutocompleteInput, TabbedForm, TextInput, SelectInput, ReferenceInput } from "react-admin";
+import { Create, DateInput, FormDataConsumer, FormTab, NumberInput, AutocompleteInput, TabbedForm, TextInput, SelectInput, ReferenceInput, BooleanInput } from "react-admin";
 import { getDate } from "../../lib/dateFormat";
 import RenderFullName from "../../lib/RenderFullName";
 
@@ -83,6 +83,7 @@ export const CreateTransactions = (props: any) =>
                     { id: "credit_card", name: "credit_card" },
                     { id: "swish", name: "swish" },
                 ]} fullWidth />
+                <BooleanInput isRequired={false} source="markInvoiceAsPaid" defaultValue={false} label={"Mark invoice as paid"} />
             </FormTab>
         </TabbedForm>
     </Create>

@@ -7,8 +7,6 @@ import CustomerModel from "../../Database/Models/Customers/Customer.model";
 import { sendInvoiceEmail, sendLateInvoiceEmail } from "../../Lib/Invoices/SendEmail";
 import { ChargeCustomer } from "../../Payments/Stripe";
 import { InvoiceLateReport, InvoiceNotifiedReport } from "../../Email/Reports/InvoiceReport";
-import mainEvent from "../../Events/Main.event";
-import { getDate } from "lib/Time";
 import { convertCurrency } from "lib/Currencies";
 import { getInvoiceByIdAndMarkAsPaid } from "../../Lib/Invoices/MarkAsPaid";
 import sendEmailOnTransactionCreation from "../../Lib/Transaction/SendEmailOnCreation";
@@ -226,12 +224,7 @@ export function cron_chargeStripePayment()
                 await ChargeCustomer(invoice.id);
                 Logger.info(`Charging ${Customer.personal.email}`);
                 // assuming it worked, we can mark it as paid
-                invoice.status = "paid";
-                invoice.paid = true;
-                invoice.dates.date_paid = getDate();
-                mainEvent.emit("invoice_paid", invoice);
-                // invoice.notified = true;
-                await invoice.save();
+                await getInvoiceByIdAndMarkAsPaid(invoice.id, true);
             }
             catch (e)
             {
