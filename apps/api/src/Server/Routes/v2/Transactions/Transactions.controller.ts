@@ -7,7 +7,7 @@ import { idTransactions } from "../../../../Lib/Generator";
 import { APISuccess } from "../../../../Lib/Response";
 import sendEmailOnTransactionCreation from "../../../../Lib/Transaction/SendEmailOnCreation";
 import BaseModelAPI from "../../../../Models/BaseModelAPI";
-import { getDate } from "lib/Time";
+import { getInvoiceByIdAndMarkAsPaid } from "../../../../Lib/Invoices/MarkAsPaid";
 
 const API = new BaseModelAPI<ITransactions>(idTransactions, TransactionsModel);
 
@@ -38,14 +38,7 @@ function insert(req: Request, res: Response)
                     invoice.markModified("transactions");
                     // Check if they wanted to mark it as paid as well
                     if (req.body.markInvoiceAsPaid)
-                    {
-                        invoice.status = "paid";
-                        invoice.markModified("status");
-                        invoice.paid = true;
-                        invoice.markModified("paid");
-                        invoice.dates.date_paid = getDate();
-                        invoice.markModified("dates");
-                    }
+                        await getInvoiceByIdAndMarkAsPaid(invoice.id);
                     await invoice.save();
                 }
             }
