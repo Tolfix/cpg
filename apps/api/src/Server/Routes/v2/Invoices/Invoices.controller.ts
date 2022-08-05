@@ -10,6 +10,7 @@ import { sendEmail } from "../../../../Email/Send";
 import CustomerModel from "../../../../Database/Models/Customers/Customer.model";
 import RefundedInvoiceTemplate from "../../../../Email/Templates/Invoices/Refunded.invoice.template";
 import { sendInvoiceEmail } from "../../../../Lib/Invoices/SendEmail";
+import { getInvoiceByIdAndMarkAsPaid } from "../../../../Lib/Invoices/MarkAsPaid";
 
 const API = new BaseModelAPI<IInvoice>(idInvoice, InvoiceModel);
 
@@ -59,7 +60,6 @@ function list(req: Request, res: Response)
 
 async function patch(req: Request, res: Response)
 {
-    const paid = req.body.paid ?? false;
     const refund_invoice = req.body.refund_invoice ?? false;
     const refund_email = req.body.refund_email ?? false;
     const currentInvoice = await InvoiceModel.findOne({
@@ -141,8 +141,11 @@ async function patch(req: Request, res: Response)
                 });
         }
 
-        if (paid !== result.paid && result.paid)
+        if (currentInvoice?.paid !== result.paid && result.paid && result.status === "paid")
+        {
+            await getInvoiceByIdAndMarkAsPaid(result.id, true);
             mainEvent.emit("invoice_paid", result);
+        }
         // @ts-ignore
         mainEvent.emit("invoice_updated", result);
         APISuccess(result)(res);
