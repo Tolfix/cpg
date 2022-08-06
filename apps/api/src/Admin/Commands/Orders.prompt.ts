@@ -211,7 +211,7 @@ export default
 
                         await sendEmail({
                             receiver: customer.personal.email,
-                            subject: `New order from ${await Company_Name() !== "" ? await Company_Name() : "CPG"} #${newOrder.id}`,
+                            subject: `${await Company_Name() !== "" ? await Company_Name() : "CPG"}: New order created`,
                             body: {
                                 body: await NewOrderCreated(newOrder, customer)
                             }

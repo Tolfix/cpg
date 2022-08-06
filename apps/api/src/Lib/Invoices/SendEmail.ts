@@ -18,7 +18,7 @@ export async function sendInvoiceEmail(invoice: IInvoice & Document & IInvoiceMe
 
         await sendEmail({
             receiver: Customer.personal.email,
-            subject: `Invoice from ${await Company_Name() === "" ? "CPG" : await Company_Name()}`,
+            subject: `${await Company_Name() === "" ? "CPG" : await Company_Name()}: New invoice created`,
             body: {
                 body: await InvoiceTemplate(invoice, Customer),
                 attachments: [
@@ -49,7 +49,7 @@ export async function sendLateInvoiceEmail(invoice: IInvoice & Document & IInvoi
             return;
 
         //@ts-ignore
-        await SendEmail(Customer.personal.email, `Invoice reminder | ${await Company_Name() ?? "CPG"} #${invoice.id}`, {
+        await SendEmail(Customer.personal.email, `${await Company_Name() ?? "CPG"}: Invoice reminder`, {
             isHTML: true,
             attachments: [
                 {

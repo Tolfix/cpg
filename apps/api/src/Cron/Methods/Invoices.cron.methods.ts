@@ -1,4 +1,4 @@
-import { DebugMode, Default_Language, d_Days } from "../../Config";
+import { Company_Name, DebugMode, Default_Language, d_Days } from "../../Config";
 import InvoiceModel from "../../Database/Models/Invoices.model";
 import dateFormat from "date-and-time";
 import Logger from "lib/Logger";
@@ -11,6 +11,8 @@ import { convertCurrency } from "lib/Currencies";
 import { getInvoiceByIdAndMarkAsPaid } from "../../Lib/Invoices/MarkAsPaid";
 import sendEmailOnTransactionCreation from "../../Lib/Transaction/SendEmailOnCreation";
 import createCredit from "../../Lib/Customers/createCredit";
+import { sendEmail } from "../../Email/Send";
+import DueTodayInvoiceTemplate from "../../Email/Templates/Invoices/DueTodayInvoice.template";
 
 export const getDates30DaysAgo = () =>
 {
@@ -256,5 +258,41 @@ export function cron_notifyLateInvoicePaid()
         }
         if (invoices.length > 0)
             await InvoiceLateReport(invoices);
+    });
+}
+
+/**
+ * @description
+ * Check if the invoice due_date is today and send reminder that the invoice is due today.
+ */
+export const cron_remindCustomerLastDay = async () =>
+{
+    InvoiceModel.find(
+        {
+            "dates.due_date": {
+                $in: [dateFormat.format(new Date(), "YYYY-MM-DD")]
+            },
+            paid: false,
+            status: {
+                $not: /fraud|cancelled|draft|refunded|paid/g
+            }
+        }
+    ).then(async (invoices) =>
+    {
+        for await (const invoice of invoices)
+        {
+            // Get customer
+            const Customer = await CustomerModel.findOne({ id: invoice.customer_uid });
+            if (!Customer)
+                continue;
+
+            await sendEmail({
+                receiver: Customer.personal.email,
+                subject: `${await Company_Name()}: Invoice is due today`,
+                body: {
+                    body: DueTodayInvoiceTemplate(invoice, Customer)
+                }
+            });
+        }
     });
 }

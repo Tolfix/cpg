@@ -1,7 +1,7 @@
 import { Application, Router, Response } from "express";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import CustomerController from "./Customers.controller";
-import { GetSMTPEmails, JWT_Access_Token } from "../../../../Config";
+import { Company_Name, GetSMTPEmails, JWT_Access_Token } from "../../../../Config";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { APIError, APISuccess } from "../../../../Lib/Response";
@@ -307,16 +307,16 @@ class CustomerRouter
             order.order_status = "cancelled";
             await order.save();
 
-            await SendEmail(customer.personal.email, "Order Cancelled Confirmation", {
+            await SendEmail(customer.personal.email, `${await Company_Name()}: Order Cancelled Confirmation`, {
                 isHTML: true,
                 body: await OrderCancelTemplate(customer, order),
             });
 
-            GetSMTPEmails().then(emails =>
+            GetSMTPEmails().then(async emails =>
             {
                 for (const email of emails)
                 {
-                    SendEmail(email, `Order Cancelled #${order.id}`, {
+                    SendEmail(email, `${await Company_Name()}: Order Cancelled #${order.id}`, {
                         isHTML: true,
                         body: `
                             <h1>Order Cancelled</h1>
@@ -465,7 +465,7 @@ class CustomerRouter
                 token: token
             }).save();
 
-            await SendEmail(customer.personal.email, "Reset Password", {
+            await SendEmail(customer.personal.email, `${await Company_Name()}: Reset Password`, {
                 isHTML: true,
                 body: await ResetPasswordTemplate(customer, version, token)
             });
@@ -643,7 +643,7 @@ class CustomerRouter
                     {
                         if (attempts >= 3)
                         {
-                            await SendEmail(customer.personal.email, "Account login attempts", {
+                            await SendEmail(customer.personal.email, `${await Company_Name()}: Account login attempts`, {
                                 isHTML: true,
                                 body: await LoginAttemptTemplate(customer),
                             });

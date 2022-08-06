@@ -12,6 +12,7 @@ import { sendInvoiceEmail } from "../../../../Lib/Invoices/SendEmail";
 import { sendEmail } from "../../../../Email/Send";
 import QuoteAcceptedTemplate from "../../../../Email/Templates/Quotes/Quote.accepted.template";
 import { setTypeValueOfObj } from "../../../../Lib/Sanitize";
+import { Company_Name } from "../../../../Config";
 
 export = QuotesRouter;
 class QuotesRouter
@@ -107,7 +108,7 @@ class QuotesRouter
 
             await sendEmail({
                 receiver: customer.personal.email,
-                subject: `Quote accepted | #${quote.id}`,
+                subject: `${await Company_Name()}: Quote accepted #${quote.id}`,
                 body: {
                     body: await QuoteAcceptedTemplate(quote, customer),
                 }
