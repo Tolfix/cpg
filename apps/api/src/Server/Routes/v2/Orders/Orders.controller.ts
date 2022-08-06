@@ -61,7 +61,7 @@ async function insert(req: Request, res: Response)
         const customer = await CustomerModel.findOne({ id: result.customer_uid });
         // We should send a email to the customer
         // noinspection CommaExpressionJS
-        customer && await SendEmail(customer.personal.email, `New order from ${"" !== await Company_Name() ? await Company_Name() : "CPG"} #${result.id}`, {
+        customer && await SendEmail(customer.personal.email, `${"" !== await Company_Name() ? await Company_Name() : "CPG"}: New order created`, {
             isHTML: !0,
             body: await NewOrderCreated(result, customer)
         }), APISuccess({ uid: result.uid })(res)

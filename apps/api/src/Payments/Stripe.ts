@@ -1,5 +1,5 @@
 import stripe from "stripe";
-import { Company_Currency, DebugMode, Full_Domain, Stripe_SK_Live, Stripe_SK_Test } from "../Config";
+import { Company_Currency, Company_Name, DebugMode, Full_Domain, Stripe_SK_Live, Stripe_SK_Test } from "../Config";
 import CustomerModel from "../Database/Models/Customers/Customer.model";
 import InvoiceModel from "../Database/Models/Invoices.model";
 import TransactionsModel from "../Database/Models/Transactions.model";
@@ -246,7 +246,7 @@ export const ChargeCustomer = async (invoice_id: IInvoice["id"]) =>
 
         await sendEmail({
             receiver: customer.personal.email,
-            subject: "Transaction Statement",
+            subject: `${await Company_Name()}: Transaction Statement`,
             body: {
                 body: await NewTransactionTemplate(newTrans, customer, true)
             },

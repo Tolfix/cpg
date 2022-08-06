@@ -66,7 +66,7 @@ export async function getInvoiceByIdAndMarkAsPaid<
         if (customer)
             await sendEmail({
                 receiver: customer.personal.email,
-                subject: `Invoice paid from ${await Company_Name()}`,
+                subject: `${await Company_Name()}: Invoice paid confirmation`,
                 body: {
                     body: await PaidInvoiceTemplate(invoice, customer),
                 }

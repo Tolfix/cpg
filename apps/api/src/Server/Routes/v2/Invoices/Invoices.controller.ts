@@ -11,6 +11,7 @@ import CustomerModel from "../../../../Database/Models/Customers/Customer.model"
 import RefundedInvoiceTemplate from "../../../../Email/Templates/Invoices/Refunded.invoice.template";
 import { sendInvoiceEmail } from "../../../../Lib/Invoices/SendEmail";
 import { getInvoiceByIdAndMarkAsPaid } from "../../../../Lib/Invoices/MarkAsPaid";
+import { Company_Name } from "../../../../Config";
 
 const API = new BaseModelAPI<IInvoice>(idInvoice, InvoiceModel);
 
@@ -113,7 +114,7 @@ async function patch(req: Request, res: Response)
                     if (customer)
                         await sendEmail({
                             receiver: customer.personal.email,
-                            subject: `Invoice #${result.id} has been refunded`,
+                            subject: `${await Company_Name()}: Invoice #${result.id} has been refunded`,
                             body: {
                                 // @ts-ignore
                                 body: await RefundedInvoiceTemplate(result, customer)
@@ -133,7 +134,7 @@ async function patch(req: Request, res: Response)
             if (customer)
                 await sendEmail({
                     receiver: customer.personal.email,
-                    subject: `Invoice #${result.id} has been refunded`,
+                    subject: `${await Company_Name()}: Invoice #${result.id} has been refunded`,
                     body: {
                         // @ts-ignore
                         body: await RefundedInvoiceTemplate(result, customer)
