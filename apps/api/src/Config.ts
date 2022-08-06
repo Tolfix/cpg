@@ -29,6 +29,16 @@ export const Postgres_Database = process.env.POSTGRES_DATABASE ||= "";
 export const Postgres_Port = parseInt(process.env.POSTGRES_PORT ||= "5432");
 export const Postgres_Host = process.env.POSTGRES_HOST ||= "localhost";
 
+// RabbitMQ
+export const RabbitMQ_Host = process.env.RABBITMQ_HOST ||= "localhost";
+export const RabbitMQ_Exchange = process.env.RABBITMQ_EXCHANGE ||= "cpg";
+export const RabbitMQ_Queue = process.env.RABBITMQ_QUEUE ||= "cpg";
+export const RabbitMQ_Routing_Key = process.env.RABBITMQ_ROUTING_KEY ||= "cpg";
+export const RabbitMQ_User = process.env.RABBITMQ_USER ||= "guest";
+export const RabbitMQ_Password = process.env.RABBITMQ_PASSWORD ||= "guest";
+
+export const RabbitMQ_URI = `amqp://${RabbitMQ_User}:${RabbitMQ_Password}@${RabbitMQ_Host}`;
+
 // osTicket configs
 export const osticket_url = process.env.OSTICKET_URL ||= "";
 export const osticket_api_key = process.env.OSTICKET_API_KEY ||= "";
