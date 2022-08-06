@@ -6,6 +6,8 @@
   "main": "./build/Main.js",
   "dependencies": {
     "ac-osticket": "^3.0.2",
+    "amqp-connection-manager": "^4.1.4",
+    "amqplib": "^0.10.1",
     "apollo-server-express": "^3.6.1",
     "bcryptjs": "^2.4.3",
     "chalk": "^4.1.2",
@@ -63,6 +65,7 @@
   },
   "homepage": "https://github.com/Tolfix/cpg-api#readme",
   "devDependencies": {
+    "@types/amqplib": "^0.8.2",
     "@types/bcryptjs": "^2.4.2",
     "@types/clear": "^0.1.2",
     "@types/colors": "^1.2.1",
@@ -95,8 +98,8 @@
     "eslint": "^8.14.0",
     "eslint-config-custom": "*",
     "interfaces": "*",
-    "tsconfig": "*",
     "lib": "*",
+    "tsconfig": "*",
     "typescript": "^4.3.5"
   }
 }
