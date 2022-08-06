@@ -77,7 +77,7 @@ async function createOrder(payload: {
 
     mainEvent.emit("order_created", order);
 
-    await SendEmail(payload.customer.personal.email, `New order from ${await Company_Name() !== "" ? await Company_Name() : "CPG"} #${order.id}`, {
+    await SendEmail(payload.customer.personal.email, `${await Company_Name() !== "" ? await Company_Name() : "CPG"}: New order created`, {
         isHTML: true,
         body: await NewOrderCreated(order, payload.customer),
     });

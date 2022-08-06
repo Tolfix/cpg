@@ -1,4 +1,5 @@
 import stripe from "stripe";
+import { Company_Name } from "../Config";
 import CustomerModel from "../Database/Models/Customers/Customer.model";
 import InvoiceModel from "../Database/Models/Invoices.model";
 import { sendEmail } from "../Email/Send";
@@ -26,10 +27,12 @@ export default async function stripeWebhookEvent(event: stripe.Event)
             if (!invoice)
                 throw new Error("Invoice not found");
 
-            const customer = await CustomerModel.findOne({ $or: [
-                { id: invoice.customer_uid },
-                { uid: invoice.customer_uid },
-            ] });
+            const customer = await CustomerModel.findOne({
+                $or: [
+                    { id: invoice.customer_uid },
+                    { uid: invoice.customer_uid },
+                ]
+            });
             if (!customer)
                 throw new Error("Customer not found");
 
@@ -37,7 +40,7 @@ export default async function stripeWebhookEvent(event: stripe.Event)
             // That their payment failed
             sendEmail({
                 receiver: customer.personal.email,
-                subject: `Payment failed for invoice ${invoice.id}`,
+                subject: `${await Company_Name()}: Payment failed for invoice ${invoice.id}`,
                 body: {
                     body: await PaymentFailedTemplate(invoice, customer),
                 }
