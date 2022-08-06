@@ -3,11 +3,12 @@ import Logger from "lib/Logger";
 import { Default_Language } from "../Config";
 import GetText from "../Translation/GetText";
 import
-    {
-        cron_chargeStripePayment,
-        cron_notifyInvoices,
-        cron_notifyLateInvoicePaid
-    } from "./Methods/Invoices.cron.methods";
+{
+    cron_chargeStripePayment,
+    cron_notifyInvoices,
+    cron_notifyLateInvoicePaid,
+    cron_remindCustomerLastDay
+} from "./Methods/Invoices.cron.methods";
 
 export = function Cron_Invoices()
 {
@@ -19,6 +20,7 @@ export = function Cron_Invoices()
         cron_chargeStripePayment();
         cron_notifyInvoices();
         cron_notifyLateInvoicePaid();
+        cron_remindCustomerLastDay();
 
     }, null, true, "Europe/Stockholm");
 }
