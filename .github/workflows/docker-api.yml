@@ -8,6 +8,8 @@ on:
       - 'Dockerfile_API'
     branches:
       - master
+    tags:
+      - '*'
 
 jobs:
 
@@ -16,14 +18,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      - uses: oprypin/find-latest-tag@v1
+        with:
+          repository: Tolfix/cpg  # The repository to scan.
+          releases-only: true  # We know that all relevant tags have a GitHub release for them.
+        id: cpg  # The step ID to refer to later.
+
       - uses: actions/checkout@v2
       - name: Docker login
         env:
           DOCKER_USER: ${{secrets.DOCKER_USERNAME}}
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+          LATEST_RELEASE: ${{ steps.octokit.outputs.tag }}
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - name: Build the Docker image
-        run: docker build . --file Dockerfile_API --tag tolfixorg/cpg-api:latest
+        run: docker build . --file Dockerfile_API --tag tolfixorg/cpg-api:$LATEST_RELEASE
       - name: Docker push
-        run: docker push tolfixorg/cpg-api:latest
+        run: docker push tolfixorg/cpg-api:$LATEST_RELEASE
