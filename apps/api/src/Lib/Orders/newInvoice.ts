@@ -231,10 +231,10 @@ export async function createInvoiceFromOrder(order: IOrder)
         }
     }
 
+    let taxRate = order.tax_rate;
     // If we have order.items and order.products is empty, tax_rate should be order.tax_rate
-    if (order.products && !order.items)
-        // @ts-ignore
-        order.tax_rate = Products?.reduce((acc, cur) => cur.tax_rate, 0);
+    if (order.products && order.items.length === 0)
+        taxRate = Products?.reduce((acc, cur) => cur.tax_rate, 0);
 
     // Create invoice
     const newInvoice = await (new InvoiceModel({
@@ -255,8 +255,7 @@ export async function createInvoiceFromOrder(order: IOrder)
         payment_method: order.payment_method,
         status: order.order_status,
         // This a fix if we use only items and there is no set tax_rate, then we set from our request, if that is empty we set to 0
-        // @ts-ignore
-        tax_rate: order.tax_rate,
+        tax_rate: taxRate,
         notes: "",
         currency: order.currency,
         paid: false,

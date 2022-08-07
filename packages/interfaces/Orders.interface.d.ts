@@ -34,11 +34,16 @@ export interface IOrder
         }>,
         quantity: number
     }>;
-    items?: Array<{
+    items: Array<{
         note: string,
         amount: number,
         quantity: number,
-    }>;
+    }> | [];
+    /**
+     * @description
+     * Will be used if our order no products and instead items.
+     */
+    tax_rate: number;
     payment_method: keyof IPayments;
     order_status: TOrderStatus;
     billing_type: TPaymentTypes;
