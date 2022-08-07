@@ -179,6 +179,8 @@ class OrderRoute
                 uid: idOrder(),
                 // @ts-ignore
                 invoices: [],
+                tax_rate: 0,
+                items: [],
                 currency: !customer.currency ? await Company_Currency() : customer.currency,
                 promotion_code: promotion_code?.id,
             }
