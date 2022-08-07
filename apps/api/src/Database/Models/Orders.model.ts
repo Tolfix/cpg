@@ -70,7 +70,12 @@ const OrderSchema = new Schema
                         quantity: Number,
                     }
                 ],
-                required: false
+                default: [],
+            },
+
+            tax_rate: {
+                type: Number,
+                default: 0,
             },
 
             billing_type: {
