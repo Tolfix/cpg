@@ -31,12 +31,8 @@ const Home: NextPage = ({ profile, company }: {
 {
     return (
         <>
-            <Navigation children={
-                <>
-                    <p>test
-                    </p>
-                </>
-            } profile={profile} company={company} />
+            {/* @ts-ignore */}
+            <Navigation profile={profile} company={company} />
         </>
     );
 }

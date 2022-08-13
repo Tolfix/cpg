@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRouter } from "next/router";
 import { IRowData } from "../../interfaces/RowData";
 import Loading from "../Loading";
@@ -32,6 +31,9 @@ export default function DynamicTable<T>(
 )
 {
 
+    const router = useRouter();
+    const { items, requestSort, sortConfig } = useSortableData(data);
+
     if (!data)
         return (
             <>
@@ -39,7 +41,6 @@ export default function DynamicTable<T>(
             </>
         )
 
-    const router = useRouter();
     const skip = parseInt(router.query.skip as string) || 0;
     const limit = parseInt(router.query.limit as string) || 10;
     const currentPage = Math.floor(skip / limit) + 1;
@@ -50,7 +51,6 @@ export default function DynamicTable<T>(
     const changeNewLimit = (newLimit: number) =>
         window.location.href = `${path}?skip=${skip}&limit=${newLimit}`;
 
-    const { items, requestSort, sortConfig } = useSortableData(data);
 
     const isSelected = (name: string) =>
     {

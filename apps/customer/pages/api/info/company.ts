@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { ICompanyData } from '../../../interfaces/CompanyData';
 
-export default async (req: NextApiRequest, res: NextApiResponse) =>
+export default async function Company(req: NextApiRequest, res: NextApiResponse)
 {
     if (req.method === 'GET')
     {

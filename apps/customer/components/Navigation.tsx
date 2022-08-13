@@ -30,7 +30,6 @@ import
     FiTrendingUp,
     FiCompass,
     FiStar,
-    FiSettings,
     FiMenu,
     FiBell,
     FiChevronDown,
@@ -42,7 +41,6 @@ import { ICustomer } from "interfaces/Customer.interface";
 import { useRouter } from 'next/router';
 import { signOut } from "next-auth/react";
 import { ICompanyData } from '../interfaces/CompanyData';
-import getCompanyData from '../lib/Company.fetch';
 
 interface LinkItemProps
 {

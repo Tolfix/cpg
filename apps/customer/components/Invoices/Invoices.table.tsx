@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IInvoice } from 'interfaces/Invoice.interface';
 import { useSession } from 'next-auth/react';
 import React, { useState } from 'react';
