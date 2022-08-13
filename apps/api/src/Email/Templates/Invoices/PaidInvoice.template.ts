@@ -6,6 +6,7 @@ import getFullName from "../../../Lib/Customers/getFullName";
 import UseStyles from "../General/UseStyles";
 import printInvoiceItemsTable from "../Methods/InvoiceItems.print";
 import GetOCRNumber from "../../../Lib/Invoices/GetOCRNumber";
+import { formatPaymentMethod } from "../../../Payments/PaymentMethods";
 
 export default async (invoice: IInvoice & IInvoiceMethods, customer: ICustomer) => await UseStyles(stripIndents`
 <div>
@@ -20,7 +21,7 @@ export default async (invoice: IInvoice & IInvoiceMethods, customer: ICustomer) 
         <strong>OCR number:</strong> ${GetOCRNumber(invoice)}
     </p>
     <p>
-        <strong>Payment method:</strong> ${(invoice.payment_method).firstLetterUpperCase().replaceAll("_", " ")}
+        <strong>Payment method:</strong> ${formatPaymentMethod(invoice.payment_method)}
     </p>
 
     ${await printInvoiceItemsTable(invoice)}
