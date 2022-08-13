@@ -116,7 +116,7 @@ server.listen(PORT, () => Logger.api(`${GetText(Default_Language).txt_Api_Listin
   await PluginHandler();
   server.use("*", async (req, res) =>
   {
-    res.status(404).send(await FallbackTemplate({ req, res }))
+    res.status(404).send(await FallbackTemplate({ req }))
     // return APIError(GetText(Default_Language).txt_ApiError_default(req))(res);
   });
 }

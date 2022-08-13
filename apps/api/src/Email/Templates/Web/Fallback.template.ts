@@ -1,12 +1,10 @@
-import { Request, Response } from "express";
+import { Request } from "express";
 import Header from "../General/Header";
 
 export default async function FallbackTemplate({
-    req,
-    res
+    req
 }: {
     req: Request,
-    res: Response,
 })
 {
     return `
