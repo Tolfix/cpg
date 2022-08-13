@@ -8,6 +8,7 @@ import printInvoiceItemsTable from "../Methods/InvoiceItems.print";
 import { createSwishQRCode } from "../../../Payments/Swish";
 import GetOCRNumber from "../../../Lib/Invoices/GetOCRNumber";
 import { convertCurrency } from "lib/Currencies";
+import { formatPaymentMethod } from "../../../Payments/PaymentMethods";
 
 export default async (invoice: IInvoice & IInvoiceMethods, customer: ICustomer) => await UseStyles(stripIndents`
 <div>
@@ -22,7 +23,7 @@ export default async (invoice: IInvoice & IInvoiceMethods, customer: ICustomer) 
         <strong>OCR number:</strong> ${(invoice.dates.invoice_date as string).replaceAll("-", "")}${invoice.id}
     </p>
     <p>
-        <strong>Your payment method is:</strong> ${(invoice.payment_method).firstLetterUpperCase().replaceAll("_", " ")}
+        <strong>Your payment method is:</strong> ${formatPaymentMethod(invoice.payment_method)}
     </p>
     <p>
         <strong>Tax due:</strong> ${invoice.tax_rate}%
