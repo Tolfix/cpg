@@ -5,6 +5,7 @@ import getFullName from "../../../Lib/Customers/getFullName";
 import UseStyles from "../General/UseStyles";
 import { IQuotes } from "interfaces/Quotes.interface";
 import printQuotesItemsTable from "../Methods/QuotesItems.print";
+import { formatPaymentMethod } from "../../../Payments/PaymentMethods";
 
 export default async (quote: IQuotes, customer: ICustomer) => await UseStyles(stripIndents`
 <div>
@@ -16,10 +17,16 @@ export default async (quote: IQuotes, customer: ICustomer) => await UseStyles(st
         <strong>Memo:</strong> ${quote.memo}
     </p>
     <p>
-        <strong>Due Date:</strong> ${quote.due_date}
+        <strong>Payment Method:</strong> ${formatPaymentMethod(quote.payment_method)}
     </p>
     <p>
-        <strong>Payment Method:</strong> ${quote.payment_method}
+        <strong>Tax due:</strong> ${quote.tax_rate}%
+    </p>
+    <p>
+        <strong>Amount due:</strong> ${quote.items.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)} ${quote.currency}
+    </p>
+    <p>
+        <strong>Due Date:</strong> ${quote.due_date}
     </p>
 
     ${await printQuotesItemsTable(quote)}
@@ -28,7 +35,7 @@ export default async (quote: IQuotes, customer: ICustomer) => await UseStyles(st
         <strong>
             Total:
         </strong>
-        ${quote.items.reduce((total, item) => total + (item.price * item.quantity), 0) + ((quote.tax_rate / 100) * quote.items.reduce((total, item) => total + (item.price * item.quantity), 0))} ${quote.currency}
+        ${quote.items.reduce((total, item) => total + (item.price * item.quantity), 0) + ((quote.tax_rate / 100) * quote.items.reduce((total, item) => total + (item.price * item.quantity), 0))} ${quote.currency} (${quote.tax_rate}%)
     </p>
     ${CPG_Customer_Panel_Domain ? `
     <p>
