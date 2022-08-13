@@ -63,6 +63,7 @@ export default function EditQuote(props: any)
                             <NumberInput label="Quantity" defaultValue={1} source="quantity" />
                         </SimpleFormIterator>
                     </ArrayInput>
+                    <NumberInput label="Tax rate" source="tax_rate" defaultValue={0} />
                     <RichTextInput source="memo" />
                     <BooleanInput source="send_email" defaultValue={false} />
                     <BooleanInput source="accepted" />
