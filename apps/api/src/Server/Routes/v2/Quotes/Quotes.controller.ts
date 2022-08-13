@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Company_Name } from "../../../../Config";
 import CustomerModel from "../../../../Database/Models/Customers/Customer.model";
 import QuotesModel from "../../../../Database/Models/Quotes.model";
-import { SendEmail } from "../../../../Email/Send";
+import { sendEmail, SendEmail } from "../../../../Email/Send";
 import mainEvent from "../../../../Events/Main.event";
 import { IQuotes } from "interfaces/Quotes.interface";
 import { idQuotes } from "../../../../Lib/Generator";
@@ -12,6 +12,7 @@ import QuoteCreateTemplate from "../../../../Email/Templates/Quotes/Quote.create
 import QuoteToInvoice from "../../../../Lib/Quotes/QuoteToInvoice";
 import { sendInvoiceEmail } from "../../../../Lib/Invoices/SendEmail";
 import createQuotePdf from "../../../../Lib/Quotes/CreateQuotePdf";
+import QuoteAcceptedTemplate from "../../../../Email/Templates/Quotes/Quote.accepted.template";
 
 const API = new BaseModelAPI<IQuotes>(idQuotes, QuotesModel);
 
@@ -100,7 +101,16 @@ async function patch(req: Request, res: Response)
                 return APIError("Failed to convert quote to invoice")(res);
 
             if (Customer)
+            {
+                await sendEmail({
+                    receiver: Customer.personal.email,
+                    subject: `${await Company_Name()}: Quote #${result.id} has been accepted`,
+                    body: {
+                        body: await QuoteAcceptedTemplate(result, Customer),
+                    }
+                });
                 await sendInvoiceEmail(invoice, Customer)
+            }
         }
 
         if (req.body.send_email !== undefined && req.body.send_email)
