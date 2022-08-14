@@ -1,5 +1,5 @@
-# Installer
-FROM node:16-alpine as INSTALLER
+# BUILDER
+FROM node:16-alpine as BUILDER
 
 # Caching
 RUN apk add --no-cache libc6-compat
@@ -13,23 +13,16 @@ RUN apk update && \
 RUN npm install -g @types/node \
     && npm install -g typescript@4.3.5 
 
+RUN npm i -g turbo
+
 COPY . .
 
 RUN npm install -w=api --force
 
-##########################
-
-# BUILDER
-FROM node:16-alpine as BUILDER
-
-RUN npm i -g turbo
-COPY --from=INSTALLER . .
-
 RUN npm run build -w=packages
 
-WORKDIR /app
-
 RUN npm run build -w=api
+
 ##########################
 
 # APP
@@ -46,11 +39,6 @@ COPY --from=BUILDER /app/apps/api/ .
 RUN apk update && \
     apk upgrade && \
     apk add git
-
-# COPY --from=BUILDER /app/apps/api/build ./build
-# COPY --from=BUILDER /app/node_modules ./node_modules
-# COPY --from=BUILDER /app/packages ./packages
-# COPY --from=BUILDER /app/package.json ./package.json
 
 ENV DEBIAN_FRONTEND=noninteractive
 
