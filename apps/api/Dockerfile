@@ -41,11 +41,6 @@ RUN apk update && \
     apk upgrade && \
     apk add git
 
-# COPY --from=BUILDER /app/apps/api/build ./build
-# COPY --from=BUILDER /app/node_modules ./node_modules
-# COPY --from=BUILDER /app/packages ./packages
-# COPY --from=BUILDER /app/package.json ./package.json
-
 ENV DEBIAN_FRONTEND=noninteractive
 
 LABEL author="Tolfix" maintainer="support@tolfix.com"
