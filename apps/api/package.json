@@ -43,6 +43,7 @@
     "qrcode": "^1.4.4",
     "request": "^2.88.2",
     "sequelize": "^6.15.0",
+    "lib": "*",
     "stripe": "^8.186.1"
   },
   "scripts": {
@@ -94,7 +95,6 @@
     "eslint": "^8.14.0",
     "eslint-config-custom": "*",
     "interfaces": "*",
-    "lib": "*",
     "tsconfig": "*",
     "typescript": "^4.3.5"
   }
