@@ -1,7 +1,7 @@
 import { readdirSync } from "fs";
 import { cacheCommands } from "../Admin/Commands/Prompt";
 import { HomeDir } from "../Config";
-import Logger from "lib/Logger";
+import { Logger } from "lib";
 
 const routeDir = HomeDir + "/build/Admin/Commands";
 const command = readdirSync(`${routeDir}`).filter((f) => f.endsWith('.js'));

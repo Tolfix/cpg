@@ -24,7 +24,7 @@ import
 import qrcode from "qrcode";
 import GetText from "../../Translation/GetText";
 import GetOCRNumber from "./GetOCRNumber";
-import { convertCurrency } from "lib/Currencies";
+import { convertCurrency } from "lib";
 
 export default function createPDFInvoice(invoice: IInvoice): Promise<string>
 {

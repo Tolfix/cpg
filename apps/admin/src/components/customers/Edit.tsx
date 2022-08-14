@@ -1,4 +1,4 @@
-import { currencyCodes } from "lib/Currencies";
+import { currencyCodes } from "lib";
 import { Edit, FormTab, PasswordInput, AutocompleteInput, TabbedForm, TextInput, SelectInput, ArrayInput, SimpleFormIterator, NumberInput, ReferenceInput, useEditController } from "react-admin";
 //@ts-ignore
 import { RichTextInput } from 'ra-input-rich-text';

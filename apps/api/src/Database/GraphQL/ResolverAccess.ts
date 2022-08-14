@@ -1,5 +1,5 @@
 import { Resolver } from "graphql-compose";
-import Logger from "lib/Logger";
+import { Logger } from "lib";
 import GetText from "../../Translation/GetText";
 
 export function resolverAdminAccess(resolvers: {

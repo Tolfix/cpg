@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import { CacheAdmin, getAdminByUsername } from "../Cache/Admin.cache";
 import AdminModel from "../Database/Models/Administrators.model";
 import { idAdmin } from "../Lib/Generator";
-import Logger from "lib/Logger";
+import { Logger } from "lib";
 
 export default function createAdmin(username: string, password: string)
 {

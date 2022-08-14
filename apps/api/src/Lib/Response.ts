@@ -1,5 +1,5 @@
 import { Response } from "express";
-import Logger from "lib/Logger";
+import { Logger } from "lib";
 
 export function APISuccess(msg: any, status = 200)
 {

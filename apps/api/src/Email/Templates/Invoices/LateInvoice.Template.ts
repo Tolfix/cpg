@@ -6,7 +6,7 @@ import getFullName from "../../../Lib/Customers/getFullName";
 import UseStyles from "../General/UseStyles";
 import printInvoiceItemsTable from "../Methods/InvoiceItems.print";
 import { createSwishQRCode } from "../../../Payments/Swish";
-import { convertCurrency } from "lib/Currencies";
+import { convertCurrency } from "lib";
 import GetOCRNumber from "../../../Lib/Invoices/GetOCRNumber";
 import { formatPaymentMethod } from "../../../Payments/PaymentMethods";
 

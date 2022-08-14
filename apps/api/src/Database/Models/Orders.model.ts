@@ -2,10 +2,10 @@ import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../Config";
 import { IOrder } from "interfaces/Orders.interface";
-import Logger from "lib/Logger";
+import { Logger } from "lib";
 import GetText from "../../Translation/GetText";
 import { A_CC_Payments, A_RecurringMethod } from "interfaces/types/PaymentMethod";
-import { currencyCodes } from "lib/Currencies";
+import { currencyCodes } from "lib";
 import { A_PaymentTypes } from "interfaces/types/PaymentTypes";
 
 

@@ -1,4 +1,4 @@
-import { currencyCodes } from "lib/Currencies";
+import { currencyCodes } from "lib";
 import
 {
     ArrayInput,

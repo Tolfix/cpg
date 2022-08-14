@@ -5,13 +5,13 @@ import { ICustomer } from "interfaces/Customer.interface";
 import { idCustomer } from "../../../../Lib/Generator";
 import { APIError, APISuccess } from "../../../../Lib/Response";
 import BaseModelAPI from "../../../../Models/BaseModelAPI";
-import Logger from "lib/Logger";
+import { Logger } from "lib";
 import { SendEmail } from "../../../../Email/Send";
 import { Company_Currency, Company_Name } from "../../../../Config";
 import mainEvent from "../../../../Events/Main.event";
 import { sanitizeMongoose } from "../../../../Lib/Sanitize";
 import WelcomeTemplate from "../../../../Email/Templates/Customer/Welcome.template";
-import { currencyCodes } from "lib/Currencies";
+import { currencyCodes } from "lib";
 import { TPaymentCurrency } from "interfaces/types/Currencies";
 
 

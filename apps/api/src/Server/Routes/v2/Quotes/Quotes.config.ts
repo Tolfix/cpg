@@ -1,7 +1,7 @@
 import { Application, Router } from "express";
 import CustomerModel from "../../../../Database/Models/Customers/Customer.model";
 import QuotesModel from "../../../../Database/Models/Quotes.model";
-import AW from "lib/AW";
+import { AW } from "lib";
 import createQuotePdf from "../../../../Lib/Quotes/CreateQuotePdf";
 import QuoteToInvoice from "../../../../Lib/Quotes/QuoteToInvoice";
 import { APIError, APISuccess } from "../../../../Lib/Response";

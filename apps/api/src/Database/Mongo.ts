@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { reCache } from "../Cache/reCache";
 import { DebugMode, Default_Language, MongoDB_URI } from "../Config";
-import Logger from "lib/Logger";
+import { Logger } from "lib";
 import GetText from "../Translation/GetText";
 
 mongoose.connect(MongoDB_URI);

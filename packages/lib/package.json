@@ -2,23 +2,31 @@
   "name": "lib",
   "version": "0.0.0",
   "license": "MIT",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "source": "./src/index.ts",
   "files": [
-    "AW.d.ts",
-    "AW.js",
-    "Currencies.d.ts",
-    "Currencies.js",
-    "Logger.d.ts",
-    "Logger.js",
-    "Time.d.ts",
-    "Time.js",
-    "UrlToBase64.d.ts",
-    "UrlToBase64.js"
+    "dist/**"
   ],
   "dependencies": {
-    "exchange-rates-api": "^1.1.0",
-    "date-and-time": "^1.0.1"
+    "date-and-time": "^1.0.1",
+    "exchange-rates-api": "^1.1.0"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "dev": "tsc -w",
+    "lint": "TIMING=1 eslint src/**/*.ts* --fix",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.33.0",
+    "@typescript-eslint/parser": "^5.33.0",
+    "eslint": "^8.22.0",
+    "eslint-config-custom": "*"
   }
 }

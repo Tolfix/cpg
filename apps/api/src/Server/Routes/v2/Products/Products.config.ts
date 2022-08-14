@@ -2,7 +2,7 @@ import { Application, Router } from "express";
 import ConfigurableOptionsModel from "../../../../Database/Models/ConfigurableOptions.model";
 import ProductModel from "../../../../Database/Models/Products.model";
 import { IProduct } from "interfaces/Products.interface";
-import AW from "lib/AW";
+import { AW } from "lib";
 import { APIError, APISuccess } from "../../../../Lib/Response";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import ProductController from "./Products.controller";

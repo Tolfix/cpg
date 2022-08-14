@@ -2,7 +2,7 @@ import InvoiceModel from "../../Database/Models/Invoices.model";
 import { IInvoice } from "interfaces/Invoice.interface";
 import { Document } from "mongoose";
 import mainEvent from "../../Events/Main.event";
-import { getDate } from "lib/Time";
+import { getDate } from "lib";
 import TransactionsModel from "../../Database/Models/Transactions.model";
 import { Company_Currency, Company_Name } from "../../Config";
 import { idTransactions } from "../Generator";

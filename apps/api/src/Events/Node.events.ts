@@ -1,4 +1,4 @@
-import Logger from "lib/Logger";
+import { Logger } from "lib";
 
 process.on('exit', (code) =>
 {

@@ -1,7 +1,7 @@
 import { Application, Router } from "express";
 import ProductModel from "../../../../Database/Models/Products.model";
 import PromotionCodeModel from "../../../../Database/Models/PromotionsCode.model";
-import Logger from "lib/Logger";
+import { Logger } from "lib";
 import { APIError, APISuccess } from "../../../../Lib/Response";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import { setTypeValueOfObj } from "../../../../Lib/Sanitize";

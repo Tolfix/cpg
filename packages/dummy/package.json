@@ -1,0 +1,30 @@
+{
+    "name": "dummy",
+    "version": "0.0.0",
+    "license": "MIT",
+    "private": true,
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "source": "./src/index.ts",
+    "files": [
+      "dist/**"
+    ],
+    "dependencies": {
+    },
+    "publishConfig": {
+      "access": "public"
+    },
+    "scripts": {
+      "build": "tsc",
+      "clean": "rm -rf dist",
+      "dev": "tsc -w",
+      "lint": "TIMING=1 eslint src/**/*.ts* --fix"
+    },
+    "devDependencies": {
+      "@typescript-eslint/eslint-plugin": "^5.33.0",
+      "@typescript-eslint/parser": "^5.33.0",
+      "eslint": "^8.22.0",
+      "eslint-config-custom": "*"
+    }
+  }
+  

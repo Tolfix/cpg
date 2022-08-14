@@ -4,7 +4,7 @@ import SchemaPoser from './SchemaPoser';
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { CacheAdmin, getAdminByUsername } from '../../Cache/Admin.cache';
-import Logger from 'lib/Logger';
+import { Logger } from "lib";
 import { Application } from "express";
 import GetText from '../../Translation/GetText';
 

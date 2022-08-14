@@ -1,5 +1,5 @@
 import { Application, Router } from "express";
-import Logger from "lib/Logger";
+import { Logger } from "lib";
 import { APIError, APISuccess } from "../../../../Lib/Response";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import { CacheImages } from "../../../../Cache/Image.cache";
@@ -8,7 +8,7 @@ import { UploadedFile } from "express-fileupload";
 import { idImages } from "../../../../Lib/Generator";
 import ImageModel from "../../../../Database/Models/Images.model";
 import { setTypeValueOfObj } from "../../../../Lib/Sanitize";
-import AW from "lib/AW";
+import { AW } from "lib";
 export = ImagesRouter;
 class ImagesRouter
 {

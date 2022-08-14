@@ -1,13 +1,13 @@
 import { Company_Name, DebugMode, Default_Language, d_Days } from "../../Config";
 import InvoiceModel from "../../Database/Models/Invoices.model";
 import dateFormat from "date-and-time";
-import Logger from "lib/Logger";
+import { Logger } from "lib";
 import GetText from "../../Translation/GetText";
 import CustomerModel from "../../Database/Models/Customers/Customer.model";
 import { sendInvoiceEmail, sendLateInvoiceEmail } from "../../Lib/Invoices/SendEmail";
 import { ChargeCustomer } from "../../Payments/Stripe";
 import { InvoiceLateReport, InvoiceNotifiedReport } from "../../Email/Reports/InvoiceReport";
-import { convertCurrency } from "lib/Currencies";
+import { convertCurrency } from "lib";
 import { getInvoiceByIdAndMarkAsPaid } from "../../Lib/Invoices/MarkAsPaid";
 import sendEmailOnTransactionCreation from "../../Lib/Transaction/SendEmailOnCreation";
 import createCredit from "../../Lib/Customers/createCredit";

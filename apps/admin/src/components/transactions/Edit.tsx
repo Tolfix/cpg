@@ -1,4 +1,4 @@
-import { currencyCodes } from "lib/Currencies";
+import { currencyCodes } from "lib";
 import { DateInput, Edit, FormDataConsumer, FormTab, NumberInput, ReferenceInput, AutocompleteInput, TabbedForm, TextInput } from "react-admin";
 import RenderFullName from "../../lib/RenderFullName";
 

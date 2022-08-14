@@ -1,7 +1,7 @@
 import { Application, Router } from "express";
 import { APIError, APISuccess } from "../../../../Lib/Response";
 import { PaypalCurrencies } from "../../../../Payments/Currencies/Paypal.currencies";
-import { convertCurrency, currencyCodes, GetCurrencySymbol } from 'lib/Currencies';
+import { convertCurrency, currencyCodes, GetCurrencySymbol } from "lib";
 import { TPaymentCurrency } from "interfaces/types/Currencies";
 export = CurrenciesRouter;
 class CurrenciesRouter

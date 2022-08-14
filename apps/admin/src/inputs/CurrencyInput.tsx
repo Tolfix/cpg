@@ -1,4 +1,4 @@
-import { currencyCodes } from "lib/Currencies";
+import { currencyCodes } from "lib";
 import { AutocompleteInput } from "react-admin";
 
 export default function CurrencyInput()

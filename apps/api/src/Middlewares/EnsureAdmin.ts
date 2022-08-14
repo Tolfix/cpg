@@ -4,7 +4,7 @@ import { CacheAdmin, getAdminByUsername } from "../Cache/Admin.cache";
 import { APIError } from "../Lib/Response";
 import jwt from "jsonwebtoken";
 import { JWT_Access_Token } from "../Config";
-import Logger from "lib/Logger";
+import { Logger } from "lib";
 
 export default function EnsureAdmin(eR = false)
 {

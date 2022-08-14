@@ -1,11 +1,11 @@
 /* eslint-disable no-case-declarations */
 import InvoiceModel from "../../Database/Models/Invoices.model";
-import Logger from "lib/Logger";
+import { Logger } from "lib";
 import inquirer from 'inquirer';
 import { idInvoice } from "../../Lib/Generator";
 import { getDates30DaysAgo } from "../../Cron/Methods/Invoices.cron.methods";
 import { A_CC_Payments } from "interfaces/types/PaymentMethod";
-import { currencyCodes } from "lib/Currencies";
+import { currencyCodes } from "lib";
 import CustomerModel from "../../Database/Models/Customers/Customer.model";
 import mainEvent from "../../Events/Main.event";
 import { sendInvoiceEmail } from "../../Lib/Invoices/SendEmail";

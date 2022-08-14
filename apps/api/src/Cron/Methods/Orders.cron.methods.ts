@@ -1,6 +1,6 @@
 import { Default_Language, d_Days } from "../../Config";
 import OrderModel from "../../Database/Models/Orders.model";
-import Logger from "lib/Logger";
+import { Logger } from "lib";
 import GetText from "../../Translation/GetText";
 import dateFormat from "date-and-time";
 import nextRecycleDate from "../../Lib/Dates/DateCycle";

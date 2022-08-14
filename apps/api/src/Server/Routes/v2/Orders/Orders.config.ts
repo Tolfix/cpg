@@ -21,7 +21,7 @@ import NewOrderCreated from "../../../../Email/Templates/Orders/NewOrderCreated"
 import { IConfigurableOptions } from "interfaces/ConfigurableOptions.interface";
 import mainEvent from "../../../../Events/Main.event";
 import PromotionCodeModel from "../../../../Database/Models/PromotionsCode.model";
-import Logger from "lib/Logger";
+import { Logger } from "lib";
 import { ce_orders } from "../../../../Lib/Orders/PlaceOrder";
 import { TPayments, TRecurringMethod } from "interfaces/types/PaymentMethod";
 import { TPaymentCurrency } from "interfaces/types/Currencies";

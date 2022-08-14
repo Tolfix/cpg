@@ -11,7 +11,7 @@ import
     FormDataConsumer,
 } from "react-admin";
 import { RichTextInput } from 'ra-input-rich-text';
-import { currencyCodes } from "lib/Currencies";
+import { currencyCodes } from "lib";
 import RenderFullName from "../../lib/RenderFullName";
 import { getDate } from "../../lib/dateFormat";
 

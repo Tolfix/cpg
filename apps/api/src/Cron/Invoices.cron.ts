@@ -1,5 +1,5 @@
 import { CronJob } from "cron";
-import Logger from "lib/Logger";
+import { Logger } from "lib";
 import { Default_Language } from "../Config";
 import GetText from "../Translation/GetText";
 import

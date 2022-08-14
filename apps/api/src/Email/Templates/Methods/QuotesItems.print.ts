@@ -1,5 +1,5 @@
 import { IQuotes } from "interfaces/Quotes.interface";
-import { GetCurrencySymbol } from "lib/Currencies";
+import { GetCurrencySymbol } from "lib";
 import GetTableStyle from "../CSS/GetTableStyle";
 
 export default async function printQuotesItemsTable(quote: IQuotes)

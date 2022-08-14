@@ -11,7 +11,7 @@ import
 } from "react-admin";
 //@ts-ignore
 import { RichTextInput } from 'ra-input-rich-text';
-import { currencyCodes } from "lib/Currencies";
+import { currencyCodes } from "lib";
 
 export const CreateProducts = (props: any) =>
 (

@@ -1,6 +1,6 @@
 import { ICustomer } from "interfaces/Customer.interface";
 import { IOrder } from "interfaces/Orders.interface";
-import { convertCurrency } from "lib/Currencies";
+import { convertCurrency } from "lib";
 import ConfigurableOptionsModel from "../../Database/Models/ConfigurableOptions.model";
 import getProductById from "../Products/getProductById";
 

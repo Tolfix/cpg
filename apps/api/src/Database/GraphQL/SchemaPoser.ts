@@ -1,7 +1,7 @@
 import { SchemaComposer } from 'graphql-compose';
 import fs from "fs";
 import { HomeDir } from '../../Config';
-import Logger from 'lib/Logger';
+import { Logger } from "lib";
 import GetText from '../../Translation/GetText';
 
 const schemaComposer = new SchemaComposer();

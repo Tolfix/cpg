@@ -1,4 +1,4 @@
-import Logger from "lib/Logger";
+import { Logger } from "lib";
 import { Plugins } from "../Config";
 import npm from "npm";
 import fs from "fs";

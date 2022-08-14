@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express"
 import jwt from "jsonwebtoken";
 import { JWT_Access_Token } from "../Config";
-import Logger from "lib/Logger";
+import { Logger } from "lib";
 import { APIError } from "../Lib/Response";
 
 export default function EnsureAuth(eR = false)

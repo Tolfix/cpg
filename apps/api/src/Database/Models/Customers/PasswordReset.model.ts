@@ -1,5 +1,5 @@
 import { Document, model, Schema } from "mongoose"
-import Logger from "lib/Logger";
+import { Logger } from "lib";
 
 const PasswordResetSchema = new Schema
     (

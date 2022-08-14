@@ -10,8 +10,7 @@ import { IInvoice } from "interfaces/Invoice.interface";
 import getFullName from "../Lib/Customers/getFullName";
 import { idTransactions } from "../Lib/Generator";
 import { getInvoiceByIdAndMarkAsPaid } from "../Lib/Invoices/MarkAsPaid";
-import Logger from "lib/Logger";
-import { getDate } from "lib/Time";
+import { Logger, getDate } from "lib";
 import sendEmailOnTransactionCreation from "../Lib/Transaction/SendEmailOnCreation";
 const Stripe = new stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
     apiVersion: "2020-08-27",

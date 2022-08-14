@@ -1,6 +1,6 @@
 import { cron_chargeStripePayment, cron_notifyInvoices, cron_notifyLateInvoicePaid } from "../../Cron/Methods/Invoices.cron.methods";
 import { cron_createNewInvoicesFromOrders } from "../../Cron/Methods/Orders.cron.methods";
-import Logger from "lib/Logger";
+import { Logger } from "lib";
 
 export default
     {

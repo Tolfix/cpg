@@ -1,8 +1,8 @@
 import mail from "nodemailer";
 import { Company_Name, GetSMTPConfig } from "../Config";
 import { IConfigs } from "interfaces/Admin/Configs.interface";
-import AW from "lib/AW";
-import Logger from "lib/Logger";
+import { AW } from "lib";
+import { Logger } from "lib";
 
 /**
  * @description

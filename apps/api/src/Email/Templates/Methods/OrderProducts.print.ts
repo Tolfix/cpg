@@ -2,7 +2,7 @@ import { IOrder } from "interfaces/Orders.interface";
 import { stripIndents } from "common-tags";
 import ConfigurableOptionsModel from "../../../Database/Models/ConfigurableOptions.model";
 import getProductById from "../../../Lib/Products/getProductById";
-import { convertCurrency, GetCurrencySymbol } from "lib/Currencies";
+import { convertCurrency, GetCurrencySymbol } from "lib";
 import GetTableStyle from "../CSS/GetTableStyle";
 import { ICustomer } from "interfaces/Customer.interface";
 

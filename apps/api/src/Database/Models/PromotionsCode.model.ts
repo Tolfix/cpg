@@ -2,7 +2,7 @@ import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../Config";
 import { IPromotionsCodes } from "interfaces/PromotionsCodes.interface";
-import Logger from "lib/Logger";
+import { Logger } from "lib";
 import GetText from "../../Translation/GetText";
 
 const PromotionCodeSchema = new Schema

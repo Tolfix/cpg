@@ -1,5 +1,5 @@
 {
-  "name": "cpg-api",
+  "name": "api",
   "version": "3.4.0",
   "private": true,
   "description": "Central Payment Gateway",
@@ -65,7 +65,6 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/clear": "^0.1.2",
-    "@types/colors": "^1.2.1",
     "@types/common-tags": "^1.8.1",
     "@types/cors": "^2.8.12",
     "@types/cron": "^1.7.3",
@@ -95,8 +94,8 @@
     "eslint": "^8.14.0",
     "eslint-config-custom": "*",
     "interfaces": "*",
-    "tsconfig": "*",
     "lib": "*",
+    "tsconfig": "*",
     "typescript": "^4.3.5"
   }
 }

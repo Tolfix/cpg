@@ -1,5 +1,5 @@
 {
-  "name": "cpg-customer",
+  "name": "customer",
   "private": true,
   "scripts": {
     "dev": "next dev",

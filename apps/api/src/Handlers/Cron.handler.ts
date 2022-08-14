@@ -1,6 +1,6 @@
 import { readdirSync } from "fs";
 import { HomeDir } from "../Config";
-import Logger from "lib/Logger";
+import { Logger } from "lib";
 
 const routeDir = HomeDir + "/build/Cron";
 const command = readdirSync(`${routeDir}`).filter((f) => f.endsWith('cron.js'));

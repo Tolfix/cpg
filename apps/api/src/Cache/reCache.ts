@@ -5,7 +5,7 @@ import ImageModel from "../Database/Models/Images.model";
 import OrderModel from "../Database/Models/Orders.model";
 import ProductModel from "../Database/Models/Products.model";
 import TransactionsModel from "../Database/Models/Transactions.model";
-import Logger from "lib/Logger";
+import { Logger } from "lib";
 import { CacheAdmin } from "./Admin.cache";
 import { CacheCategories } from "./Categories.cache";
 import { CacheCustomer } from "./Customer.cache";
