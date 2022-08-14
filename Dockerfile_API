@@ -16,6 +16,8 @@ RUN npm install -g @types/node \
 COPY . .
 
 RUN npm install -w=api --force
+RUN npm run build -w=packages
+
 ##########################
 
 # BUILDER
@@ -25,7 +27,7 @@ RUN npm i -g turbo
 COPY --from=INSTALLER . .
 
 WORKDIR /app
-RUN npm run build -w=packages
+
 RUN npm run build -w=api
 ##########################
 
