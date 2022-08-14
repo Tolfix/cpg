@@ -13,15 +13,15 @@
     "cpg-api:build": "tsc --project ./apps/api/tsconfig.json --watch",
     "cpg-api:dev": "turbo run dev --scope=cpg-api",
     "cpg-customer:dev": "turbo run dev --scope=cpg-customer",
-    "format": "npx eslint \"**/*.{ts,tsx}\" --fix"
+    "format": "npx eslint \"**/*.{ts,tsx}\" --fix",
+    "test": "turbo run test"
   },
   "devDependencies": {
-    "turbo": "latest"
+    "turbo": "^1.4.3"
   },
   "engines": {
     "npm": ">=7.0.0",
     "node": ">=14.0.0"
   },
-  "packageManager": "npm@8.3.0",
-  "dependencies": {}
+  "packageManager": "npm@8.3.0"
 }

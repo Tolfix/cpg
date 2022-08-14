@@ -1,6 +1,6 @@
-POST http://localhost:8080/v2/orders/place
+POST http://localhost:3001/v2/orders/place
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoxLCJlbWFpbCI6InRlc3RAdG9sZml4LmNvbSJ9LCJleHAiOjE2NDc0Mzc0MjYsImlhdCI6MTY0NzM1MTAyNn0.6U6SUhsq76Ad0uDjm9Z3XbiKDY-YXZ320i6WRcvGnJA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoxLCJlbWFpbCI6InRlc3RAdG9sZml4LmNvbSJ9LCJleHAiOjE2NTk5Nzc4NzcsImlhdCI6MTY1OTg5MTQ3N30.nikGc2EmOdGeG-vagUJ9eD1ZkFLA9fdUh7wGbxLFJic
 
 {
     "payment_method": "credit_card",
