@@ -22,7 +22,6 @@ RUN npm install -w=api --force
 RUN npm run build -w=packages
 
 RUN npm run build -w=api
-# RUN tsc --project apps/api/tsconfig.json
 
 ##########################
 
