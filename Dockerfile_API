@@ -15,7 +15,7 @@ RUN npm install -g @types/node \
 
 COPY . .
 
-RUN npm install --force
+RUN npm install -w=api --force
 ##########################
 
 # BUILDER
