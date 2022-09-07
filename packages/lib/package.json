@@ -24,6 +24,8 @@
     "test": "jest"
   },
   "devDependencies": {
+    "@types/date-and-time": "^0.13.0",
+    "@types/exchange-rates-api": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
     "eslint": "^8.22.0",
