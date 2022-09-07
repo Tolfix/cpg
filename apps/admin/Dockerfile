@@ -18,7 +18,6 @@ RUN npm i -g turbo
 COPY . .
 
 RUN npm install -w=admin --force
-
 RUN npm run build -w=packages
 
 ##########################
