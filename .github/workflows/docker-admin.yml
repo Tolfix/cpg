@@ -3,18 +3,15 @@ name: Docker Image - Admin
 on:
   push:
     paths:
-      - 'apps/admin/src/**'
-      - 'apps/admin/public/**'
-      - 'apps/admin/package.json'
-      - 'Dockerfile_ADMIN'
+      - "apps/admin/src/**"
+      - "apps/admin/public/**"
+      - "apps/admin/package.json"
+      - "apps/admin/Dockerfile"
     branches:
       - master
 
-
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -26,6 +23,6 @@ jobs:
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - name: Build the Docker image
-        run: docker build . --file Dockerfile_ADMIN --tag tolfixorg/cpg-admin:latest
+        run: docker build . --file ./apps/admin/Dockerfile --tag tolfixorg/cpg-admin:latest
       - name: Docker push
         run: docker push tolfixorg/cpg-admin:latest
