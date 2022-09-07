@@ -21,7 +21,7 @@ RUN npm install -w=admin --force
 
 RUN npm run build -w=packages
 
-RUN npm run build -w=admin
+# RUN npm run build -w=admin
 
 ##########################
 
