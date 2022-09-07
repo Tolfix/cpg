@@ -1,8 +1,8 @@
-# Installer
-FROM node:16-alpine as INSTALLER
+# BUILDER
+FROM node:16-alpine as BUILDER
 
 # Caching
-# RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat
 
 WORKDIR /app
 
@@ -13,17 +13,15 @@ RUN apk update && \
 RUN npm install -g @types/node \
     && npm install -g typescript@4.3.5 
 
+RUN npm i -g turbo
+
 COPY . .
 
-RUN npm install --force
-##########################
+RUN npm install -w=admin --force
 
-# BUILDER
-FROM node:16-alpine as BUILDER
+RUN npm run build -w=packages
 
-RUN npm i -g turbo
-COPY --from=INSTALLER . .
-WORKDIR /app
+RUN npm run build -w=admin
 
 ##########################
 
