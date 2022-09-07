@@ -12,7 +12,8 @@
   "dependencies": {
     "colors": "^1.4.0",
     "date-and-time": "^1.0.1",
-    "exchange-rates-api": "^1.1.0"
+    "exchange-rates-api": "^1.1.0",
+    "request": "^2.88.2"
   },
   "publishConfig": {
     "access": "public"
