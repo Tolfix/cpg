@@ -12,13 +12,22 @@ import { idTransactions } from "../Lib/Generator";
 import { getInvoiceByIdAndMarkAsPaid } from "../Lib/Invoices/MarkAsPaid";
 import { Logger, getDate } from "lib";
 import sendEmailOnTransactionCreation from "../Lib/Transaction/SendEmailOnCreation";
-const Stripe = new stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
-    apiVersion: "2020-08-27",
-});
+let Stripe: stripe | undefined = undefined;
+
+if (Stripe_SK_Test !== "" || Stripe_SK_Live !== "")
+    Stripe = new stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
+        apiVersion: "2020-08-27",
+    });
+
+if (Stripe === undefined)
+{
+    Logger.warning("Stripe is not configured, this will cause errors!");
+}
 
 // Check if stripe webhook is configured
 (async () => 
 {
+    if (Stripe === undefined) return;
     if (!((await Stripe.webhookEndpoints.list()).data.length))
         Stripe.webhookEndpoints.create({
             url: `${Full_Domain}/v2/payments/stripe/webhook`,
@@ -58,6 +67,7 @@ const cacheSetupIntents = new Map<string, stripe.Response<stripe.SetupIntent>>()
 // Create a method that will create a payment intent from an order
 export const CreatePaymentIntent = async (invoice: IInvoice<"credit_card">) =>
 {
+    if (Stripe === undefined) throw new Error("Stripe is not configured!");
     if (cacheIntents.has(invoice.uid))
         return cacheIntents.get(invoice.uid) as stripe.Response<stripe.PaymentIntent>;
 
@@ -119,10 +129,15 @@ export const CreatePaymentIntent = async (invoice: IInvoice<"credit_card">) =>
     return intent;
 };
 
-export const RetrievePaymentIntent = async (payment_intent: string) => (await Stripe.paymentIntents.retrieve(payment_intent));
+export const RetrievePaymentIntent = async (payment_intent: string) =>
+{
+    if (Stripe === undefined) throw new Error("Stripe is not configured!");
+    return (await Stripe.paymentIntents.retrieve(payment_intent))
+};
 
 export const refundPaymentIntent = async (payment_intent_id: stripe.PaymentIntent["id"]) =>
 {
+    if (Stripe === undefined) throw new Error("Stripe is not configured!");
     const intent = await Stripe.paymentIntents.retrieve(payment_intent_id);
     if (intent.status !== "succeeded")
         throw new Error("Payment intent is not succeeded");
@@ -133,6 +148,8 @@ export const refundPaymentIntent = async (payment_intent_id: stripe.PaymentInten
 
 export const createSetupIntent = async (id: ICustomer["id"]) =>
 {
+    if (Stripe === undefined) throw new Error("Stripe is not configured!");
+
     if (cacheSetupIntents.has(id))
         return cacheSetupIntents.get(id) as stripe.Response<stripe.SetupIntent>;
 
@@ -183,10 +200,17 @@ export const createSetupIntent = async (id: ICustomer["id"]) =>
     return setupIntent;
 };
 
-export const RetrieveSetupIntent = async (setup_intent: string) => (await Stripe.setupIntents.retrieve(setup_intent));
+export const RetrieveSetupIntent = async (setup_intent: string) =>
+{
+    if (Stripe === undefined) throw new Error("Stripe is not configured!");
+
+    return (await Stripe.setupIntents.retrieve(setup_intent))
+};
 
 export const ChargeCustomer = async (invoice_id: IInvoice["id"]) =>
 {
+    if (Stripe === undefined) throw new Error("Stripe is not configured!");
+
     const invoice = await InvoiceModel.findOne({ id: invoice_id });
     if (!invoice)
         throw new Error("Invoice not found");

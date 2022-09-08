@@ -13,9 +13,12 @@ import { CreatePaymentIntent, createSetupIntent, markInvoicePaid, RetrievePaymen
 import CustomerModel from "../../../../Database/Models/Customers/Customer.model";
 import stripeWebhookEvent from "../../../../Events/Stripe.event";
 import { IInvoice } from "interfaces/Invoice.interface";
-const stripe = new Stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
-    apiVersion: "2020-08-27",
-});
+let stripe: Stripe | undefined = undefined;
+
+if (Stripe_SK_Test !== "" || Stripe_SK_Live !== "")
+    stripe = new Stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
+        apiVersion: "2020-08-27",
+    });
 
 export = StripeRouter;
 class StripeRouter
