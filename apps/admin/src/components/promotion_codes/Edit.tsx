@@ -19,12 +19,13 @@ export default function EditPromotionCode(props: any)
                     <TextInput label="Valid to" source="valid_to" defaultValue={'permanent'} />
                     <NumberInput label="Max uses" source="uses" defaultValue={'unlimited'} />
                     <BooleanInput label="Percentage" source="percentage" />
-                    <ReferenceArrayInput filterToQuery={(searchText: string) => ({
-                        "name": searchText,
-                    })} perPage={100} source="products_ids" reference="products">
+                    <ReferenceArrayInput perPage={100} source="products_ids" reference="products">
                         <AutocompleteArrayInput
                             source="products"
                             label="Products"
+                            filterToQuery={(searchText: string) => ({
+                                "name": searchText,
+                            })}
                             fullWidth
                             optionText="name"
                         />

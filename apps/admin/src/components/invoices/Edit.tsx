@@ -100,12 +100,13 @@ export const EditInvoices = (props: any) =>
                             <RichTextInput source="notes" />
                             <NumberInput isRequired={true} label="Amount" source="amount" />
                             <NumberInput label="Quantity" defaultValue={1} source="quantity" />
-                            <ReferenceInput filterToQuery={(searchText: any) => ({
-                                "name": searchText,
-                            })} perPage={100} source="product_id" reference="products">
+                            <ReferenceInput perPage={100} source="product_id" reference="products">
                                 <AutocompleteInput
                                     source="product"
                                     label="Product"
+                                    filterToQuery={(searchText: any) => ({
+                                        "name": searchText,
+                                    })}
                                     isRequired={true}
                                     optionText={(r: any) => `${r.name} - (${r.id})`}
                                     fullWidth
@@ -114,13 +115,14 @@ export const EditInvoices = (props: any) =>
                         </SimpleFormIterator>
                     </ArrayInput>
 
-                    <ReferenceArrayInput filterToQuery={(searchText: any) => ({
-                        "id": searchText,
-                    })} perPage={100} source="transactions" reference="transactions">
+                    <ReferenceArrayInput perPage={100} source="transactions" reference="transactions">
                         <AutocompleteArrayInput
                             source="transactions"
                             optionValue="id"
                             label="Transactions"
+                            filterToQuery={(searchText: any) => ({
+                                "id": searchText,
+                            })}
                             fullWidth
                             optionText={(record: any) => record?.id?.toString() ?? ""}
                         />

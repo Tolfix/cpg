@@ -27,12 +27,13 @@ export const CreateTransactions = (props: any) =>
                                 />
                             </ReferenceInput>
                             <div>
-                                <ReferenceInput filterToQuery={(searchText: string) => ({
-                                    "id": searchText,
-                                })} perPage={100} source="invoice_uid"
+                                <ReferenceInput perPage={100} source="invoice_uid"
                                     reference="invoices" allowEmpty>
                                     <AutocompleteInput
                                         fullWidth
+                                        filterToQuery={(searchText: string) => ({
+                                            "id": searchText,
+                                        })}
                                         isRequired={formData.statement === "income"}
                                         optionText={(record) => record?.id?.toString() ?? ""} />
                                 </ReferenceInput>

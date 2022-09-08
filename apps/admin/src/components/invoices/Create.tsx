@@ -72,12 +72,13 @@ export const CreateInvoices = (props: any) =>
                         <NumberInput isRequired={true} label="Amount" source="amount" />
                         <NumberInput label="Quantity" defaultValue={1} source="quantity" />
                         {/* @ts-ignore */}
-                        <ReferenceInput filterToQuery={searchText => ({
-                            "name": searchText,
-                        })} perPage={100} source="product_id" reference="products">
+                        <ReferenceInput perPage={100} source="product_id" reference="products">
                             <AutocompleteInput
                                 source="product"
                                 label="Product"
+                                filterToQuery={searchText => ({
+                                    "name": searchText,
+                                })}
                                 isRequired={true}
                                 fullWidth
                                 optionText={(r: any) => `${r.name} - (${r.id})`}
@@ -86,10 +87,10 @@ export const CreateInvoices = (props: any) =>
                     </SimpleFormIterator>
                 </ArrayInput>
 
-                <ReferenceArrayInput filterToQuery={(searchText: string) => ({
-                    "id": searchText,
-                })} perPage={100} source="transactions" reference="transactions">
-                    <AutocompleteArrayInput fullWidth optionText={(record) => record?.id?.toString() ?? ""} />
+                <ReferenceArrayInput perPage={100} source="transactions" reference="transactions">
+                    <AutocompleteArrayInput filterToQuery={(searchText: string) => ({
+                        "id": searchText,
+                    })} fullWidth optionText={(record) => record?.id?.toString() ?? ""} />
                 </ReferenceArrayInput>
 
             </FormTab>
