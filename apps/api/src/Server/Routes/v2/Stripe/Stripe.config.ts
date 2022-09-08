@@ -4,21 +4,14 @@ import
     Company_Currency,
     Company_Website, DebugMode, Full_Domain,
     Stripe_PK_Public, Stripe_PK_Public_Test,
-    Stripe_SK_Live, Stripe_SK_Test, Stripe_Webhook_Secret
+    Stripe_Webhook_Secret
 } from "../../../../Config";
 import InvoiceModel from "../../../../Database/Models/Invoices.model";
 import { APIError } from "../../../../Lib/Response";
-import Stripe from "stripe";
-import { CreatePaymentIntent, createSetupIntent, markInvoicePaid, RetrievePaymentIntent, RetrieveSetupIntent } from "../../../../Payments/Stripe";
+import { CreatePaymentIntent, createSetupIntent, markInvoicePaid, RetrievePaymentIntent, RetrieveSetupIntent, StripeMap } from "../../../../Payments/Stripe";
 import CustomerModel from "../../../../Database/Models/Customers/Customer.model";
 import stripeWebhookEvent from "../../../../Events/Stripe.event";
 import { IInvoice } from "interfaces/Invoice.interface";
-let stripe: Stripe | undefined = undefined;
-
-if (Stripe_SK_Test !== "" || Stripe_SK_Live !== "")
-    stripe = new Stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
-        apiVersion: "2020-08-27",
-    });
 
 export = StripeRouter;
 class StripeRouter
@@ -534,6 +527,7 @@ class StripeRouter
             let event;
             try
             {
+                const stripe = StripeMap.get('stripe');
                 // @ts-ignore
                 event = stripe.webhooks.constructEvent(req.rawBody, sig, Stripe_Webhook_Secret);
             }
