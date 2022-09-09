@@ -4,10 +4,11 @@ import
     BooleanInput,
     Create, FormTab,
     NumberInput,
-    ReferenceArrayInput, AutocompleteInput,
+    AutocompleteInput,
     SimpleFormIterator,
     TabbedForm,
     TextInput,
+    ReferenceInput,
 } from "react-admin";
 //@ts-ignore
 import { RichTextInput } from 'ra-input-rich-text';
@@ -18,18 +19,18 @@ export const CreateProducts = (props: any) =>
     <Create {...props}>
         <TabbedForm>
             <FormTab label="General">
-                {/* @ts-ignore */}
-                <ReferenceArrayInput filterToQuery={searchText => ({
-                    "name": searchText,
-                })} perPage={100} source="category_uid" reference="categories">
+                <ReferenceInput perPage={100} source="category_uid" reference="categories">
                     <AutocompleteInput
                         source="categories"
                         label="Categories"
                         isRequired={true}
+                        filterToQuery={searchText => ({
+                            "name": searchText,
+                        })}
                         fullWidth
                         optionText={(r: any) => `${r.name} - (${r.id})`}
                     />
-                </ReferenceArrayInput>
+                </ReferenceInput>
                 <TextInput fullWidth isRequired={true} label="Name" source="name" />
                 <RichTextInput isRequired={true} label="Description" source="description" />
                 <BooleanInput label="Hidden" defaultValue={false} source="hidden" />
