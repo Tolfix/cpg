@@ -27,7 +27,7 @@ export default function EditPromotionCode(props: any)
                                 "name": searchText,
                             })}
                             fullWidth
-                            optionText="name"
+                            optionText={(r: any) => `${r.name} - (${r.id})`}
                         />
                     </ReferenceArrayInput>
                 </FormTab>

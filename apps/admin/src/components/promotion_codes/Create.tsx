@@ -26,7 +26,7 @@ export default function CreatePromotionCode(props: any)
                             source="products"
                             label="Products"
                             fullWidth
-                            optionText="name"
+                            optionText={(r: any) => `${r.name} - (${r.id})`}
                         />
                     </ReferenceArrayInput>
                 </FormTab>
