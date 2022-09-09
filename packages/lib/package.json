@@ -21,7 +21,6 @@
   "scripts": {
     "build": "tsc -b",
     "clean": "rm -rf dist",
-    "dev": "tsc -w",
     "lint": "TIMING=1 eslint src/**/*.ts* --fix",
     "test": "jest"
   },
