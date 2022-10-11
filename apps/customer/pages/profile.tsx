@@ -26,6 +26,11 @@ export default ({
     const [profilePicture, setProfilePicture] = useState<string>("");
     const [showModal, setShowModal] = useState(false);
 
+    /**
+     * It saves the profile of the user.
+     * @param {string} target - the name of the input field
+     * @returns A function that takes an event object and returns a promise.
+     */
     const saveProfile = (target: string) =>
     {
         return async (e: { preventDefault: () => void; target: any; }) =>
@@ -54,6 +59,11 @@ export default ({
             setProfilePicture(data.data);
         });
 
+    /**
+     * It takes an event, prevents the default action, gets the form from the event, creates a new FormData object, appends
+     * the image to the FormData object, and then sends the FormData object to the server
+     * @param e - { preventDefault: () => void; target: any; }
+     */
     const changeProfilePicture = (e: { preventDefault: () => void; target: any; }) =>
     {
         e.preventDefault();
@@ -334,6 +344,12 @@ export default ({
     );
 }
 
+/**
+ * It gets the user's session, checks if the user is logged in, checks if the user's token is valid, and then gets the
+ * user's profile
+ * @param context - This is the context object that Next.js passes to getServerSideProps. It contains the request and
+ * response objects, as well as the query string parameters.
+ */
 export const getServerSideProps: GetServerSideProps = async (context) =>
 {
     const session = await mustAuth(true, context);

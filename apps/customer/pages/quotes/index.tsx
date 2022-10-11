@@ -36,6 +36,12 @@ export default (
     const [currentQuote, setCurrentQuote] = useState<IQuotes>(quotes[0]);
     const [showModal, setShowModal] = useState(false);
 
+    /**
+     * It takes a quote and a boolean, and if the boolean is true, it accepts the quote, otherwise it declines it
+     * @param {IQuotes} quote - IQuotes - the quote object that was clicked on
+     * @param {boolean} accept - boolean - whether the user accepted or declined the quote
+     * @returns A JSON object containing the invoice information.
+     */
     const responseQuote = async (quote: IQuotes, accept: boolean) =>
     {
         if (!session)

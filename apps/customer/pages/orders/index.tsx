@@ -13,6 +13,11 @@ import Navigation from "../../components/Navigation";
 import { ICompanyData } from "../../interfaces/CompanyData";
 const { publicRuntimeConfig: config } = getConfig()
 
+/**
+ * It cancels an order
+ * @param orderId - The order ID of the order you want to cancel.
+ * @returns A boolean value.
+ */
 export async function CancelOrder(orderId: IOrder["id"])
 {
     const session = await getSession();
@@ -172,6 +177,12 @@ export default (
     )
 }
 
+
+/**
+ * It gets the user's orders, the total number of orders, the total number of pages, and the user's profile
+ * @param {any} context - This is the context object that Next.js passes to getServerSideProps. It contains the query
+ * object, which is an object that contains the query string parameters.
+ */
 export async function getServerSideProps(context: any)
 {
     const session = await mustAuth(true, context);

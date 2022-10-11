@@ -2,10 +2,11 @@ import dateFormat from "date-and-time";
 
 
 /**
- * 
- * @param date 
- * @param format 
- * @returns A string formatted date based on format
+ * "Given a date and a format string, return a formatted date string."
+ *
+ * @param {Date} date - The date to format.
+ * @param {string} format - The format string.
+ * @returns A Formatted string
  */
 export function formatDate(date: Date, format: string): string
 {
@@ -23,9 +24,9 @@ export function getTime()
 }
 
 /**
- * 
- * @param removeDays Removes days from current date
- * @returns Returns date format YYYY-MM-DD or YYYY-MM
+ * It returns the current date in the format of YYYY-MM-DD or YYYY-MM
+ * @param [removeDays=false] - If true, the date will be returned without the day.
+ * @returns A string of the current date in the format of YYYY-MM-DD
  */
 export function getDate(removeDays = false)
 {

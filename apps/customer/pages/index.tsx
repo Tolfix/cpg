@@ -37,6 +37,13 @@ const Home: NextPage = ({ profile, company }: {
     );
 }
 
+/**
+ * It gets the user's session, checks if the user is logged in, checks if the user's token is valid, and then gets the
+ * user's profile
+ * @param {any} context - This is the context object that Next.js passes to getServerSideProps. It contains the query
+ * string, as well as some internal Next.js values.
+ * @returns The profile of the user.
+ */
 export async function getServerSideProps(context: any)
 {
     const session = await mustAuth(true, context);

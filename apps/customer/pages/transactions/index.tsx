@@ -125,6 +125,12 @@ export default ({
     )
 }
 
+/**
+ * It gets the user's session, checks if the user is authenticated, gets the user's token, checks if the token is valid,
+ * gets the user's transactions, gets the user's profile, and returns the transactions, count, pages, and profile as props
+ * @param {any} context - any
+ * @returns An object with a property called props.
+ */
 export async function getServerSideProps(context: any)
 {
     const session = await mustAuth(true, context);

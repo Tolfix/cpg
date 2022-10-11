@@ -12,6 +12,7 @@ import
     TableContainer,
 } from '@chakra-ui/react'
 
+/* A table that is dynamic and can be sorted and searched. */
 export default function DynamicTable<T>(
     {
         data,
@@ -45,13 +46,28 @@ export default function DynamicTable<T>(
     const limit = parseInt(router.query.limit as string) || 10;
     const currentPage = Math.floor(skip / limit) + 1;
 
+    /**
+     * It changes the URL to the new page number
+     * @param {number} newPage - The new page number.
+     */
     const changeNewPage = (newPage: number) =>
         window.location.href = `${path}?skip=${(newPage - 1) * limit}&limit=${limit}`;
 
+    /**
+     * It changes the URL to the current URL with the new limit
+     * @param {number} newLimit - The new limit to use.
+     */
     const changeNewLimit = (newLimit: number) =>
         window.location.href = `${path}?skip=${skip}&limit=${newLimit}`;
 
 
+    
+    /**
+     * If the sortConfig exists and the key of the sortConfig is equal to the name parameter, then return the direction of
+     * the sortConfig, otherwise return undefined
+     * @param {string} name - The name of the column.
+     * @returns a string.
+     */
     const isSelected = (name: string) =>
     {
         if (!sortConfig)
@@ -59,6 +75,13 @@ export default function DynamicTable<T>(
         return sortConfig.key === name ? sortConfig.direction : undefined;
     };
 
+    /**
+     * `search` is an async function that takes an event as a parameter, prevents the default action of the event, gets the
+     * form and the option and search values from the event target, and then redirects the user to the path with the option
+     * and search values as query parameters
+     * @param event - { preventDefault: () => void; target: any; }
+     * @returns The search function is returning the window.location.href.
+     */
     const search = async (event: { preventDefault: () => void; target: any; }) =>
     {
         event.preventDefault();
