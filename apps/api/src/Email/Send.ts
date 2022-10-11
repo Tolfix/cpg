@@ -5,11 +5,8 @@ import { AW } from "lib";
 import { Logger } from "lib";
 
 /**
- * It sends an email to a receiver with a subject and body
- * @param {string} receiver - The email address of the receiver.
- * @param {string} subject - The subject of the email
- * @param body - {
- * @param [callback] - (error: Error | null, sent: boolean | null) => void
+ * @description
+ * Send a email
  */
 export async function SendEmail(
     receiver: string,
