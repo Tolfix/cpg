@@ -14,7 +14,7 @@ import GetText from "../Translation/GetText";
 import rateLimiter from "express-rate-limit"
 import EnsureAdmin from "../Middlewares/EnsureAdmin";
 import EnsureAuth from "../Middlewares/EnsureAuth";
-import PluginHandler from "../Plugins/PluginHandler";
+// import PluginHandler from "../Plugins/PluginHandler";
 import FallbackTemplate from "../Email/Templates/Web/Fallback.template";
 
 declare module "express-session"
@@ -109,11 +109,10 @@ server.use(limiter);
 RouteHandler(server);
 
 server.listen(PORT, () => Logger.api(`${GetText(Default_Language).txt_Api_Listing} ${PORT} | ${Full_Domain}`));
-
 (async () =>
 {
   await ApolloServer(server);
-  await PluginHandler();
+  // await PluginHandler();
   server.use("*", async (req, res) =>
   {
     res.status(404).send(await FallbackTemplate({ req }))

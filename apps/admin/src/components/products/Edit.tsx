@@ -18,12 +18,13 @@ export const EditProducts = (props: any) =>
     <Edit mutationMode="pessimistic" {...props}>
         <TabbedForm>
             <FormTab label="General">
-                <ReferenceInput filterToQuery={(searchText: string) => ({
-                    "name": searchText,
-                })} perPage={100} source="category_uid" reference="categories">
+                <ReferenceInput perPage={100} source="category_uid" reference="categories">
                     <AutocompleteInput
                         source="categories"
                         label="Category"
+                        filterToQuery={(searchText: string) => ({
+                            "name": searchText,
+                        })}
                         isRequired={true}
                         fullWidth
                         optionText={(r: any) => `${r.name} - (${r.id})`}

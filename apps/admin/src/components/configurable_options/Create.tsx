@@ -17,13 +17,14 @@ export const Create_configurable_options = (props: any) =>
             <FormTab label="General">
                 <TextInput label="Name" isRequired={true} source="name" />
                 {/* @ts-ignore */}
-                <ReferenceArrayInput filterToQuery={searchText => ({
-                    "name": searchText,
-                })} perPage={100} source="products_ids" reference="products">
+                <ReferenceArrayInput perPage={100} source="products_ids" reference="products">
                     <AutocompleteArrayInput
                         source="products"
                         label="Products"
                         isRequired={true}
+                        filterToQuery={searchText => ({
+                            "name": searchText,
+                        })}
                         optionText={(r: any) => `${r.name} - (${r.id})`}
                     />
                 </ReferenceArrayInput>

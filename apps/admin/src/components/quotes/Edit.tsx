@@ -43,12 +43,13 @@ export default function EditQuote(props: any)
                             optionText={RenderFullName}
                         />
                     </ReferenceInput>
-                    <ReferenceArrayInput filterToQuery={(searchText: string) => ({
-                        "name": searchText,
-                    })} perPage={100} source="promotion_codes" reference="promotion_codes">
+                    <ReferenceArrayInput perPage={100} source="promotion_codes" reference="promotion_codes">
                         <AutocompleteArrayInput
                             source="promotion_codes"
                             label="Promotion codes"
+                            filterToQuery={(searchText: string) => ({
+                                "name": searchText,
+                            })}
                             fullWidth
                             optionText="name"
                         />
