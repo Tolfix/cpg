@@ -7,6 +7,7 @@ import { Company_Currency } from "../../../../Config";
 import { convertCurrency } from "lib";
 
 export = TaxesRouter;
+/* It creates a router that handles the /taxes endpoint */
 class TaxesRouter
 {
     private server: Application;

@@ -16,6 +16,12 @@ import QuoteAcceptedTemplate from "../../../../Email/Templates/Quotes/Quote.acce
 
 const API = new BaseModelAPI<IQuotes>(idQuotes, QuotesModel);
 
+/**
+ * It creates a quote, and if the quote has the `send_email` property set to true, it will send an email to the customer
+ * with the quote attached
+ * @param {Request} req - Request - This is the request object that is passed to the function.
+ * @param {Response} res - Response - This is the response object that will be sent back to the client.
+ */
 function insert(req: Request, res: Response)
 {
     API.create(req.body)
@@ -56,6 +62,11 @@ function insert(req: Request, res: Response)
         });
 }
 
+/**
+ * > This function is called when a user requests a quote by its unique identifier
+ * @param {Request} req - Request - The request object
+ * @param {Response} res - Response - The response object that will be sent to the client.
+ */
 function getByUid(req: Request, res: Response)
 {
     API.findByUid((req.params.uid as IQuotes["uid"])).then((result) =>
@@ -64,6 +75,13 @@ function getByUid(req: Request, res: Response)
     });
 }
 
+
+/**
+ * > The function `list` takes a `Request` and a `Response` object as parameters, and returns a `Promise` of an array of
+ * `IQuotes` objects
+ * @param {Request} req - Request - The request object
+ * @param {Response} res - Response - The response object from the express server
+ */
 function list(req: Request, res: Response)
 {
     API.findAll(req.query, res).then((result: any) =>
@@ -72,6 +90,11 @@ function list(req: Request, res: Response)
     });
 }
 
+/**
+ * It patches a quote, and if the quote is accepted, it converts it to an invoice
+ * @param {Request} req - Request - The request object.
+ * @param {Response} res - Response - The response object.
+ */
 async function patch(req: Request, res: Response)
 {
     // Lets get if accepted or declined.
@@ -134,6 +157,11 @@ async function patch(req: Request, res: Response)
     });
 }
 
+/**
+ * > It removes a quote by its unique identifier
+ * @param {Request} req - Request - The request object
+ * @param {Response} res - Response - The response object that will be sent to the client
+ */
 function removeById(req: Request, res: Response)
 {
     API.removeByUid(req.params.uid as IQuotes["uid"])

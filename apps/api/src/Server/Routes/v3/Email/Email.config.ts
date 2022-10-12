@@ -7,6 +7,7 @@ import { APIError, APISuccess } from "../../../../Lib/Response";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 
 export = EmailRouter;
+/* It's a router that handles sending emails */
 class EmailRouter
 {
     private server: Application;

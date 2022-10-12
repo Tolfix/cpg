@@ -17,6 +17,7 @@ import SubscriptionController from "./Subscription.controller";
 import dateFormat from "date-and-time";
 import { ce_subscription } from "../../../../Lib/Subscriptions/PlaceSubscription";
 export = SubscriptionRouter;
+/* It's a router that handles all the routes for the subscription model */
 class SubscriptionRouter
 {
     private server: Application;
@@ -88,7 +89,7 @@ class SubscriptionRouter
             if (!p_same_method)
                 return APIError(`Ensure that products includes same recurring method`)(res);
 
-            // Create subscription
+            /* It's creating a new subscription and saving it to the database. */
             const subscription = await (new SubscriptionModel(
                 {
                     customer_id: customer?.id,

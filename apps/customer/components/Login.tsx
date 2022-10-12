@@ -14,6 +14,13 @@ export default ({
 
     const [Error, setError] = useState(false);
 
+    /**
+     * A function that is called when the user clicks the login button. It prevents the default action of the button, and
+     * then calls the signIn function. If the signIn function returns a status of 401, it
+     * sets the error state to true. If the signIn function returns a status of 200, it sets the error state to false and
+     * redirects the user to the home page.
+     * @param e - { preventDefault: () => void; target: any; }
+     */
     const login = async (e: { preventDefault: () => void; target: any; }) =>
     {
         e.preventDefault();
@@ -38,13 +45,27 @@ export default ({
     }
 
     const [show, setShow] = React.useState(false);
+    /**
+     * If the show variable is true, set it to false. If it's false, set it to true
+     */
     const handleClick = () => setShow(!show);
 
+    /**
+     * HandleUsername is a function that takes an event object as an argument and returns nothing. The event object has a
+     * target property that is of type any. The function sets the email state to the value of the target property of the
+     * event object and sets the error state to false.
+     * @param e - { target: any; }
+     */
     const handleUsername = (e: { target: any; }) =>
     {
         setEmail(e.target.value);
         setError(false);
     }
+    /**
+     * HandlePassword is a function that takes an event object as an argument, and sets the password state to the value of
+     * the event target, and sets the error state to false.
+     * @param e - { target: any; }
+     */
     const handlePassword = (e: { target: any; }) =>
     {
         setPassword(e.target.value);

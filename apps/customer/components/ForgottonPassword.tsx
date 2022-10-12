@@ -5,6 +5,13 @@ export default () =>
 
     const [message, setMessage] = useState("");
 
+    /**
+     * It sends a POST request to the server with the email address of the user who wants to reset their password, and if
+     * the server responds with a 200 status code, it displays a message to the user saying that an email has been sent to
+     * them with instructions on how to reset their password
+     * @param e - { preventDefault: () => void; target: any; }
+     * @returns the value of the setMessage function.
+     */
     const forgottenPassword = async (e: { preventDefault: () => void; target: any; }) =>
     {
         e.preventDefault();

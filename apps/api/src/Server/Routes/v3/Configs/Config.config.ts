@@ -6,6 +6,7 @@ import { ISmtp } from "interfaces/Admin/Configs.interface";
 import { A_CC_Payments, TPayments } from "interfaces/types/PaymentMethod";
 
 export = ConfigRouter;
+/* It's a class that handles the configuration routes */
 class ConfigRouter
 {
     private server: Application;

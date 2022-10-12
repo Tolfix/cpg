@@ -11,6 +11,12 @@ import { getInvoiceByIdAndMarkAsPaid } from "../../../../Lib/Invoices/MarkAsPaid
 
 const API = new BaseModelAPI<ITransactions>(idTransactions, TransactionsModel);
 
+/**
+ * It creates a transaction, and if the user specified an invoice, it will add the transaction to the invoice and mark it
+ * as paid if the user specified that
+ * @param {Request} req - Request - This is the request object that was sent to the API.
+ * @param {Response} res - The response object
+ */
 function insert(req: Request, res: Response)
 {
     API.create(req.body)
@@ -52,6 +58,11 @@ function insert(req: Request, res: Response)
         });
 }
 
+/**
+ * > This function is called when a user makes a GET request to the `./transactions/:uid` endpoint
+ * @param {Request} req - Request - The request object
+ * @param {Response} res - Response - The response object that will be sent back to the client.
+ */
 function getByUid(req: Request, res: Response)
 {
     API.findByUid((req.params.uid as ITransactions["uid"])).then((result) =>
@@ -60,6 +71,11 @@ function getByUid(req: Request, res: Response)
     });
 }
 
+/**
+ * `list` is a function that takes a `Request` and a `Response` and returns a `Promise` that resolves to a `Response`
+ * @param {Request} req - Request - The request object
+ * @param {Response} res - Response - The response object from the express server
+ */
 function list(req: Request, res: Response)
 {
     API.findAll(req.query, res).then((result: any) =>
@@ -68,6 +84,11 @@ function list(req: Request, res: Response)
     });
 }
 
+/**
+ * It finds a transaction by its unique ID, and then updates it with the data provided in the request body
+ * @param {Request} req - Request - The request object
+ * @param {Response} res - Response - The response object from express
+ */
 function patch(req: Request, res: Response)
 {
     API.findAndPatch((req.params.uid as ITransactions["uid"]), req.body).then((result) =>
@@ -78,6 +99,11 @@ function patch(req: Request, res: Response)
     });
 }
 
+/**
+ * > This function removes a transaction from the database by its unique identifier
+ * @param {Request} req - Request - The request object
+ * @param {Response} res - Response - The response object that will be sent to the client
+ */
 function removeById(req: Request, res: Response)
 {
     API.removeByUid(req.params.uid as ITransactions["uid"])
