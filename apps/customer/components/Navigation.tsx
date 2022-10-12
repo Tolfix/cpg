@@ -58,6 +58,7 @@ const LinkItems: Array<LinkItemProps> = [
     { name: 'Profile', icon: FiBell, url: '/profile' }
 ];
 
+/* It's a functional component that is used to render the navigation bar. */
 function Navigation({
     children,
     profile,
@@ -97,12 +98,14 @@ function Navigation({
     );
 }
 
+/* It's defining the props that are passed to the Sidebar component. */
 interface SidebarProps extends BoxProps
 {
     onClose: () => void;
     company: ICompanyData
 }
 
+/* This is a functional component that is used to render the sidebar. */
 const SidebarContent = ({ onClose, company, ...rest }: SidebarProps) =>
 {
     const router = useRouter();
@@ -136,6 +139,7 @@ const SidebarContent = ({ onClose, company, ...rest }: SidebarProps) =>
     );
 };
 
+/* It's defining the props that are passed to the NavItem component. */
 interface NavItemProps extends FlexProps
 {
     url: string;
@@ -143,6 +147,8 @@ interface NavItemProps extends FlexProps
     children: ReactText;
 }
 
+
+/* It's a functional component that is used to render the navigation items. */
 const NavItem = ({ url, icon, children, ...rest }: NavItemProps) =>
 {
     return (
@@ -175,6 +181,7 @@ const NavItem = ({ url, icon, children, ...rest }: NavItemProps) =>
     );
 };
 
+/* This is a TypeScript interface that is used to define the props that are passed to the MobileNav component. */
 interface MobileProps extends FlexProps
 {
     onOpen: () => void;
@@ -182,6 +189,7 @@ interface MobileProps extends FlexProps
     company: ICompanyData;
 }
 
+/* The above code is a React component that is used to display the mobile navigation bar. */
 const MobileNav = ({ onOpen, profile, company, ...rest }: MobileProps) =>
 {
 
@@ -189,6 +197,10 @@ const MobileNav = ({ onOpen, profile, company, ...rest }: MobileProps) =>
     const [userImg, setUserImg] = useState<null | string>(null)
     const [userEmail, setUserEmail] = useState(profile?.personal.email ?? "")
 
+    /**
+     * It fetches the profile picture of the user, and returns it as a base64 string
+     * @returns A base64 string
+     */
     const fetchProfilePicture = async () =>
     {
         const picture = await fetch(

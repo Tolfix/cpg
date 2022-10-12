@@ -6,6 +6,7 @@ import InvoiceModal, { popupCenter } from './Invoice.modal';
 import getConfig from 'next/config'
 const { publicRuntimeConfig: config } = getConfig()
 
+/* A function that takes in an invoice, and then it returns a table row with the invoice data in it. */
 const InvoiceData = ({ invoice }: { invoice: IInvoice }) =>
 {
     const [showModal, setShowModal] = useState(false);
@@ -55,6 +56,7 @@ const InvoiceData = ({ invoice }: { invoice: IInvoice }) =>
     )
 }
 
+/* The code below is a React component that is displaying a table of invoices. */
 const InvoiceTable = ({
     invoice
 }: {
@@ -62,6 +64,12 @@ const InvoiceTable = ({
 }) =>
 {
     const { items, requestSort, sortConfig } = useSortableData(invoice);
+    /**
+     * If the sortConfig exists and the key of the sortConfig is equal to the name parameter, then return the direction of
+     * the sortConfig, otherwise return undefined
+     * @param {string} name - The name of the column.
+     * @returns The sortConfig.direction if the sortConfig.key is equal to the name passed in.
+     */
     const isSelected = (name: string) =>
     {
         if (!sortConfig)
@@ -69,6 +77,15 @@ const InvoiceTable = ({
         return sortConfig.key === name ? sortConfig.direction : undefined;
     };
 
+    /**
+     * It takes an event, and then prevents the default action of the event, and then gets the form from the event, and
+     * then gets the search option and search value from the form, and then if the search option is "dates.invoice_date&id"
+     * then it gets the invoice id and date from the search, and then it redirects to the invoices page with the invoice id
+     * and date as query parameters, and otherwise it redirects to the invoices page with the search option and search
+     * value as query parameters
+     * @param event - { preventDefault: () => void; target: any; }
+     * @returns The search function is returning the url with the search parameters.
+     */
     const search = async (event: { preventDefault: () => void; target: any; }) =>
     {
         event.preventDefault();

@@ -1,7 +1,10 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
 
+// skipcq: JS-D1001 
+
 export default class _Document extends Document
 {
+    // skipcq: JS-D1001 
     render()
     {
         return (

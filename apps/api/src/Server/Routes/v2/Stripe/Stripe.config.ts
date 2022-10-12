@@ -14,6 +14,7 @@ import stripeWebhookEvent from "../../../../Events/Stripe.event";
 import { IInvoice } from "interfaces/Invoice.interface";
 
 export = StripeRouter;
+/* It creates a router for Stripe */
 class StripeRouter
 {
     private server: Application;

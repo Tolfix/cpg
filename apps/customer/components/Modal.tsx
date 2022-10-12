@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 
+/* A React component that is a modal. */
 export const Modal = (
     { show, onClose, children, title }: {
         show: boolean;
@@ -17,6 +18,12 @@ export const Modal = (
         setIsBrowser(true);
     }, []);
 
+    /**
+     * "When the user clicks the close button, prevent the default action, and then call the onClose function."
+     * 
+     * The onClose function is passed in as a prop to the Modal component
+     * @param e - { preventDefault: () => void; }
+     */
     const handleCloseClick = (e: { preventDefault: () => void; }) =>
     {
         e.preventDefault();

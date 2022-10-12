@@ -4,6 +4,7 @@ import { PaypalCurrencies } from "../../../../Payments/Currencies/Paypal.currenc
 import { convertCurrency, currencyCodes, GetCurrencySymbol } from "lib";
 import { TPaymentCurrency } from "interfaces/types/Currencies";
 export = CurrenciesRouter;
+/* It's a router for the /api/{version}/currencies endpoint */
 class CurrenciesRouter
 {
     private server: Application;
