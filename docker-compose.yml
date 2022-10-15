@@ -25,12 +25,16 @@ services:
     container_name: MongoDB
     restart: unless-stopped
     environment:
-      - MONGO_INITDB_ROOT_USERNAME: root
-      - MONGO_INITDB_ROOT_PASSWORD: root
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
     ports:
       - "27017:27017"
     networks:
       - cpg-network
+
+volumes:
+  rabbitmq-storage:
+
 
 networks:
   cpg-network:
