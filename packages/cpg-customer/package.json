@@ -1,5 +1,5 @@
 {
-    "name": "dummy",
+    "name": "@cpg/customer",
     "version": "0.0.0",
     "license": "MIT",
     "private": true,
@@ -10,9 +10,9 @@
       "dist/**"
     ],
     "dependencies": {
-      "@cpg/logger": "*",
-      "@cpg/rabbitmq": "*",
       "@cpg/core": "*",
+      "@cpg/logger": "*",
+      "@cpg/interfaces": "*",
       "uuid": "9.0.0"
     },
     "publishConfig": {

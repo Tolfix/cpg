@@ -1,6 +1,16 @@
 import colors from "colors";
 import { getTime } from "./Time";
 
+/**
+ * @deprecated
+ * 
+ * Use "@cpg/logger" instead
+ * ```ts
+ * import Logger from "@cpg/logger";
+ * const logger = new Logger("name");
+ * logger.info("Hello World");
+ * ```
+ */
 const Logger = {
     trace: () =>
     {
