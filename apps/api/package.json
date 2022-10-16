@@ -44,7 +44,11 @@
     "request": "^2.88.2",
     "sequelize": "^6.15.0",
     "lib": "*",
-    "stripe": "^8.186.1"
+    "stripe": "^8.186.1",
+    "@cpg/logger": "*",
+    "@cpg/rabbitmq": "*",
+    "@cpg/core": "*",
+    "@cpg/customer": "*"
   },
   "scripts": {
     "start": "node ./build/Main.js",
