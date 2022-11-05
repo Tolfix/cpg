@@ -1,5 +1,7 @@
 import { Document, model, Schema } from "mongoose"
-import { Logger } from "lib";
+import Logger from "@cpg/logger";
+
+const log = new Logger("cpg:api:database:mongo:models:passwordresets");
 
 const PasswordResetSchema = new Schema
     (
@@ -29,7 +31,7 @@ const PasswordResetSchema = new Schema
 // Log when creation
 PasswordResetSchema.post('save', function (doc: any)
 {
-    Logger.db(`Created password reset for ${doc.email}`);
+    log.info(`Created password reset for ${doc.email}`);
 });
 
 export interface IPasswordReset

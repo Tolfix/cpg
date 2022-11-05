@@ -2,10 +2,12 @@ import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../Config";
 import { IQuotes } from "interfaces/Quotes.interface";
-import { Logger } from "lib";
 import GetText from "../../Translation/GetText";
 import { A_CC_Payments } from "interfaces/types/PaymentMethod";
 import { currencyCodes } from "lib";
+import Logger from "@cpg/logger";
+
+const log = new Logger("cpg:api:database:mongo:models:quotes");
 
 const QuotesSchema = new Schema
     (
@@ -87,7 +89,7 @@ const QuotesSchema = new Schema
 // Log when creation
 QuotesSchema.post('save', function (doc: IQuotes & Document)
 {
-    Logger.db(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.uid));
+    log.info(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.uid));
     // Logger.db(`Created Quotes ${doc.id}`);
 });
 

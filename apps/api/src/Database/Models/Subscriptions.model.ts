@@ -3,10 +3,12 @@ import increment from "mongoose-auto-increment";
 import { MongoDB_URI } from "../../Config";
 import { IQuotes } from "interfaces/Quotes.interface";
 import { ISubscription } from "interfaces/Subscriptions.interface";
-import { Logger } from "lib";
 import GetText from "../../Translation/GetText";
 import { A_RecurringMethod } from "interfaces/types/PaymentMethod";
 import { A_InvoiceStatus } from "./Invoices.model";
+import Logger from "@cpg/logger";
+
+const log = new Logger("cpg:api:database:mongo:models:subscriptions");
 
 const SubscriptionSchema = new Schema
     (
@@ -86,7 +88,7 @@ const SubscriptionSchema = new Schema
 // Log when creation
 SubscriptionSchema.post('save', function (doc: IQuotes & Document)
 {
-    Logger.db(GetText().database.txt_Model_Created(doc.modelName, doc.uid));
+    log.info(GetText().database.txt_Model_Created(doc.modelName, doc.uid));
     // Logger.db(`Created Quotes ${doc.id}`);
 });
 

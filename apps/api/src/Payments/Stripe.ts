@@ -10,19 +10,23 @@ import { IInvoice } from "interfaces/Invoice.interface";
 import getFullName from "../Lib/Customers/getFullName";
 import { idTransactions } from "../Lib/Generator";
 import { getInvoiceByIdAndMarkAsPaid } from "../Lib/Invoices/MarkAsPaid";
-import { Logger, getDate } from "lib";
 import sendEmailOnTransactionCreation from "../Lib/Transaction/SendEmailOnCreation";
+import Logger from "@cpg/logger";
+
+const log = new Logger("cpg:api:payments:stripe");
+
 export const StripeMap = new Map<string, stripe>();
 
 if (Stripe_SK_Test !== "" || Stripe_SK_Live !== "")
 {
+    log.info("Stripe SK are set, enabling Stripe payments");
     StripeMap.set("stripe", new stripe(DebugMode ? Stripe_SK_Test : Stripe_SK_Live, {
         apiVersion: "2020-08-27",
     }));
 }
 
 if (!StripeMap.has('stripe'))
-    Logger.warning("Stripe is not configured, this will cause errors!");
+    log.error("Stripe is not configured, this will cause errors!");
 
 // Check if stripe webhook is configured
 (async () => 
@@ -265,7 +269,7 @@ export const ChargeCustomer = async (invoice_id: IInvoice["id"]) =>
             invoice_uid: invoice.id,
             customer_uid: invoice.customer_uid,
             currency: invoice.currency ?? await Company_Currency(),
-            date: getDate(),
+            date: Logger.getDate(),
             uid: idTransactions(),
         }).save());
 
@@ -282,7 +286,7 @@ export const ChargeCustomer = async (invoice_id: IInvoice["id"]) =>
             },
         })
 
-        Logger.warning(`Created transaction ${newTrans.uid} for invoice ${invoice.id}`);
+        log.warn(`Created transaction ${newTrans.uid} for invoice ${invoice.id}`);
 
         invoice?.transactions.push(newTrans.id);
         invoice.markModified("transactions");
@@ -306,7 +310,7 @@ export const markInvoicePaid = async (intent: stripe.Response<stripe.PaymentInte
         invoice_uid: invoice.id,
         customer_uid: invoice.customer_uid,
         currency: invoice.currency ?? await Company_Currency(),
-        date: getDate(),
+        date: Logger.getDate(),
         uid: idTransactions(),
     }).save());
 

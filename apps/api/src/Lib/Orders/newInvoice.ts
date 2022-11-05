@@ -11,7 +11,6 @@ import { IConfigurableOptions } from "interfaces/ConfigurableOptions.interface";
 import mainEvent from "../../Events/Main.event";
 import { IPromotionsCodes } from "interfaces/PromotionsCodes.interface";
 import { Document } from "mongoose";
-import { Logger } from "lib";
 import PromotionCodeModel from "../../Database/Models/PromotionsCode.model";
 import { sanitizeMongoose } from "../Sanitize";
 import CustomerModel from "../../Database/Models/Customers/Customer.model";
@@ -20,6 +19,9 @@ import nextRycleDate from "../../Lib/Dates/DateCycle";
 import createCredit from "../Customers/createCredit";
 import { getInvoiceByIdAndMarkAsPaid } from "../Invoices/MarkAsPaid";
 import sendEmailOnTransactionCreation from "../../Lib/Transaction/SendEmailOnCreation";
+import Logger from "@cpg/logger";
+
+const log = new Logger("cpg:api:lib:orders:newInvoice");
 
 function p_markInvoiceAsPaid(invoice: IInvoice)
 {
@@ -282,24 +284,24 @@ export async function getNewPriceOfPromotionCode(code: IPromotionsCodes & Docume
         // Convert string to date
         if (new Date(code.valid_to) < new Date())
         {
-            Logger.debug(`Promotion code ${code.name} got invalid valid date`);
+            log.debug(`Promotion code ${code.name} got invalid valid date`);
             return product;
         }
 
     if (code.uses <= 0)
     {
-        Logger.warning(`Promotion code ${code.name} has no uses left`);
+        log.warn(`Promotion code ${code.name} has no uses left`);
         return product;
     }
 
-    Logger.info(`Promotion code ${code.name} (${code.id}) is valid`);
+    log.info(`Promotion code ${code.name} (${code.id}) is valid`);
 
     // get product from code.products_ids[]
     // _products is also an array so we need to go through each product
     // Check if the product id is in the promotion code
     if (code.products_ids.includes(product.id))
     {
-        Logger.info(`Promotion code ${code.name} (${code.id}) is valid for product ${product.id}`);
+        log.info(`Promotion code ${code.name} (${code.id}) is valid for product ${product.id}`);
         const o_price = product.price;
         // if(code.percentage)
         //     product.price = product.price-(product.price*code.discount);
@@ -308,11 +310,11 @@ export async function getNewPriceOfPromotionCode(code: IPromotionsCodes & Docume
 
         product.price = product.price - (code.percentage ? (product.price * code.discount) : code.discount);
 
-        Logger.info(`New price of product ${product.id} is ${product.price}, old price was ${o_price}`);
+        log.info(`New price of product ${product.id} is ${product.price}, old price was ${o_price}`);
         // Check if we are - on price
         if (product.price < 0)
         {
-            Logger.error(`Product ${product.id} price is less than 0, making it "free" by setting it to 0`);
+            log.error(`Product ${product.id} price is less than 0, making it "free" by setting it to 0`);
             product.price = 0;
         }
     }

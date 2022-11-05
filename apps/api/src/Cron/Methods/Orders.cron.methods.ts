@@ -1,16 +1,17 @@
 import { Default_Language, d_Days } from "../../Config";
 import OrderModel from "../../Database/Models/Orders.model";
-import { Logger } from "lib";
 import GetText from "../../Translation/GetText";
 import dateFormat from "date-and-time";
 import nextRecycleDate from "../../Lib/Dates/DateCycle";
 import { createInvoiceFromOrder } from "../../Lib/Orders/newInvoice";
 import { InvoiceCreatedReport } from "../../Email/Reports/InvoiceReport";
+import Logger from "@cpg/logger";
 
 // Logger.info(`Checking orders..`);
 export function cron_createNewInvoicesFromOrders()
 {
-    Logger.info(GetText(Default_Language).cron.txt_Orders_Checking);
+    const log = new Logger("cpg:api:cron:orders:createNewInvoicesFromOrders");
+    log.info(GetText(Default_Language).cron.txt_Orders_Checking);
     // Check if the order needs to create a new invoice if order.dates.next_recycle is withing 14 days
     OrderModel.find({
         order_status: "active",
@@ -23,7 +24,7 @@ export function cron_createNewInvoicesFromOrders()
         // orders.forEach(async order => {
         for await (const order of orders)
         {
-            Logger.info(GetText(Default_Language).cron.txt_Order_Checking(order.id));
+            log.info(GetText(Default_Language).cron.txt_Order_Checking(order.id));
             // Logger.info(`Checking order ${order.id}`);
             // Check if order.order_status is not "cancelled" or "fraud"
             if (order.dates.next_recycle)

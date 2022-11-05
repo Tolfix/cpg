@@ -2,8 +2,10 @@ import { ICategory } from "interfaces/Categories.interface";
 import mongoose, { model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../Config";
-import { Logger } from "lib";
 import GetText from "../../Translation/GetText";
+import Logger from "@cpg/logger";
+
+const log = new Logger("cpg:api:database:mongo:models:category");
 
 const CategorySchema = new Schema
     (
@@ -45,7 +47,7 @@ const CategorySchema = new Schema
 // @ts-ignore
 CategorySchema.post('save', function (doc: ICategory & Document)
 {
-    Logger.db(GetText(Default_Language).database.txt_Model_Created(doc.nodeName, doc.id));
+    log.info(GetText(Default_Language).database.txt_Model_Created(doc.nodeName, doc.id));
     // Logger.db(`Created category ${doc.id}`);
 });
 

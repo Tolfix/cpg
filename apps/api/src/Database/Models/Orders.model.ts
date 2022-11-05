@@ -2,12 +2,13 @@ import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../Config";
 import { IOrder } from "interfaces/Orders.interface";
-import { Logger } from "lib";
 import GetText from "../../Translation/GetText";
 import { A_CC_Payments, A_RecurringMethod } from "interfaces/types/PaymentMethod";
 import { currencyCodes } from "lib";
 import { A_PaymentTypes } from "interfaces/types/PaymentTypes";
+import Logger from "@cpg/logger";
 
+const log = new Logger("cpg:api:database:mongo:models:orders");
 
 export const A_OrderStatus = [
     "active",
@@ -135,8 +136,7 @@ const OrderSchema = new Schema
 // Log when creation
 OrderSchema.post('save', function (doc: IOrder & Document)
 {
-    Logger.db(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
-    // Logger.db(`Created order ${doc.id}`);
+    log.info(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
 });
 
 const connection = mongoose.createConnection(MongoDB_URI);

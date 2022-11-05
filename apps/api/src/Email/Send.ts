@@ -2,7 +2,9 @@ import mail from "nodemailer";
 import { Company_Name, GetSMTPConfig } from "../Config";
 import { IConfigs } from "interfaces/Admin/Configs.interface";
 import { AW } from "lib";
-import { Logger } from "lib";
+import Logger from "@cpg/logger";
+
+const log = new Logger("cpg:api:email:send");
 
 /**
  * @description
@@ -64,7 +66,7 @@ export async function SendEmail(
     //@ts-ignore
     const transport = mail.createTransport(config);
 
-    Logger.info("Email:", `Sending email to ${receiver}`);
+    log.info(`Sending email to ${receiver}..`);
 
 
     transport.sendMail(email).then(() =>
@@ -124,7 +126,7 @@ export async function sendEmail(options: {
     //@ts-ignore
     const transport = mail.createTransport(config);
 
-    Logger.info("Email:", `Sending email to ${options.receiver}`);
+    log.info(`Sending email to ${options.receiver}..`);
 
     return transport.sendMail(email);
 }

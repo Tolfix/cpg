@@ -5,7 +5,6 @@ import ImageModel from "../Database/Models/Images.model";
 import OrderModel from "../Database/Models/Orders.model";
 import ProductModel from "../Database/Models/Products.model";
 import TransactionsModel from "../Database/Models/Transactions.model";
-import { Logger } from "lib";
 import { CacheAdmin } from "./Admin.cache";
 import { CacheCategories } from "./Categories.cache";
 import { CacheCustomer } from "./Customer.cache";
@@ -16,19 +15,22 @@ import InvoiceModel from "../Database/Models/Invoices.model";
 import { CacheInvoice } from "./Invoices.cache";
 import { Company_Currency } from "../Config";
 import { TPaymentCurrency } from "interfaces/types/Currencies";
+import Logger from "@cpg/logger";
+
+const log = new Logger("cpg:api:cache:reCache");
 
 /**
  * @deprecated
  */
 export function reCache_Categories()
 {
-    Logger.info(`Starting caching on categories..`);
+    log.info(`Starting caching on categories..`);
     return new Promise(async (resolve) =>
     {
         const categories = await CategoryModel.find();
         for (const c of categories)
         {
-            Logger.cache(`Caching category ${c.uid}`);
+            log.debug(`Caching category ${c.uid}`);
             CacheCategories.set(c.uid, c);
         }
         return resolve(true);
@@ -37,13 +39,13 @@ export function reCache_Categories()
 
 export async function reCache_Admin()
 {
-    Logger.info(`Starting caching on admins..`);
+    log.info(`Starting caching on admins..`);
     return new Promise(async (resolve) =>
     {
         const admin = await AdminModel.find();
         for (const a of admin)
         {
-            Logger.cache(`Caching admin ${a.uid}`);
+            log.debug(`Caching admin ${a.uid}`);
             CacheAdmin.set(a.uid, a);
         }
         return resolve(true);
@@ -52,7 +54,7 @@ export async function reCache_Admin()
 
 export async function reCache_Customers()
 {
-    Logger.info(`Starting caching on customers..`);
+    log.info(`Starting caching on customers..`);
     return new Promise(async (resolve) =>
     {
         const customer = await CustomerModel.find();
@@ -65,7 +67,7 @@ export async function reCache_Customers()
                 c.currency = companyCurrency.toLocaleUpperCase() as TPaymentCurrency;
                 await c.save();
             }
-            // Logger.cache(`Caching customer ${c.uid}`);
+            // log.cache(`Caching customer ${c.uid}`);
             CacheCustomer.set(c.uid, c);
         }
         return resolve(true);
@@ -74,7 +76,7 @@ export async function reCache_Customers()
 
 export async function reCache_Product()
 {
-    Logger.info(`Starting caching on products..`);
+    log.info(`Starting caching on products..`);
     return new Promise(async (resolve) =>
     {
         const product = await ProductModel.find();
@@ -100,7 +102,7 @@ export async function reCache_Product()
 
 export async function reCache_Transactions()
 {
-    Logger.info(`Starting caching on transactions..`);
+    log.info(`Starting caching on transactions..`);
     return new Promise(async (resolve) =>
     {
         const transactions = await TransactionsModel.find();
@@ -124,7 +126,7 @@ export async function reCache_Transactions()
 
 export async function reCache_Orders()
 {
-    Logger.info(`Starting caching on orders..`);
+    log.info(`Starting caching on orders..`);
     return new Promise(async (resolve) =>
     {
         const order = await OrderModel.find();
@@ -143,11 +145,11 @@ export async function reCache_Orders()
 
 export async function reCache_Configs()
 {
-    Logger.info(`Starting caching on configs..`);
+    log.info(`Starting caching on configs..`);
     return new Promise(async (resolve) =>
     {
         const config = await ConfigModel.find();
-        // Logger.debug(config);
+        // log.debug(config);
         if (!config[0])
         {
             const smtpData = {
@@ -162,7 +164,7 @@ export async function reCache_Configs()
             }
             await new ConfigModel(smtpData).save();
 
-            Logger.cache(`Caching config`);
+            log.debug(`Caching config`);
 
             CacheConfig.set("smtp", smtpData.smtp);
             CacheConfig.set("smtp_emails", smtpData.smtp_emails);
@@ -170,7 +172,7 @@ export async function reCache_Configs()
             return resolve(true);
         }
 
-        Logger.cache(`Caching config`);
+        log.debug(`Caching config`);
         const c = config[0];
 
         // Check if c has payment_methods
@@ -199,13 +201,13 @@ export async function reCache_Configs()
 
 export async function reCache_Images()
 {
-    Logger.info(`Starting caching on images..`);
+    log.info(`Starting caching on images..`);
     return new Promise(async (resolve) =>
     {
         const image = await ImageModel.find();
         for (const o of image)
         {
-            Logger.cache(`Caching image ${o.id}`);
+            log.debug(`Caching image ${o.id}`);
             CacheImages.set(o.id, o);
         }
         return resolve(true);
@@ -215,7 +217,7 @@ export async function reCache_Images()
 
 export async function reCache_Invoices()
 {
-    Logger.info(`Starting caching on invoices..`);
+    log.info(`Starting caching on invoices..`);
     return new Promise(async (resolve) =>
     {
         const invoice = await InvoiceModel.find();
@@ -243,7 +245,7 @@ export async function reCache_Invoices()
                 await o.save();
             }
 
-            Logger.cache(`Caching invoice ${o.uid}`);
+            log.debug(`Caching invoice ${o.uid}`);
             CacheInvoice.set(o.uid, o);
         }
         return resolve(true);

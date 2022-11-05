@@ -2,8 +2,10 @@ import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../Config";
 import { IPromotionsCodes } from "interfaces/PromotionsCodes.interface";
-import { Logger } from "lib";
 import GetText from "../../Translation/GetText";
+import Logger from "@cpg/logger";
+
+const log = new Logger("cpg:api:database:mongo:models:promotionscodes");
 
 const PromotionCodeSchema = new Schema
     (
@@ -50,7 +52,7 @@ const PromotionCodeSchema = new Schema
 // Log when creation
 PromotionCodeSchema.post('save', function (doc: IPromotionsCodes & Document)
 {
-    Logger.db(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
+    log.info(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
     // Logger.db(`Created promotion code ${doc.name}`);
 });
 

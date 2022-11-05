@@ -1,5 +1,4 @@
 import { Application, Router } from "express";
-import { Logger } from "lib";
 import { APIError, APISuccess } from "../../../../Lib/Response";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import { CacheImages } from "../../../../Cache/Image.cache";
@@ -9,6 +8,10 @@ import { idImages } from "../../../../Lib/Generator";
 import ImageModel from "../../../../Database/Models/Images.model";
 import { setTypeValueOfObj } from "../../../../Lib/Sanitize";
 import { AW } from "lib";
+import Logger from "@cpg/logger";
+
+const log = new Logger("cpg:api:server:routes:v2:images");
+
 export = ImagesRouter;
 class ImagesRouter
 {
@@ -95,7 +98,7 @@ class ImagesRouter
                 // @ts-ignore
                 const image = (req.files.image as UploadedFile);
 
-                Logger.debug(`Uploading image ${image.name}`);
+                log.debug(`Uploading image ${image.name}`);
 
                 const dataImage = {
                     uid: idImages(),

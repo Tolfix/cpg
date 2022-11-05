@@ -5,17 +5,22 @@ import TransactionsModel from "../Database/Models/Transactions.model";
 import { IInvoice } from "interfaces/Invoice.interface";
 import { idTransactions } from "../Lib/Generator";
 import { getInvoiceByIdAndMarkAsPaid } from "../Lib/Invoices/MarkAsPaid";
-import { Logger, getDate } from "lib";
 import sendEmailOnTransactionCreation from "../Lib/Transaction/SendEmailOnCreation";
 import GetText from "../Translation/GetText";
 import { validCurrencyPaypal } from "./Currencies/Paypal.currencies";
+import Logger from "@cpg/logger";
+
+const log = new Logger("cpg:api:payments:paypal");
 
 if (Paypal_Client_Id !== "" || Paypal_Client_Secret !== "")
+{
+    log.info("Paypal Client ID and Secret are set, enabling Paypal payments");
     paypal.configure({
         'mode': DebugMode ? 'sandbox' : "live",
         'client_id': Paypal_Client_Id,
         'client_secret': Paypal_Client_Secret
     });
+}
 
 export function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise<paypal.Link[] | undefined>
 {
@@ -35,7 +40,7 @@ export function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise<paypa
             return str.replace(/(<([^>]+)>)/ig, '');
         }
 
-        Logger.warning(GetText().paypal.txt_Paypal_Creating_Payment_For_Invoice(invoice))
+        log.warn(GetText().paypal.txt_Paypal_Creating_Payment_For_Invoice(invoice))
         // Logger.warning(`Creating payment paypal for invoice ${invoice.uid}`);
 
         const customer = await CustomerModel.findOne({
@@ -101,7 +106,7 @@ export function createPaypalPaymentFromInvoice(invoice: IInvoice): Promise<paypa
             if (error || !payment)
                 throw error;
 
-            Logger.warning(GetText().paypal.txt_Paypal_Creating_Payment_For_Invoice(invoice))
+            log.warn(GetText().paypal.txt_Paypal_Creating_Payment_For_Invoice(invoice))
             // Logger.warning(`Created payment paypal for invoice ${invoice.uid}`);
 
             resolve(payment?.links)
@@ -138,13 +143,13 @@ export async function retrievePaypalTransaction(payerId: string, paymentId: stri
                 invoice_uid: invoice.id,
                 customer_uid: invoice.customer_uid,
                 currency: invoice.currency ?? await Company_Currency(),
-                date: getDate(),
+                date: Logger.getDate(),
                 uid: idTransactions(),
             }).save());
 
             await sendEmailOnTransactionCreation(newTrans);
 
-            Logger.warning(GetText().paypal.txt_Paypal_Created_Transaction_From_Invoice(newTrans, invoice));
+            log.warn(GetText().paypal.txt_Paypal_Created_Transaction_From_Invoice(newTrans, invoice));
             // Logger.warning(`Created transaction ${newTrans.uid} for invoice ${invoice.uid}`);
 
             invoice?.transactions.push(newTrans.id);
