@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import amqp from "amqplib/callback_api";
 import Logger from "@cpg/logger"
-import { v4 as uuid } from "uuid";
 
 export default class RabbitMQService
 {

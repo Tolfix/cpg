@@ -27,7 +27,7 @@ export default class Projection
   // @ts-ignore
   public type: string;
   // @ts-ignore
-  _view: InMemoryView;
+  _view: Map;
   eventHandler = new EventHandler();
 
   /**
@@ -50,9 +50,9 @@ export default class Projection
    *
    * @readonly
    */
-  get view()
+  get view(): Map<any, any>
   {
-    return this._view || (this._view = new InMemoryView());
+    return this._view || (this._view = new Map());
   }
 
   /**
@@ -64,8 +64,7 @@ export default class Projection
    */
   get shouldRestoreView()
   {
-    return (this.view instanceof Map)
-      || (this.view instanceof InMemoryView);
+    return (this.view instanceof Map);
   }
 
   async subscribe(eventStore: EventStore)

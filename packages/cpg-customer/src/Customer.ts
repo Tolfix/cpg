@@ -1,14 +1,43 @@
 import { Aggregate, Command, Event } from "@cpg/core";
-import { ICustomer } from "@cpg/interfaces";
+import { Billing, ICreditCustomer, IImage, Personal, TPaymentCurrency } from "@cpg/interfaces";
 import { v4 as uuid } from "uuid";
+import * as amendLastname from "./commands/amendLastname";
 
 export type CustomerHandles =
   {
     'customer.register.command': ICustomer,
-    'customer.firstname.amend.command': string
+    'customer.firstname.amend.command': string,
+    'customer.lastname.amend.command': string,
   }
 
-export default class Customer extends Aggregate<ICustomer>
+export interface Customer extends Aggregate<ICustomer>,
+  amendLastname.AmendLastnameCommand { }
+
+export interface ICustomer
+{
+  uid: `CUS_${string}`;
+  personal: Personal;
+  billing: Billing;
+  password: string;
+  profile_picture?: IImage["id"] | null;
+  currency: TPaymentCurrency;
+  notes: string;
+  /**
+   * Here we store credits the customer has issued.
+   * It will be used to invoices to auto pay the customer.
+   * 
+   * Credits can also be added if the customer has paid a invoice but was too much,
+   * then we as a company owes the customer money, thus we add credit.
+   */
+  credits: Array<ICreditCustomer>;
+  status: "active" | "inactive";
+  extra?: {
+    [key: string]: any;
+  };
+  createdAt?: Date;
+}
+
+export class Customer extends Aggregate<ICustomer>
 {
   public type = 'customer';
   constructor({ id, events }: {
@@ -17,6 +46,7 @@ export default class Customer extends Aggregate<ICustomer>
   })
   {
     super({ id, events });
+    this.state as ICustomer;
   }
 
   static get handles()
@@ -24,6 +54,7 @@ export default class Customer extends Aggregate<ICustomer>
     return [
       'customer.register.command',
       'customer.firstname.amend.command',
+      'customer.lastname.amend.command',
     ]
   }
 
@@ -62,3 +93,7 @@ export default class Customer extends Aggregate<ICustomer>
   }
 
 }
+
+Object.assign(Customer.prototype, amendLastname);
+
+export default Customer;

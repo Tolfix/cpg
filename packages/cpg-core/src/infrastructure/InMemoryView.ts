@@ -86,7 +86,7 @@ export default class InMemoryView
     return this._map.get(key);
   }
 
-  async getAll(filter: (record: any, key: string) => boolean)
+  async getAll(filter?: (record: any, key: string) => boolean)
   {
     if (filter && typeof filter !== 'function')
       throw new TypeError('filter argument, when defined, must be a Function');

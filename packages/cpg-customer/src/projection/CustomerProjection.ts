@@ -2,26 +2,38 @@ import { Event } from "@cpg/core";
 import Projection from "@cpg/core/dist/projection/Projection";
 import { ICustomer } from "@cpg/interfaces";
 
-export default class CustomerProjection extends Projection implements Projection
+import amendedLastname from "./projectors/amnededLastname";
+
+export interface CustomerProjection
 {
-  public type = 'customer';
+  type: 'customer';
+}
+
+export class CustomerProjection extends Projection
+{
+  public type: 'customer' = 'customer';
   static get handles()
   {
     return [
       'customer.registered.event',
       'customer.firstname.amended.event',
+      'customer.lastname.amended.event',
     ]
   }
 
   applyRegistered(event: Event<ICustomer>): void
   {
-    this.view.create(event.aggregateId, event.payload);
+    this.view.set(event.aggregateId, event.payload);
   }
 
   async applyAmendedFirstname(event: Event<{ first_name: string }>): Promise<void>
   {
     const customer = await this.view.get(event.aggregateId);
     customer.personal.first_name = event.payload.first_name;
-    this.view.update(event.aggregateId, customer);
+    this.view.set(event.aggregateId, customer);
   }
 }
+
+Object.assign(CustomerProjection.prototype, amendedLastname.prototype);
+
+export default CustomerProjection;

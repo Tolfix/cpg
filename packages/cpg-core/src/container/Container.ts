@@ -81,14 +81,8 @@ declare module 'di0' {
   }
 }
 
-export type ProjectionsTypesExtendedToClass<Class, T extends Projection> = {
-  [K in keyof Class]: Class[K];
-} & {
-    [key in T['type']]: T['_view'];
-  };
-
-export default class Container<
-  Aggregates extends Aggregate[] = Aggregate[],
+export class Container<
+  Projectors extends Projection[] = Projection[],
 > extends ContainerBuilder
 {
 
@@ -157,3 +151,5 @@ export default class Container<
     return this.registerCommandHandler(commandHandlerFactory);
   }
 }
+
+export default Container;
