@@ -6,7 +6,6 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { APIError, APISuccess } from "../../../../Lib/Response";
 import CustomerModel from "../../../../Database/Models/Customers/Customer.model";
-import { Logger } from "lib";
 import EnsureAuth from "../../../../Middlewares/EnsureAuth";
 import crypto from "crypto";
 import PasswordResetModel, { IPasswordReset } from "../../../../Database/Models/Customers/PasswordReset.model";
@@ -29,6 +28,9 @@ import ImageModel from "../../../../Database/Models/Images.model";
 import Jimp from 'jimp';
 import QuotesModel from "../../../../Database/Models/Quotes.model";
 import { setTypeValueOfObj } from "../../../../Lib/Sanitize";
+import Logger from "@cpg/logger";
+
+const log = new Logger("cpg:api:server:routes:v2:customer");
 
 export = CustomerRouter;
 class CustomerRouter
@@ -441,21 +443,21 @@ class CustomerRouter
         this.router.post("/my/reset-password", async (req, res) =>
         {
             const email = req.body.email;
-            Logger.api(`Email reset password request for ${email}`);
+            log.info(`Email reset password request for ${email}`);
             if (!email)
             {
-                Logger.error(`API: Email reset password request failed. No email provided`);
+                log.error(`API: Email reset password request failed. No email provided`);
                 return APIError(`Invalid email`)(res);
             }
 
             const customer = await CustomerModel.findOne({ "personal.email": sanitizeMongoose(email) });
             if (!customer)
             {
-                Logger.error(`API: Email reset password request failed. No customer found`);
+                log.error(`API: Email reset password request failed. No customer found`);
                 return APIError(`Unable to find user with email ${email}`)(res);
             }
 
-            Logger.warning(`Reset password request for ${email}`);
+            log.warn(`Reset password request for ${email}`);
 
             const randomToken = crypto.randomBytes(20).toString("hex");
             const token = crypto.createHash("sha256").update(randomToken).digest("hex");
@@ -621,7 +623,7 @@ class CustomerRouter
 
             const { username, password } = req.body;
 
-            Logger.info(`Authenticating user ${username}`);
+            log.info(`Authenticating user ${username}`);
 
             if (!username || !password)
                 return APIError("Please include username and password in body.")(res);
@@ -699,7 +701,7 @@ class CustomerRouter
                 if (image.size > 5000000)
                     return APIError("Image is too large.")(res);
 
-                Logger.info(`Customer uploading new profile picture`);
+                log.info(`Customer uploading new profile picture`);
 
                 // Crop image to 512x512
                 const imageData = await Jimp.read(image.data);

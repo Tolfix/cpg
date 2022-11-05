@@ -21,7 +21,6 @@ import NewOrderCreated from "../../../../Email/Templates/Orders/NewOrderCreated"
 import { IConfigurableOptions } from "interfaces/ConfigurableOptions.interface";
 import mainEvent from "../../../../Events/Main.event";
 import PromotionCodeModel from "../../../../Database/Models/PromotionsCode.model";
-import { Logger } from "lib";
 import { ce_orders } from "../../../../Lib/Orders/PlaceOrder";
 import { TPayments, TRecurringMethod } from "interfaces/types/PaymentMethod";
 import { TPaymentCurrency } from "interfaces/types/Currencies";
@@ -29,6 +28,9 @@ import { TPaymentTypes } from "interfaces/types/PaymentTypes";
 import { sanitizeMongoose } from "../../../../Lib/Sanitize";
 import { getEnabledPaymentMethods } from "../../../../Cache/Configs.cache";
 import { setTypeValueOfObj } from "../../../../Lib/Sanitize";
+import Logger from "@cpg/logger";
+
+const log = new Logger("cpg:api:server:routes:v2:orders");
 
 async function createOrder(payload: {
     customer: ICustomer,
@@ -117,7 +119,7 @@ class OrderRoute
 
             if (!validPaymentMethods.includes(payment_method))
             {
-                Logger.error(`Invalid payment method ${payment_method}`, `Please ensure you have enabled this payment method in the config (/v3/config/payment_methods)`);
+                log.error(`Invalid payment method ${payment_method}`, `Please ensure you have enabled this payment method in the config (/v3/config/payment_methods)`);
                 return APIError("Invalid payment method", 400)(res);
             }
 
@@ -126,7 +128,7 @@ class OrderRoute
                 name: sanitizeMongoose(__promotion_code),
             });
             // @ts-ignore
-            Logger.info(`Order placed by ${req.customer.email}`, `General information:`, products, payment_method, promotion_code);
+            log.info(`Order placed by ${req.customer.email}`, `General information:`, products, payment_method, promotion_code);
 
             if (!customer_id || !products || !payment_method)
                 return APIError("Missing in body")(res);

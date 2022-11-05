@@ -1,11 +1,13 @@
 import { Application, Router } from "express";
 import ProductModel from "../../../../Database/Models/Products.model";
 import PromotionCodeModel from "../../../../Database/Models/PromotionsCode.model";
-import { Logger } from "lib";
 import { APIError, APISuccess } from "../../../../Lib/Response";
 import EnsureAdmin from "../../../../Middlewares/EnsureAdmin";
 import { setTypeValueOfObj } from "../../../../Lib/Sanitize";
 import PromotionCodeController from "./PromotionCode.controller";
+import Logger from "@cpg/logger";
+
+const log = new Logger("cpg:api:server:routes:v2:promotionscodes");
 
 export = PromotionCodeRoute;
 class PromotionCodeRoute
@@ -58,30 +60,30 @@ class PromotionCodeRoute
                 // Convert string to date
                 if (new Date(code.valid_to) < new Date())
                 {
-                    Logger.debug(`Promotion code ${code.name} got invalid valid date`);
+                    log.debug(`Promotion code ${code.name} got invalid valid date`);
                     return APIError(`Promotion code ${name} got invalid valid date`, 400)(res);
                 }
 
             if (typeof code.valid_to === "string")
                 if (code.uses <= 0)
                 {
-                    Logger.warning(`Promotion code ${code.name} has no uses left`);
+                    log.warn(`Promotion code ${code.name} has no uses left`);
                     return APIError(`Promotion code ${name} has no uses left`, 400)(res);
                 }
 
-            Logger.info(`Promotion code ${code.name} (${code.id}) is valid`);
+            log.info(`Promotion code ${code.name} (${code.id}) is valid`);
 
             // Filter products which is not included in the promotion code
             const filtered_products = products.filter(product =>
             {
                 if (code.products_ids.includes(product.id))
                 {
-                    Logger.info(`Promotion code ${code.name} (${code.id}) is valid for product ${product.id}`);
+                    log.info(`Promotion code ${code.name} (${code.id}) is valid for product ${product.id}`);
                     return true;
                 }
                 else
                 {
-                    Logger.info(`Promotion code ${code.name} (${code.id}) is not valid for product ${product.id}`);
+                    log.info(`Promotion code ${code.name} (${code.id}) is not valid for product ${product.id}`);
                     return false;
                 }
             });
@@ -93,18 +95,18 @@ class PromotionCodeRoute
             {
                 if (code.products_ids.includes(product.id))
                 {
-                    Logger.info(`Promotion code ${code.name} (${code.id}) is valid for product ${product.id}`);
+                    log.info(`Promotion code ${code.name} (${code.id}) is valid for product ${product.id}`);
                     const o_price = product.price;
                     if (code.discount > 0)
                         product.price = product.price + (product.price * code.discount);
                     else
                         product.price = product.price - code.discount;
 
-                    Logger.info(`New price of product ${product.id} is ${product.price}, old price was ${o_price}`);
+                    log.info(`New price of product ${product.id} is ${product.price}, old price was ${o_price}`);
                     // Check if we are - on price
                     if (product.price < 0)
                     {
-                        Logger.error(`Product ${product.id} price is less than 0, making it "free" by setting it to 0`);
+                        log.error(`Product ${product.id} price is less than 0, making it "free" by setting it to 0`);
                         product.price = 0;
                     }
                     new_changed_products.push({

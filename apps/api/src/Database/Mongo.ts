@@ -1,29 +1,31 @@
 import mongoose from "mongoose";
 import { reCache } from "../Cache/reCache";
 import { DebugMode, Default_Language, MongoDB_URI } from "../Config";
-import { Logger } from "lib";
 import GetText from "../Translation/GetText";
+import Logger from "@cpg/logger";
+
+const log = new Logger("cpg:api:database:mongo");
 
 mongoose.connect(MongoDB_URI);
 const db = mongoose.connection;
 
 db.on('error', (error: any) =>
 {
-    Logger.error(GetText(Default_Language).database.txt_Database_Error_default, error)
-    // Logger.error(`A error occurred, in the database`, error);
+    log.error(GetText(Default_Language).database.txt_Database_Error_default, error)
+    // log.error(`A error occurred, in the database`, error);
 });
 
 db.on('disconnected', () =>
 {
-    Logger.error(GetText(Default_Language).database.txt_Database_Error_Lost_Connection);
-    // Logger.error(`Lost connection to the database, shutting down.`);
+    log.error(GetText(Default_Language).database.txt_Database_Error_Lost_Connection);
+    // log.error(`Lost connection to the database, shutting down.`);
     if (!DebugMode)
         process.exit(1);
 });
 
 db.once('open', () =>
 {
-    Logger.db(GetText(Default_Language).database.txt_Database_Opened);
+    log.info(GetText(Default_Language).database.txt_Database_Opened);
     reCache();
     // Logger.db(`Database opened`);
 });

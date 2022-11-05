@@ -45,10 +45,7 @@
     "sequelize": "^6.15.0",
     "lib": "*",
     "stripe": "^8.186.1",
-    "@cpg/logger": "*",
-    "@cpg/rabbitmq": "*",
-    "@cpg/core": "*",
-    "@cpg/customer": "*"
+    "@cpg/logger": "*"
   },
   "scripts": {
     "start": "node ./build/Main.js",

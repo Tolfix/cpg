@@ -1,9 +1,11 @@
-import { Logger } from "lib";
+import Logger from "@cpg/logger";
 import chalk from "chalk";
 import clear from "clear";
 import figlet from "figlet";
 import Prompt, { cacheCommands } from "./Commands/Prompt";
 import inquirer from 'inquirer';
+
+const log = new Logger("cpg:api:admin:AdminHandler");
 
 export default class AdminHandler
 {
@@ -52,7 +54,7 @@ export default class AdminHandler
             }
         }).catch((error) =>
         {
-            Logger.error(error);
+            log.error(error);
             this.action();
         });
     }

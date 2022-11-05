@@ -5,7 +5,6 @@ import { ICustomer } from "interfaces/Customer.interface";
 import { idCustomer } from "../../../../Lib/Generator";
 import { APIError, APISuccess } from "../../../../Lib/Response";
 import BaseModelAPI from "../../../../Models/BaseModelAPI";
-import { Logger } from "lib";
 import { SendEmail } from "../../../../Email/Send";
 import { Company_Currency, Company_Name } from "../../../../Config";
 import mainEvent from "../../../../Events/Main.event";
@@ -13,7 +12,9 @@ import { sanitizeMongoose } from "../../../../Lib/Sanitize";
 import WelcomeTemplate from "../../../../Email/Templates/Customer/Welcome.template";
 import { currencyCodes } from "lib";
 import { TPaymentCurrency } from "interfaces/types/Currencies";
+import Logger from "@cpg/logger";
 
+const log = new Logger("cpg:api:server:routes:v2:customers:controller");
 
 const API = new BaseModelAPI<ICustomer>(idCustomer, CustomerModel);
 
@@ -24,7 +25,7 @@ function insert(req: Request, res: Response)
         bcrypt.hash(req.body.password ?? "123qwe123", salt, async (err, hash) =>
         {
             if (err)
-                Logger.error(err);
+                log.error(err);
 
             req.body.password = hash;
 
