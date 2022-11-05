@@ -85,6 +85,7 @@ const ProductSchema = new Schema
                 type: String,
                 enum: [...A_RecurringMethod],
                 default: undefined,
+                required: false,
             },
 
             image: {

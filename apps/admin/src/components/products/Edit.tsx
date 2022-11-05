@@ -52,7 +52,7 @@ export const EditProducts = (props: any) =>
                     { id: "one_time", name: "one_time" },
                     { id: "recurring", name: "recurring" },
                 ]} />
-                <AutocompleteInput isRequired={false} source="recurring_method" choices={[
+                <AutocompleteInput isRequired={false} defaultValue={undefined} source="recurring_method" choices={[
                     { id: "monthly", name: "monthly" },
                     { id: "quarterly", name: "quarterly" },
                     { id: "semi_annually", name: "semi_annually" },
