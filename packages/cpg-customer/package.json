@@ -19,7 +19,7 @@
       "access": "public"
     },
     "scripts": {
-      "build": "tsc",
+      "build": "",
       "clean": "rm -rf dist",
       "lint": "TIMING=1 eslint src/**/*.ts* --fix"
     },
