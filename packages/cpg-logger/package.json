@@ -10,7 +10,8 @@
         "dist/**"
     ],
     "dependencies": {
-        "date-and-time": "^2.4.1"
+        "date-and-time": "^2.4.1",
+        "debug": "^4.3.4"
     },
     "publishConfig": {
         "access": "public"
