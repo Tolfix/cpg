@@ -15,7 +15,7 @@ WORKDIR /app
 
 RUN npm i -g turbo
 COPY . .
-RUN turbo prune --scope=web --docker
+RUN turbo prune --scope=admin --docker
 
 ##########################
 
@@ -35,7 +35,7 @@ COPY --from=builder /app/out/full/ .
 
 COPY turbo.json turbo.json
 
-RUN npm run build --filter=web...
+RUN npm run build --filter=admin...
 
 # APP
 FROM node:16-alpine as APP
