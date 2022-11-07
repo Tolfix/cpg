@@ -14,9 +14,7 @@ RUN npm install -g @types/node \
 WORKDIR /app
 
 RUN npm i -g turbo
-
 COPY . .
-
 RUN turbo prune --scope=api --docker
 
 ##########################
