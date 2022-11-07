@@ -2,8 +2,10 @@ import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../Config";
 import { IImage } from "interfaces/Images.interface";
-import { Logger } from "lib";
 import GetText from "../../Translation/GetText";
+import Logger from "@cpg/logger";
+
+const log = new Logger("cpg:api:database:mongo:models:images");
 
 const ImageSchema = new Schema
     (
@@ -44,7 +46,7 @@ const ImageSchema = new Schema
 // Log when creation
 ImageSchema.post('save', function (doc: IImage & Document)
 {
-    Logger.db(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
+    log.info(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
     // Logger.db(`Created image ${doc.id}`);
 });
 

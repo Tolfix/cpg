@@ -5,7 +5,7 @@ import cors from "cors";
 import session from "express-session";
 import fileUpload from "express-fileupload";
 import { Default_Language, disableJsonError, Express_Session_Secret, Full_Domain, PORT } from "../Config";
-import { Logger } from "lib";
+import Logger from "@cpg/logger";
 import RouteHandler from "../Handlers/Route.handler";
 import { ICustomer } from "interfaces/Customer.interface";
 import { APIError } from "../Lib/Response";
@@ -16,6 +16,8 @@ import EnsureAdmin from "../Middlewares/EnsureAdmin";
 import EnsureAuth from "../Middlewares/EnsureAuth";
 // import PluginHandler from "../Plugins/PluginHandler";
 import FallbackTemplate from "../Email/Templates/Web/Fallback.template";
+
+const log = new Logger("cpg:api:server");
 
 declare module "express-session"
 {
@@ -108,7 +110,7 @@ server.use(limiter);
 
 RouteHandler(server);
 
-server.listen(PORT, () => Logger.api(`${GetText(Default_Language).txt_Api_Listing} ${PORT} | ${Full_Domain}`));
+server.listen(PORT, () => log.info(`${GetText(Default_Language).txt_Api_Listing} ${PORT} | ${Full_Domain}`));
 (async () =>
 {
   await ApolloServer(server);
@@ -116,7 +118,6 @@ server.listen(PORT, () => Logger.api(`${GetText(Default_Language).txt_Api_Listin
   server.use("*", async (req, res) =>
   {
     res.status(404).send(await FallbackTemplate({ req }))
-    // return APIError(GetText(Default_Language).txt_ApiError_default(req))(res);
   });
 }
 )();

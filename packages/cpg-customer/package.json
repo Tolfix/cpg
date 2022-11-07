@@ -1,0 +1,33 @@
+{
+    "name": "@cpg/customer",
+    "version": "0.0.0",
+    "license": "MIT",
+    "private": true,
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "source": "./src/index.ts",
+    "files": [
+      "dist/**"
+    ],
+    "dependencies": {
+      "@cpg/core": "*",
+      "@cpg/logger": "*",
+      "@cpg/interfaces": "*",
+      "uuid": "9.0.0"
+    },
+    "publishConfig": {
+      "access": "public"
+    },
+    "scripts": {
+      "build": "",
+      "clean": "rm -rf dist",
+      "lint": "TIMING=1 eslint src/**/*.ts* --fix"
+    },
+    "devDependencies": {
+      "@typescript-eslint/eslint-plugin": "^5.33.0",
+      "@typescript-eslint/parser": "^5.33.0",
+      "eslint": "^8.22.0",
+      "eslint-config-custom": "*"
+    }
+  }
+  

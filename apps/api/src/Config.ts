@@ -6,7 +6,7 @@ import { IAllLanguages } from "interfaces/Lang/AllLang.interface";
  * @description
  * Used if this service is running in debug mode.
  */
-export const DebugMode = process.env.DEBUG === "true";
+export const DebugMode = process.env.DEBUG_MODE === "true";
 export const HomeDir = ((__dirname.replace("\\build", "")).replace("/build", ""));
 export const JWT_Access_Token = process.env.JWT_ACCESS_TOKEN ?? "";
 export const d_Days = parseInt(process.env.D_DAYS ?? "30");

@@ -4,7 +4,9 @@ import { CacheAdmin, getAdminByUsername } from "../Cache/Admin.cache";
 import { APIError } from "../Lib/Response";
 import jwt from "jsonwebtoken";
 import { JWT_Access_Token } from "../Config";
-import { Logger } from "lib";
+import Logger from "@cpg/logger";
+
+const log = new Logger("cpg:api:middleware:admin");
 
 export default function EnsureAdmin(eR = false)
 {
@@ -42,20 +44,20 @@ export default function EnsureAdmin(eR = false)
             {
                 // Assuming base64 string
                 // Convert it to normal string
-                Logger.error(`Admin authorizing with base64 string`);
-                Logger.info(`Encoding admin credentials to normal string`);
+                log.error(`Admin authorizing with base64 string`);
+                log.info(`Encoding admin credentials to normal string`);
                 login = Buffer.from(login, 'base64').toString();
                 password = login.split(":")[1];
                 login = login.split(":")[0];
             }
 
-            !eR ? Logger.warning(`Authoring admin with username: ${login}`) : null;
+            !eR ? log.warn(`Authoring admin with username: ${login}`) : null;
 
             const match = await bcrypt.compare(password, (CacheAdmin.get(getAdminByUsername(login) ?? "ADM_")?.["password"]) ?? "");
 
             if (!match)
             {
-                !eR ? Logger.warning(`Authorization failed for admin with username: ${login}`) : null;
+                !eR ? log.warn(`Authorization failed for admin with username: ${login}`) : null;
                 return eR ? Promise.resolve(false) : APIError("Unauthorized admin", 403)(res);
             }
 
@@ -74,7 +76,7 @@ export default function EnsureAdmin(eR = false)
 
                 if (!payload)
                 {
-                    !eR ? Logger.warning(`Authorization failed for admin with token: ${token}`) : null;
+                    !eR ? log.warn(`Authorization failed for admin with token: ${token}`) : null;
                     return eR ? Promise.resolve(false) : APIError("Unauthorized admin", 403)(res);
                 }
 

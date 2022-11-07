@@ -1,6 +1,8 @@
 import { Resolver } from "graphql-compose";
-import { Logger } from "lib";
 import GetText from "../../Translation/GetText";
+import Logger from "@cpg/logger";
+
+const log = new Logger("cpg:api:database:graphql:resolveraccess");
 
 export function resolverAdminAccess(resolvers: {
     [key: string]: Resolver;
@@ -10,7 +12,7 @@ export function resolverAdminAccess(resolvers: {
     {
         resolvers[k] = resolvers[k].wrapResolve(next => async rp =>
         {
-            Logger.graphql(GetText().graphql.txt_Resolver_Checking_Admin(k));
+            log.info(GetText().graphql.txt_Resolver_Checking_Admin(k));
             // Logger.graphql(`Checking if user is admin on ${k}`);
 
             if (!rp.context.isAuth)
@@ -34,7 +36,7 @@ export function resolverUserAccess(resolvers: {
         resolvers[k] = resolvers[k].wrapResolve(next => async rp =>
         {
 
-            Logger.graphql(GetText().graphql.txt_Resolver_Checking_User(k));
+            log.info(GetText().graphql.txt_Resolver_Checking_User(k));
             // Logger.graphql(`Checking if user is user on ${k}`);
 
             if (!rp.context.isAuth)

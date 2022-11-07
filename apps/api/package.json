@@ -44,11 +44,12 @@
     "request": "^2.88.2",
     "sequelize": "^6.15.0",
     "lib": "*",
-    "stripe": "^8.186.1"
+    "stripe": "^8.186.1",
+    "@cpg/logger": "*"
   },
   "scripts": {
     "start": "node ./build/Main.js",
-    "build": "tsc -b",
+    "build": "tsc",
     "dev": "nodemon ./build/Main.js",
     "lint": "eslint ./src --ext .ts"
   },

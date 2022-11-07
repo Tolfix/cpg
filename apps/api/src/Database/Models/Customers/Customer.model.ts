@@ -2,9 +2,11 @@ import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../../Config";
 import { ICustomer, ICustomerMethods } from "interfaces/Customer.interface";
-import { Logger } from "lib";
 import GetText from "../../../Translation/GetText";
 import { currencyCodes } from "lib";
+import Logger from "@cpg/logger";
+
+const log = new Logger("cpg:api:database:mongo:models:customers");
 
 const CustomerSchema = new Schema
     (
@@ -158,7 +160,7 @@ CustomerSchema.methods.fullName = function (sC = false)
 // Log when creation
 CustomerSchema.post('save', function (doc: ICustomer & Document)
 {
-    Logger.db(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
+    log.info(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
     // Logger.db(`Created customer ${doc.id}`);
 });
 

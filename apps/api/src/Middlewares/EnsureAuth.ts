@@ -1,8 +1,10 @@
 import { Request, Response, NextFunction } from "express"
 import jwt from "jsonwebtoken";
 import { JWT_Access_Token } from "../Config";
-import { Logger } from "lib";
 import { APIError } from "../Lib/Response";
+import Logger from "@cpg/logger";
+
+const log = new Logger("cpg:api:middleware:ensureauth");
 
 export default function EnsureAuth(eR = false)
 {
@@ -56,13 +58,13 @@ export default function EnsureAuth(eR = false)
                 //@ts-ignore
                 req.customer = payload.data;
                 // @ts-ignore
-                !eR ? Logger.api(`Authorizing`, payload.data) : null;
+                !eR ? log.info(`Authorizing`, payload.data) : null;
 
                 return eR ? Promise.resolve(true) : next?.();
             }
             catch (e)
             {
-                Logger.error(`${e}`, Logger.trace());
+                log.error(e);
                 return eR ? Promise.resolve(false) : APIError(`JWT token expired or bad`, 403)(res);
             }
 

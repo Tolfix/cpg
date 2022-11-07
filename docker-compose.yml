@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+
+  rabbitmq:
+    image: rabbitmq:3.6-management
+    container_name: RabbitMQ
+    restart: unless-stopped
+    mem_limit: 1024m
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - cpg-network
+    volumes:
+      - rabbitmq-storage:/var/lib/rabbitmq
+    hostname: cpg-rabbitmq
+    healthcheck:
+      test: rabbitmqadmin show overview || exit 1
+      interval: 10s
+      timeout: 2s
+
+  mongodb:
+    image: mongo:3.6
+    container_name: MongoDB
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    ports:
+      - "27017:27017"
+    networks:
+      - cpg-network
+
+volumes:
+  rabbitmq-storage:
+
+
+networks:
+  cpg-network:
+    driver: bridge

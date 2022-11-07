@@ -1,8 +1,9 @@
 import { Application } from "express";
 import { readdirSync } from "fs";
 import { HomeDir } from "../Config";
-import { Logger } from "lib";
+import Logger from "@cpg/logger";
 
+const log = new Logger("cpg:api:handler:route");
 /**
  * 
  * @param {Application} server The server from express
@@ -11,7 +12,7 @@ import { Logger } from "lib";
  */
 export default function RouteHandler(server: Application): void
 {
-    Logger.info("Loading routes...");
+    log.info("Loading routes...");
     const routeDir = HomeDir + "/build/Server/Routes";
     readdirSync(`${routeDir}`).forEach((version) =>
     {
@@ -24,7 +25,7 @@ export default function RouteHandler(server: Application): void
                 const pull = require(`${routeDir}/${version}/${route}/${file}`);
                 if (pull)
                 {
-                    Logger.api(`Adding new router in version ${version}, name ${pull.name ?? ""}`)
+                    log.info(`Adding new router in version ${version}, name ${pull.name ?? ""}`)
                     new pull(server, version);
                 }
 

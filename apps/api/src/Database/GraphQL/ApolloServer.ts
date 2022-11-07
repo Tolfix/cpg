@@ -4,9 +4,11 @@ import SchemaPoser from './SchemaPoser';
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { CacheAdmin, getAdminByUsername } from '../../Cache/Admin.cache';
-import { Logger } from "lib";
 import { Application } from "express";
 import GetText from '../../Translation/GetText';
+import Logger from '@cpg/logger';
+
+const log = new Logger("cpg:api:database:graphql:apolloserver");
 
 export default async (server: Application) =>
 {
@@ -95,7 +97,7 @@ export default async (server: Application) =>
     });
 
     await apolloServer.start();
-    Logger.graphql(`${GetText().graphql.txt_Apollo_Starting} ${Full_Domain}/graphql`);
+    log.info(`${GetText().graphql.txt_Apollo_Starting} ${Full_Domain}/graphql`);
 
     apolloServer.applyMiddleware({
         app: server,

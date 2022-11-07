@@ -2,10 +2,12 @@ import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../Config";
 import { ITransactions } from "interfaces/Transactions.interface";
-import { Logger } from "lib";
 import GetText from "../../Translation/GetText";
 import { A_CC_Payments } from "interfaces/types/PaymentMethod";
 import { currencyCodes } from "lib";
+import Logger from "@cpg/logger";
+
+const log = new Logger("cpg:api:database:mongo:models:transactions");
 
 const TransactionsSchema = new Schema
     (
@@ -95,7 +97,7 @@ const TransactionsSchema = new Schema
 // Log when a transaction is created
 TransactionsSchema.post('save', function (doc: ITransactions & Document)
 {
-    Logger.db(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.uid));
+    log.info(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.uid));
     // Logger.db(`Created transaction ${doc.uid}`);
 });
 

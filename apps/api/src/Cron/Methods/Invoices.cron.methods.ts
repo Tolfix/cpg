@@ -1,7 +1,6 @@
 import { Company_Name, DebugMode, Default_Language, d_Days } from "../../Config";
 import InvoiceModel from "../../Database/Models/Invoices.model";
 import dateFormat from "date-and-time";
-import { Logger } from "lib";
 import GetText from "../../Translation/GetText";
 import CustomerModel from "../../Database/Models/Customers/Customer.model";
 import { sendInvoiceEmail, sendLateInvoiceEmail } from "../../Lib/Invoices/SendEmail";
@@ -13,6 +12,7 @@ import sendEmailOnTransactionCreation from "../../Lib/Transaction/SendEmailOnCre
 import createCredit from "../../Lib/Customers/createCredit";
 import { sendEmail } from "../../Email/Send";
 import DueTodayInvoiceTemplate from "../../Email/Templates/Invoices/DueTodayInvoice.template";
+import Logger from "@cpg/logger";
 
 export const getDates30DaysAgo = () =>
 {
@@ -32,6 +32,7 @@ export const getDatesAhead = (n: number = d_Days) =>
 
 export function cron_notifyInvoices()
 {
+    const log = new Logger("cpg:api:cron:invoices:notifyInvoices");
 
     InvoiceModel.find({
         "dates.due_date": {
@@ -43,8 +44,7 @@ export function cron_notifyInvoices()
         }
     }).then(async (invoices) =>
     {
-        Logger.info(GetText(Default_Language).cron.txt_Invoice_Found_Notify(invoices.length));
-        // Logger.info(`Found ${invoices.length} invoices to notify.`);
+        log.info(GetText(Default_Language).cron.txt_Invoice_Found_Notify(invoices.length));
         for await (const invoice of invoices)
         {
             // Get customer
@@ -52,8 +52,7 @@ export function cron_notifyInvoices()
             if (!Customer)
                 continue;
 
-            Logger.info(GetText(Default_Language).cron.txt_Invoice_Found_Sending_Email(Customer));
-            // Logger.info(`Sending email to ${Customer.personal.email}`);
+            log.info(GetText(Default_Language).cron.txt_Invoice_Found_Sending_Email(Customer));
 
             await sendInvoiceEmail(invoice, Customer);
 
@@ -175,6 +174,7 @@ export function cron_findCreditForInvoice()
 
 export function cron_chargeStripePayment()
 {
+    const log = new Logger("cpg:api:cron:invoices:chargeStripePayment");
     // Trigger if a invoice has stripe_setup_intent enabled and is due in the next 2 weeks.
     InvoiceModel.find({
         "dates.due_date": {
@@ -208,7 +208,7 @@ export function cron_chargeStripePayment()
             if (!Customer)
                 continue;
 
-            Logger.info(`Checking ${Customer.personal.email} for stripe payment.`, Logger.trace());
+            log.info(`Checking ${Customer.personal.email} for stripe payment.`);
             // Check if credit card
             if (invoice.payment_method !== "credit_card")
                 continue;
@@ -217,20 +217,20 @@ export function cron_chargeStripePayment()
             if (!(Customer?.extra?.stripe_setup_intent))
                 continue;
 
-            Logger.info(`Invoice ${invoice.id} is due in the next 2 weeks and has a setup_intent enabled.`);
+            log.info(`Invoice ${invoice.id} is due in the next 2 weeks and has a setup_intent enabled.`);
 
             // Assuming they have a card
             // Try to create a payment intent and pay
             try
             {
                 await ChargeCustomer(invoice.id);
-                Logger.info(`Charging ${Customer.personal.email}`);
+                log.info(`Charging ${Customer.personal.email}`);
                 // assuming it worked, we can mark it as paid
                 await getInvoiceByIdAndMarkAsPaid(invoice.id, true);
             }
             catch (e)
             {
-                Logger.error(`Failed to charge customer ${Customer.id} with error`, e);
+                log.error(`Failed to charge customer ${Customer.id} with error`, e);
             }
         }
     });

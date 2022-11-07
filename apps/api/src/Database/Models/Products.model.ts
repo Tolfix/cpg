@@ -2,12 +2,13 @@ import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../Config";
 import { IProduct } from "interfaces/Products.interface";
-import { Logger } from "lib";
 import GetText from "../../Translation/GetText";
 import { A_RecurringMethod } from "interfaces/types/PaymentMethod";
 import { A_PaymentTypes } from "interfaces/types/PaymentTypes";
 import { currencyCodes } from "lib";
+import Logger from "@cpg/logger";
 
+const log = new Logger("cpg:api:database:mongo:models:products");
 
 const ProductSchema = new Schema
     (
@@ -85,6 +86,7 @@ const ProductSchema = new Schema
                 type: String,
                 enum: [...A_RecurringMethod],
                 default: undefined,
+                required: false,
             },
 
             image: {
@@ -114,7 +116,7 @@ const ProductSchema = new Schema
 // Log when creation
 ProductSchema.post('save', function (doc: IProduct & Document)
 {
-    Logger.db(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
+    log.info(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
     // Logger.db(`Created product ${doc.name} (${doc.id})`);
 });
 

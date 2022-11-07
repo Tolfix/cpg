@@ -2,9 +2,11 @@ import mongoose, { Document, model, Schema } from "mongoose"
 import increment from "mongoose-auto-increment";
 import { Default_Language, MongoDB_URI } from "../../Config";
 import { extendedOrderStatus, IInvoice, IInvoiceMethods } from "interfaces/Invoice.interface";
-import { Logger } from "lib";
 import GetText from "../../Translation/GetText";
 import { currencyCodes, GetCurrencySymbol } from "lib";
+import Logger from "@cpg/logger";
+
+const log = new Logger("cpg:api:database:mongo:models:invoices");
 
 export const A_InvoiceStatus: extendedOrderStatus[] = [
     "active",
@@ -161,7 +163,7 @@ InvoiceSchema.methods.getTotalAmount = function ({
 // Log when creation
 InvoiceSchema.post('save', function (doc: IInvoice & Document)
 {
-    Logger.db(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
+    log.info(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
     // Logger.db(`Created invoice ${doc.id}`);
 });
 
