@@ -42,7 +42,7 @@
     "prompt": "^1.2.0",
     "qrcode": "^1.4.4",
     "request": "^2.88.2",
-    "sequelize": "^6.15.0",
+    "sequelize": "^6.28.2",
     "lib": "*",
     "stripe": "^8.186.1",
     "@cpg/logger": "*"
