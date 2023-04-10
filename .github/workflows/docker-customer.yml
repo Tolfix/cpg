@@ -24,6 +24,6 @@ jobs:
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - name: Build the Docker image
-        run: docker build . --file Dockerfile_CUSTOMER --tag tolfixorg/cpg-customer:latest
+        run: docker build . --file Dockerfile_CUSTOMER --tag tolfixorg/cpg-customer:build-${{github.run_number}}
       - name: Docker push
-        run: docker push tolfixorg/cpg-customer:latest
+        run: docker push tolfixorg/cpg-customer:build-${{github.run_number}}
