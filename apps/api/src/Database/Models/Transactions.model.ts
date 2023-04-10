@@ -97,6 +97,7 @@ const TransactionsSchema = new Schema
 // Log when a transaction is created
 TransactionsSchema.post('save', function (doc: ITransactions & Document)
 {
+    // @ts-ignore
     log.info(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.uid));
     // Logger.db(`Created transaction ${doc.uid}`);
 });

@@ -136,6 +136,7 @@ const OrderSchema = new Schema
 // Log when creation
 OrderSchema.post('save', function (doc: IOrder & Document)
 {
+    // @ts-ignore
     log.info(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
 });
 

@@ -46,6 +46,7 @@ const ImageSchema = new Schema
 // Log when creation
 ImageSchema.post('save', function (doc: IImage & Document)
 {
+    // @ts-ignore
     log.info(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
     // Logger.db(`Created image ${doc.id}`);
 });

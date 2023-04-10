@@ -52,6 +52,7 @@ const PromotionCodeSchema = new Schema
 // Log when creation
 PromotionCodeSchema.post('save', function (doc: IPromotionsCodes & Document)
 {
+    // @ts-ignore
     log.info(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
     // Logger.db(`Created promotion code ${doc.name}`);
 });

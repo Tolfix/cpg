@@ -12,10 +12,12 @@ export function sanitizeMongoose<A>(v: A): A
         {
             if (/^\$/.test(key))
             {
+                // @ts-ignore
                 delete v[key];
             } 
             else 
             {
+                // @ts-ignore
                 sanitizeMongoose(v[key]);
             }
         }

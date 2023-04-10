@@ -40,6 +40,7 @@ const ConfigurableOptionsSchema = new Schema
 // Log when creation
 ConfigurableOptionsSchema.post('save', function (doc: IConfigurableOptions & Document)
 {
+    // @ts-ignore
     log.info(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
     // Logger.db(`Created configurable_options ${doc.id}`);
 });

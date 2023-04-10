@@ -163,6 +163,7 @@ InvoiceSchema.methods.getTotalAmount = function ({
 // Log when creation
 InvoiceSchema.post('save', function (doc: IInvoice & Document)
 {
+    // @ts-ignore
     log.info(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
     // Logger.db(`Created invoice ${doc.id}`);
 });

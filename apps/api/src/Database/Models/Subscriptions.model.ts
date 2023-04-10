@@ -88,6 +88,7 @@ const SubscriptionSchema = new Schema
 // Log when creation
 SubscriptionSchema.post('save', function (doc: IQuotes & Document)
 {
+    // @ts-ignore
     log.info(GetText().database.txt_Model_Created(doc.modelName, doc.uid));
     // Logger.db(`Created Quotes ${doc.id}`);
 });

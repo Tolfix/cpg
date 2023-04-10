@@ -160,6 +160,7 @@ CustomerSchema.methods.fullName = function (sC = false)
 // Log when creation
 CustomerSchema.post('save', function (doc: ICustomer & Document)
 {
+    // @ts-ignore
     log.info(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
     // Logger.db(`Created customer ${doc.id}`);
 });

@@ -116,6 +116,7 @@ const ProductSchema = new Schema
 // Log when creation
 ProductSchema.post('save', function (doc: IProduct & Document)
 {
+    // @ts-ignore
     log.info(GetText(Default_Language).database.txt_Model_Created(doc.modelName, doc.id));
     // Logger.db(`Created product ${doc.name} (${doc.id})`);
 });
