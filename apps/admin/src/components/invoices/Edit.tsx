@@ -79,7 +79,7 @@ export const EditInvoices = (props: any) =>
                                 <BooleanInput disabled={formData.refund_invoice} label="Refund Email" source="refund_email" />
                             )}
                     </FormDataConsumer>
-
+                    <BooleanInput label="Send Email" defaultValue={false} source="send_email" />
                 </FormTab>
 
                 <FormTab label="Dates">

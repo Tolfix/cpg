@@ -147,6 +147,22 @@ async function patch(req: Request, res: Response)
             await getInvoiceByIdAndMarkAsPaid(result.id, true);
             mainEvent.emit("invoice_paid", result);
         }
+
+        const send_email = req.body.send_email ?? false;
+
+        if (send_email)
+        {
+            const customer = await CustomerModel.findOne({
+                $or: [
+                    { id: result.customer_uid },
+                    { uid: result.customer_uid as any }
+                ]
+            });
+            if (customer)
+                // @ts-ignore
+                await sendInvoiceEmail(result, customer);
+        }
+
         // @ts-ignore
         mainEvent.emit("invoice_updated", result);
         APISuccess(result)(res);
