@@ -13,7 +13,8 @@ RUN npm install -g @types/node \
 
 WORKDIR /app
 
-RUN npm i -g turbo
+# RUN npm i -g turbo@1.6.3
+RUN npm install -g --save-dev turbo --arch=x64 --platform=linux
 
 COPY . .
 
@@ -29,7 +30,7 @@ WORKDIR /app
 
 COPY .gitignore .gitignore
 COPY --from=BUILDER /app/out/json/ .
-# COPY --from=BUILDER /app/out/package-lock.json ./package-lock.json
+COPY --from=BUILDER /app/out/package-lock.json ./package-lock.json
 
 RUN npm ci --force
 
