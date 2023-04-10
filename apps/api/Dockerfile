@@ -14,7 +14,9 @@ RUN npm install -g @types/node \
 WORKDIR /app
 
 RUN npm i -g turbo
+
 COPY . .
+
 RUN turbo prune --scope=api --docker
 
 ##########################
@@ -27,16 +29,17 @@ WORKDIR /app
 
 COPY .gitignore .gitignore
 COPY --from=BUILDER /app/out/json/ .
-COPY --from=BUILDER /app/out/package-lock.json ./package-lock.json
+# COPY --from=BUILDER /app/out/package-lock.json ./package-lock.json
 
 RUN npm i --force
-RUN npm i -w=api --force
 
 COPY --from=builder /app/out/full/ .
 
 COPY turbo.json turbo.json
 
 RUN npm run build --filter=api...
+
+##########################
 
 # APP
 FROM node:16-alpine as APP
