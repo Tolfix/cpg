@@ -27,5 +27,4 @@ db.once('open', () =>
 {
     log.info(GetText(Default_Language).database.txt_Database_Opened);
     reCache();
-    // Logger.db(`Database opened`);
 });
