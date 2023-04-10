@@ -31,7 +31,7 @@ COPY .gitignore .gitignore
 COPY --from=BUILDER /app/out/json/ .
 # COPY --from=BUILDER /app/out/package-lock.json ./package-lock.json
 
-RUN npm i --force
+RUN npm ci --force
 
 COPY --from=builder /app/out/full/ .
 
