@@ -102,7 +102,7 @@ export async function sendEmail(options: {
     }
   };
 
-  if (USING_GMAIL) {
+  if (USING_GMAIL && Boolean(process.env.USE_GMAIL_SMTP)) {
     config = {
       service: 'gmail',
       secure: SMTPConfig.secure,
