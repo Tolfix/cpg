@@ -86,7 +86,7 @@ export async function sendEmail(options: {
 
   const USING_GMAIL = SMTPConfig.host === 'smtp.gmail.com';
 
-  let config: Record<string, any> = {
+  const config: Record<string, any> = {
     host: SMTPConfig.host,
     port: SMTPConfig.port,
     secure: SMTPConfig.secure,
@@ -101,17 +101,6 @@ export async function sendEmail(options: {
       rejectUnauthorized: false
     }
   };
-
-  if (USING_GMAIL && Boolean(process.env.USE_GMAIL_SMTP)) {
-    config = {
-      service: 'gmail',
-      secure: SMTPConfig.secure,
-      auth: {
-        user: SMTPConfig.username,
-        pass: SMTPConfig.password
-      }
-    };
-  }
 
   const email: {
     from: string;
