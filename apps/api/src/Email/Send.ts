@@ -105,6 +105,7 @@ export async function sendEmail(options: {
   if (USING_GMAIL) {
     config = {
       service: 'gmail',
+      secure: SMTPConfig.secure,
       auth: {
         user: SMTPConfig.username,
         pass: SMTPConfig.password
