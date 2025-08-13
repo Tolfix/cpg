@@ -8,6 +8,8 @@ on:
       - 'apps/api/Dockerfile'
     branches:
       - master
+  release:
+    types: [published]
 
 jobs:
 
@@ -23,7 +25,19 @@ jobs:
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-      - name: Build the Docker image
-        run: docker build . --file ./apps/api/Dockerfile --tag tolfixorg/cpg-api:build-${{github.run_number}}
-      - name: Docker push
-        run: docker push tolfixorg/cpg-api:build-${{github.run_number}}
+      
+      # Build for master branch (development builds)
+      - name: Build and push development Docker image
+        if: github.event_name == 'push'
+        run: |
+          docker build . --file ./apps/api/Dockerfile --tag tolfixorg/cpg-api:build-${{github.run_number}}
+          docker push tolfixorg/cpg-api:build-${{github.run_number}}
+      
+      # Build for release tags
+      - name: Build and push release Docker image
+        if: github.event_name == 'release'
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          docker build . --file ./apps/api/Dockerfile --tag tolfixorg/cpg-api:${TAG_NAME} --tag tolfixorg/cpg-api:latest
+          docker push tolfixorg/cpg-api:${TAG_NAME}
+          docker push tolfixorg/cpg-api:latest
