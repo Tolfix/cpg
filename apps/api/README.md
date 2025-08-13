@@ -32,7 +32,9 @@ You can read our documentation on our [`wiki.`](https://github.com/Tolfix/CPG-AP
 # 📦 | Setup
 Setting up **CPG** can be done in various ways, but by far the simplest is by using **Docker**.
 
-You can pull the latest **Docker Image** from `tolfixorg/cpg:latest` from **DockerHub**.
+You can pull the latest **Docker Image** from `tolfixorg/cpg-api:latest` from **DockerHub**.
+
+For specific versions, you can use versioned tags like `tolfixorg/cpg-api:v1.2.1` that correspond to release tags.
 
 **CPG** also needs environment variables added, which you can find in [`.env.example`](), those that have (optional) in the comment can be ignored if you don't feel the need for them, but the others are required to make CPG functional.
 
